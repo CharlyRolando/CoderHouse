@@ -1,0 +1,36 @@
+<h2 class="alumnos">Alumnos</h2>
+<div class="container mt-5 margen">
+  <div class="row g-3">
+    <div *ngFor="let alumno of Alumnos" class="row">
+      <div class="card tarjeta">
+        <div class="row">
+          <div class="col-md-3">
+            <img src="./assets/{{alumno.id}}.png" class="img-fluid foto" />
+          </div>
+          <div class="col-md-6">
+            <h3 class="card-title">{{ alumno.nombre | titlecase }}</h3>
+            <div style="height: 6px;"></div>
+            <p><b>Edad: </b> {{ alumno.edad }}</p>
+            <p><b>Fecha de inicio: </b> {{ alumno.fechaInicio| date: "dd-MM-yyyy" }}</p>
+          </div>
+          <div class="col-md-3">
+            <div class="marco">
+            <p><b>Cursos</b></p>
+            <ul class="list-group ">
+              <li
+                *ngFor="let curso of alumno.cursos; index as posicion"
+                class=" d-flex justify-content-between align-items-center"
+              >
+              {{ posicion + 1 }}- {{ curso }}
+              </li>
+            </ul>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
