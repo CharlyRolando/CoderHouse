@@ -34,3 +34,14 @@ p{
   padding-left: 10px;
 }
 
+.uno{
+  background-color: rgba(165, 153, 42, 0.781);
+}
+
+.dos{
+  background-color: rgba(42, 95, 165, 0.781);
+}
+
+.tres{
+  background-color: rgba(165, 42, 42, 0.781);
+}

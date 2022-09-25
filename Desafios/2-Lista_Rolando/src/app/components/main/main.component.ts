@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Alumno } from 'src/app/models/Alumno';
+import { Alumno, eSexo } from 'src/app/models/Alumno';
 
 
 
@@ -14,6 +14,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 1,
     nombre: 'jorge romero',
+    sexo: eSexo.Masculino,
     edad: 21,
     fechaInicio: new Date(2021, 5, 23),
     cursos:['Filosofía', 'Historia']
@@ -21,6 +22,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 2,
     nombre: 'martin salinas',
+    sexo: eSexo.Masculino,
     edad: 28,
     fechaInicio: new Date(2015, 4, 1),
     cursos:['Geología', 'Química']
@@ -28,6 +30,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 3,
     nombre: 'olga rito',
+    sexo: eSexo.Femenino,
     edad: 22,
     fechaInicio: new Date(2020, 2, 14),
     cursos:['Danza']
@@ -35,6 +38,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 4,
     nombre: 'alina patoruti',
+    sexo: eSexo.Femenino,
     edad: 21,
     fechaInicio: new Date(2021, 5, 23),
     cursos:['Química', 'Biología', 'Citología']
@@ -42,6 +46,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 5,
     nombre: 'wilson ravena',
+    sexo: eSexo.Masculino,
     edad: 21,
     fechaInicio: new Date(2018, 3, 20),
     cursos:['Idioma', 'Estadística']
@@ -49,6 +54,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 6,
     nombre: 'rebeca lozada',
+    sexo: eSexo.Femenino,
     edad: 38,
     fechaInicio: new Date(2006, 5, 20),
     cursos:['Historia']
@@ -56,6 +62,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 7,
     nombre: 'matías luque',
+    sexo: eSexo.Masculino,
     edad: 18,
     fechaInicio: new Date(2022, 7, 20),
     cursos:['Estadística', 'Historia']
@@ -63,6 +70,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 8,
     nombre: 'sofia morando',
+    sexo: eSexo.Femenino,
     edad: 25,
     fechaInicio: new Date(2019, 4, 8),
     cursos:['Filosofía']
@@ -70,6 +78,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 9,
     nombre: 'luis petro',
+    sexo: eSexo.Masculino,
     edad: 21,
     fechaInicio: new Date(2021, 10, 12),
     cursos:['Filosofía', 'Historia']
@@ -77,6 +86,7 @@ public Alumnos: Array<Alumno> = [
   {
     id: 10,
     nombre: 'silvia martinez',
+    sexo: eSexo.Femenino,
     edad: 24,
     fechaInicio: new Date(2020, 3, 2),
     cursos:['Literatura', 'Historia', 'Idioma']

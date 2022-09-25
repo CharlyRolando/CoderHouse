@@ -2,19 +2,20 @@
 <div class="container mt-5 margen">
   <div class="row g-3">
     <div *ngFor="let alumno of Alumnos" class="row">
-      <div class="card tarjeta">
+      <div class="card tarjeta" [style.background-color]="alumno.sexo === 1 ? 'rgba(0, 0, 0, 0.15)' : 'rgba(0, 0, 0, 0.03)'">
         <div class="row">
           <div class="col-md-3">
             <img src="./assets/{{alumno.id}}.png" class="img-fluid foto" />
           </div>
           <div class="col-md-6">
             <h3 class="card-title">{{ alumno.nombre | titlecase }}</h3>
-            <div style="height: 6px;"></div>
+            <div style="height: 6px;" *ngIf="alumno.edad < 30"></div>
+            <p style="font-size: small; color:brown;" *ngIf="alumno.edad >= 30">Alumno mayor.</p>
             <p><b>Edad: </b> {{ alumno.edad }}</p>
             <p><b>Fecha de inicio: </b> {{ alumno.fechaInicio| date: "dd-MM-yyyy" }}</p>
           </div>
           <div class="col-md-3">
-            <div class="marco">
+            <div class="marco" [ngClass]="alumno.cursos.length === 1 ? 'uno' : alumno.cursos.length === 2 ? 'dos' : 'tres' ">
             <p><b>Cursos</b></p>
             <ul class="list-group ">
               <li
