@@ -1,0 +1,17 @@
+
+
+.contenedorMain{
+  display: flex;
+  flex-direction: column;
+}
+
+.contenedorTabla{
+  display: flex;
+  justify-content: center;
+}
+
+
+table {
+  width: 90%;
+}
+

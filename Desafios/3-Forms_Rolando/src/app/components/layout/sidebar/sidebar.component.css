@@ -11,45 +11,9 @@ mat-icon{
     vertical-align: middle;
 }
 
-.top{
-    margin-top: 15px;
-    padding: 8px;
-    margin-left: 160px;
-    font-size: 30px;
-}
-.user{
-    text-align: center;
-    font-weight: 800;
-    margin-bottom: 50px;
-
-}
-
-.user img{
-  margin-top: 16px;
-  width: 120px;
-  height: 120px;
-}
-.user .name{
-  color: white;
-}
-.user .mail{
-  margin-top: -10px;
-  color:  #697d95;
-}
-
-
-.menu-head{
-    color: #466be0;
-    text-transform: uppercase;
-    font-weight: 900;
-    margin-left: 40px;
-    margin-bottom: 30px;
-    height: 64px;
-    padding-top: 20px;
-}
-
 .menu-item{
-    margin: 0 10px 0 10px;
+    margin: 0;
+    padding: 40px 10px 0 10px;
 }
 
 .menu-item .menu-button{
@@ -59,7 +23,6 @@ mat-icon{
   display: flex;
   padding-left: 40px;
   margin-bottom: 10px;
-
 }
 .menu-item .menu-button span{
   margin-left: 15px;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from 'src/app/interfaces/usuario';
 
 @Component({
   selector: 'app-main',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
+  nuevoUsuario!:Usuario;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  enviarUsuario($event: Usuario): void {
+    this.nuevoUsuario = $event;
   }
 
 }

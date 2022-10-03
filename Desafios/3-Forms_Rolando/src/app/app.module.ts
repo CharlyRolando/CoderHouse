@@ -3,21 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './modules/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { SidebarComponent } from './components/layout/sidebar/sidebar.component';
+import { MainComponent } from './components/layout/main/main.component';
+import { ToolbarComponent } from './components/layout/toolbar/toolbar.component';
 
-import {MatButtonModule} from '@angular/material/button';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { MainComponent } from './components/main/main.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-const Material_Modules = [
-  MatButtonModule,
-  MatSidenavModule,
-  MatIconModule,
-  MatToolbarModule
-]
+import { LoginComponent } from './components/login/login.component';
+
+import { FormAlumnoComponent } from './components/alumnos/form-alumno/form-alumno.component';
+import { GridAlumnosComponent } from './components/alumnos/grid-alumnos/grid-alumnos.component';
+import { FormUsuarioComponent } from './components/usuarios/form-usuario/form-usuario.component';
+import { GridUsuariosComponent } from './components/usuarios/grid-usuarios/grid-usuarios.component';
 
 
 @NgModule({
@@ -25,12 +23,19 @@ const Material_Modules = [
     AppComponent,
     SidebarComponent,
     MainComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    LoginComponent,
+    FormAlumnoComponent,
+    GridAlumnosComponent,
+    FormUsuarioComponent,
+    GridUsuariosComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    Material_Modules
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
