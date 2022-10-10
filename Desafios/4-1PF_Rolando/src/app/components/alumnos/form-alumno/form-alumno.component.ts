@@ -25,7 +25,6 @@ export class FormAlumnoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.editData);
     this.configurarFormulario();
     if (this.editData) this.configurarEdicion();
   }

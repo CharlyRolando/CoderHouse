@@ -9,7 +9,7 @@
       <div fxLayout="column" fxLayoutGap="10px" class="columna">
         <mat-form-field appearance="fill">
           <mat-label>Usuario</mat-label>
-          <input soloNumeros matInput formControlName="user" autocomplete="off">
+          <input matInput formControlName="user" autocomplete="off">
           <mat-error *ngIf="errorHandling('user', 'required')">El Usuario es requerido.</mat-error>
         </mat-form-field>
 

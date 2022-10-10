@@ -15,8 +15,6 @@ export class GridUsuariosComponent implements OnInit {
 
   @Input() set nuevoUsuario(value: Usuario ) {
 
-    //console.log("llegó la info: ", value);
-
     if ( value!=undefined ){
       this.usuarios.push(value);
       this.dataSource = new MatTableDataSource(this.usuarios);

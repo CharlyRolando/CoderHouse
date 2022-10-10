@@ -9,9 +9,7 @@ export class SoloNumerosDirective {
 
   @HostListener('input',['$event']) alCambiarElInput(event:Event): void{
 
-    //console.log(this.elemento.nativeElement.value);
-
-    const soloNumeros = /[^0-9.]/g;
+      const soloNumeros = /[^0-9.]/g;
     const valor = this.elemento.nativeElement.value;
     var valorLimpio = valor.replace(soloNumeros, '');
     this.elemento.nativeElement.value = valorLimpio;

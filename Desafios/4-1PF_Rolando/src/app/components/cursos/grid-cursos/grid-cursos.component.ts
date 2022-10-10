@@ -38,7 +38,7 @@ export class GridCursosComponent implements OnInit {
   }
 
   editar(){
-    console.log(this.cursos);
+
   }
 
   eliminar(){

@@ -26,7 +26,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Edad</mat-label>
-          <input matInput formControlName="edad" />
+          <input soloNumeros matInput formControlName="edad" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -36,7 +36,7 @@
             formControlName="fechaInicio"
             [matDatepicker]="picker"
           />
-          <mat-hint>DD/MM/YYYY</mat-hint>
+          <!-- <mat-hint>DD/MM/YYYY</mat-hint> -->
           <mat-datepicker-toggle
             matSuffix
             [for]="picker"
