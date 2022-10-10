@@ -1,0 +1,28 @@
+
+.contenedorMain{
+  display: flex;
+  flex-direction: column;
+}
+
+.contenedorFiltro{
+  display: flex;
+  justify-content: center;
+}
+.filtros{
+  width: 90%;
+}
+
+
+.contenedorTabla{
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  width: 90%;
+}
+
+
+.columna{
+  width: 100%;
+  }

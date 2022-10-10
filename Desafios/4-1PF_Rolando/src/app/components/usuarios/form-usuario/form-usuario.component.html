@@ -1,0 +1,57 @@
+<div class="contendor">
+
+  <p class="contenedorTitulo">Alta de usuario</p>
+
+  <form [formGroup]="fgUsuario"  (ngSubmit)="onSubmit()" class="contendorForm">
+
+    <div fxLayout="row" fxLayoutGap="10px" class="formulario">
+
+      <div fxLayout="column" fxLayoutGap="10px" class="columna">
+        <mat-form-field appearance="fill">
+          <mat-label>Usuario</mat-label>
+          <input soloNumeros matInput formControlName="user" autocomplete="off">
+          <mat-error *ngIf="errorHandling('user', 'required')">El Usuario es requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" formControlName="pass">
+          <mat-error *ngIf="errorHandling('pass', 'required')">La Contraseña es requerida.</mat-error>
+          <mat-error *ngIf="errorHandling('pass', 'pattern')">8 caracteres, mayúsculas, minúsculas, números y signos.</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input matInput type="password" formControlName="pass2" [errorStateMatcher]="matcher" >
+          <mat-error *ngIf="fgUsuario.hasError('notSame')">Las Contraseñas no coinciden.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="10px" class="columna">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre">
+          <mat-error *ngIf="errorHandling('nombre', 'required')">El Nombre es requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Correo</mat-label>
+          <input matInput type="email" formControlName="email">
+          <mat-error *ngIf="errorHandling('email', 'pattern')">Email inválido.</mat-error>
+          <mat-error *ngIf="errorHandling('email', 'required')">El eMail es requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="admin">Administrador</mat-checkbox>
+      </div>
+
+    </div>
+
+    <div class="botones">
+      <button type="submit" [disabled]="fgUsuario.invalid" class="boton" mat-raised-button mat-button color="primary">Agregar</button>
+      <button type="button" [disabled]="!fgUsuario.touched" (click)="cancelar()" class="boton" mat-raised-button mat-button color="warn">Cancelar</button>
+    </div>
+
+  </form>
+
+</div>
