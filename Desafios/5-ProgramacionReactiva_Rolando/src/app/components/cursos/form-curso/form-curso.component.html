@@ -1,0 +1,81 @@
+<h1 mat-dialog-title>{{ titulo }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="fgCurso">
+    <div fxLayout="row" fxLayoutGap="10px" class="formulario">
+      <div fxLayout="column" fxLayoutGap="10px" class="columna">
+        <mat-form-field appearance="fill" class="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="fill">
+          <mat-label>Comision</mat-label>
+          <input matInput formControlName="comision" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="fill">
+          <mat-label>Profesor</mat-label>
+          <input matInput formControlName="profesor" />
+        </mat-form-field>
+
+        <file-upload
+          [fileAttr]="fgCurso.value.foto"
+          [tituloBoton]="botonFoto"
+        ></file-upload>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="10px" class="columna">
+        <file-upload
+          [fileAttr]="fgCurso.value.logo"
+          [tituloBoton]="botonLogo"
+        ></file-upload>
+
+        <mat-form-field appearance="fill" class="fill">
+          <mat-label>Inicio</mat-label>
+          <input
+            matInput
+            [matDatepicker]="fechaInicio"
+            formControlName="fechaInicio"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="fechaInicio"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #fechaInicio></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="fill">
+          <mat-label>Fin</mat-label>
+          <input
+            matInput
+            [matDatepicker]="fechaFin"
+            formControlName="fechaFin"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="fechaFin"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #fechaFin></mat-datepicker>
+        </mat-form-field>
+
+        <mat-slide-toggle formControlName="inscripcionAbierta"
+          >Inscripcion abierta</mat-slide-toggle
+        >
+      </div>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    style="margin-left: 8px"
+    [disabled]="fgCurso.invalid"
+    (click)="aceptar()"
+  >
+    Aceptar
+  </button>
+</div>
