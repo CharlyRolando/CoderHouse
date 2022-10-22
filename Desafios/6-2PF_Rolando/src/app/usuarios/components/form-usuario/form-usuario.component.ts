@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, FormGroupDirective, NgForm, ValidationErrors } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Usuario } from 'src/app/models/usuario';
+import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {

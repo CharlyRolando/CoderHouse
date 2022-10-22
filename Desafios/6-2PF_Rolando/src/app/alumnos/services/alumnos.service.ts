@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { listaAlumnos } from 'src/assets/data/alumnos';
-import { Alumno } from 'src/app/models/alumno';
+import { Alumno } from 'src/app/alumnos/interfaces/alumno';
 
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Curso } from '../models/curso';
+import { Curso } from '../../cursos/interfaces/curso';
 
 @Pipe({
   name: 'arrayIdToName'

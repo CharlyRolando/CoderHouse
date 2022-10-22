@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Usuario } from 'src/app/models/usuario';
+import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { listaUsuarios } from 'src/assets/data/usuarios';
 
 

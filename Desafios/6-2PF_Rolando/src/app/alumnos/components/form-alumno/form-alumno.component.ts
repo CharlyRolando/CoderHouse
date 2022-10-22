@@ -1,10 +1,9 @@
-import { createInjectableType } from '@angular/compiler';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { listaCursos } from 'src/assets/data/cursos';
-import { Alumno } from 'src/app/models/alumno';
-import { Curso } from 'src/app/models/curso';
+import { Alumno } from 'src/app/alumnos/interfaces/alumno';
+import { Curso } from 'src/app/cursos/interfaces/curso';
 
 @Component({
   selector: 'app-form-alumno',

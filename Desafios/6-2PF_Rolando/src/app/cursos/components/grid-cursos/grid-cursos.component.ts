@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subscription } from 'rxjs';
-import { Curso } from 'src/app/models/curso';
+import { Curso } from 'src/app/cursos/interfaces/curso';
 import { CursosService } from 'src/app/cursos/services/cursos.service';
 import { ListaAlumnosComponent } from 'src/app/alumnos/components/lista-alumnos/lista-alumnos.component';
-import { ConfirmacionDialogComponent, ConfirmacionDialogModel} from 'src/app/shared/components/confirmacion-dialog/confirmacion-dialog.component';
+import { ConfirmacionDialogComponent, ConfirmacionDialogModel} from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { FormCursoComponent } from '../form-curso/form-curso.component';
+
 
 @Component({
   selector: 'app-grid-cursos',

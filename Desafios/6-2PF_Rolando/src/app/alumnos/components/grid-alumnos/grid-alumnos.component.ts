@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Alumno } from 'src/app/models/alumno';
+import { Alumno } from 'src/app/alumnos/interfaces/alumno';
 import { listaAlumnos } from 'src/assets/data/alumnos';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,10 +7,10 @@ import { FormAlumnoComponent } from '../form-alumno/form-alumno.component';
 import {
   ConfirmacionDialogComponent,
   ConfirmacionDialogModel,
-} from '../../../shared/components/confirmacion-dialog/confirmacion-dialog.component';
+} from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { listaCursos } from 'src/assets/data/cursos';
-import { Curso } from 'src/app/models/curso';
+import { Curso } from 'src/app/cursos/interfaces/curso';
 
 @Component({
   selector: 'app-grid-alumnos',

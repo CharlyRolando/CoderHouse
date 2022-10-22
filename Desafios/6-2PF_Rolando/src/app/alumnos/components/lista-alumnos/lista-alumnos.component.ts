@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Alumno } from 'src/app/models/alumno';
-import { Curso } from 'src/app/models/curso';
+import { Alumno } from 'src/app/alumnos/interfaces/alumno';
+import { Curso } from 'src/app/cursos/interfaces/curso';
 import { AlumnosService } from 'src/app/alumnos/services/alumnos.service';
 
 @Component({

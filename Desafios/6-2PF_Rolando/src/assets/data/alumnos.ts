@@ -1,4 +1,4 @@
-import { Alumno} from 'src/app/models/alumno';
+import { Alumno} from 'src/app/alumnos/interfaces/alumno';
 
 export let listaAlumnos: Alumno[] = [
   {

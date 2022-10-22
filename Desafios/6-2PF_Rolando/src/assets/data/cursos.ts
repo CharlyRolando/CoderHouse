@@ -1,4 +1,4 @@
-import { Curso } from "../../app/models/curso";
+import { Curso } from "../../app/cursos/interfaces/curso";
 
 export let listaCursos: Curso[] = [
   {

@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { UploadFile } from 'src/app/models/uploadFile';
 
 
 @Component({
