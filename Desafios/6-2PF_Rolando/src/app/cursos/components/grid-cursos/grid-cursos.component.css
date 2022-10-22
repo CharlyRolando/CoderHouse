@@ -1,0 +1,35 @@
+
+.contenedorCursos{
+  margin: 40px 0 40px 40px;
+  max-width: 1000px;
+}
+
+
+.divTarjeta{
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  display: flex;
+  min-width: 220px;
+}
+
+
+.tarjeta {
+  margin: 10px;
+  background-color: #0f172a;
+  color: azure;
+  padding: 26px 16px 26px 26px;
+}
+
+.profesor{
+  color: azure;
+}
+
+.profesor-image {
+  background-size: cover;
+}
+
+
+.logo{
+margin-left: 22px;
+width: 140px;
+}

@@ -1,0 +1,18 @@
+
+
+.contenedorUsuarios{
+  margin: 40px 0 40px 40px;
+  max-width: 1000px;
+}
+
+
+.contenedorTabla{
+  display: flex;
+  justify-content: center;
+}
+
+
+table {
+  width: 90%;
+}
+

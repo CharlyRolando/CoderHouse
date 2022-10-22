@@ -1,0 +1,21 @@
+<mat-toolbar>
+  <div class="titulo">
+    <mat-icon>school</mat-icon>
+    <span>High School</span>
+  </div>
+
+  <div class="barra">
+    <mat-icon matTooltip="Menú" (click)="sidebarToggle()">menu</mat-icon>
+    <div class="box">
+      <button mat-icon-button matTooltip="Loguin" (click)="login()">
+        <mat-icon>input</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Registración">
+        <mat-icon>app_registration</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Perfil">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
