@@ -11,7 +11,9 @@ import { Curso } from 'src/app/cursos/interfaces/curso';
   styleUrls: ['./form-alumno.component.css'],
 })
 export class FormAlumnoComponent implements OnInit {
+
   titulo: string = 'Alta de alumno';
+  botonFoto:string = 'Foto';
 
   cursos: Curso[] = listaCursos;
 
@@ -38,6 +40,7 @@ export class FormAlumnoComponent implements OnInit {
       edad: [''],
       fechaInicio: ['', [Validators.required]],
       cursoId: [, [Validators.required]],
+      foto:['']
     });
   }
 

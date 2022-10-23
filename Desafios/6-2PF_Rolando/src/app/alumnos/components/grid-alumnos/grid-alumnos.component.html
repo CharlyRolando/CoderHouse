@@ -1,6 +1,6 @@
 
 
-<div class="contenedorAlumnos">
+<div>
 
   <div class="row">
     <p appTemaTitulos style="display: inline-block;">Alumnos</p>
@@ -34,6 +34,13 @@
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>ID</th>
         <td mat-cell *matCellDef="let alumno">{{ alumno.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="foto">
+        <th mat-header-cell *matHeaderCellDef>Foto</th>
+        <td mat-cell *matCellDef="let alumno">
+          <img src="assets/images/alumnos/{{alumno.foto}}" class="img-fluid foto" />
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="nombreCompleto">

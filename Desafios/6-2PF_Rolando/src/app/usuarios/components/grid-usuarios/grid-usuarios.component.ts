@@ -1,32 +1,50 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable, Subscription } from 'rxjs';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
-import { listaUsuarios } from 'src/assets/data/usuarios';
-
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-grid-usuarios',
   templateUrl: './grid-usuarios.component.html',
-  styleUrls: ['./grid-usuarios.component.css']
+  styleUrls: ['./grid-usuarios.component.css'],
 })
-export class GridUsuariosComponent implements OnInit {
+export class GridUsuariosComponent implements OnInit, OnDestroy {
 
-  usuarios: Usuario[] = listaUsuarios;
+  usuarios!: Usuario[];
+  usuarios$!: Observable<Usuario[]>;
+subscription!: Subscription;
 
-  @Input() set nuevoUsuario(value: Usuario ) {
+  dataSource!: MatTableDataSource<Usuario>;
+  displayedColumns: string[] = ['user', 'nombre', 'email', 'admin', 'acciones'];
 
-    if ( value!=undefined ){
-      this.usuarios.push(value);
+  constructor(
+    private usuariosService: UsuariosService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) {}
+
+
+  ngOnInit() {
+    this.usuarios$ = this.usuariosService.getUsuarios();
+    this.subscription = this.usuarios$.subscribe((els) => {this.usuarios = els;
       this.dataSource = new MatTableDataSource(this.usuarios);
-    }
- }
+    });
+  }
 
-  displayedColumns: string[] = ['user', 'nombre', 'email', 'admin'];
-  dataSource: MatTableDataSource<Usuario> = new MatTableDataSource<Usuario>(this.usuarios);
 
-  constructor() { }
+  addUsuario(): void {}
 
-  ngOnInit(): void {
+  editUsuario(usuario: Usuario): void {}
+
+  deleteConfirmacion(usuario: Usuario): void {}
+
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }
@@ -41,7 +59,13 @@ export class GridUsuariosComponent implements OnInit {
 
 
 
-  //@Input() usuarios: Usuario[] = [];
+
+
+
+
+
+
+//@Input() usuarios: Usuario[] = [];
 //   @Input() set usuarios(value: Usuario[] ) {
 
 //     // this._categoryId = value;
@@ -62,27 +86,22 @@ export class GridUsuariosComponent implements OnInit {
 
 // }
 
+// description!: string;
 
+// getDescription() {
+//   let desc = `Version is ${this.usuarios}`;
+//   return desc;
+// }
 
+// ngOnInit() {
+//   this.description = this.getDescription();
+// }
 
-  // description!: string;
+// constructor() {}
 
-  // getDescription() {
-  //   let desc = `Version is ${this.usuarios}`;
-  //   return desc;
-  // }
+// ngOnChanges(changes: SimpleChanges) {
 
+//   console.log(changes);
+//   this.description = this.getDescription();
 
-
-  // ngOnInit() {
-  //   this.description = this.getDescription();
-  // }
-
-  // constructor() {}
-
-  // ngOnChanges(changes: SimpleChanges) {
-
-  //   console.log(changes);
-  //   this.description = this.getDescription();
-
-  // }
+// }

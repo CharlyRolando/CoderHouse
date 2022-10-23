@@ -1,10 +1,4 @@
 
-.contenedorAlumnos{
-  /* display: flex;
-  flex-direction: column; */
-  margin: 40px 0 40px 40px;
-  max-width: 1000px;
-}
 
 .contenedorFiltro{
   display: flex;
@@ -29,3 +23,12 @@ table {
 .columna{
   width: 100%;
 }
+
+
+.foto{
+  width: 60px;
+  height: 60px;
+}
+
+
+

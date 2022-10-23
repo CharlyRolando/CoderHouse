@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Alumno } from 'src/app/alumnos/interfaces/alumno';
 import { listaAlumnos } from 'src/assets/data/alumnos';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,21 +11,25 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { listaCursos } from 'src/assets/data/cursos';
 import { Curso } from 'src/app/cursos/interfaces/curso';
+import { Observable, Subscription } from 'rxjs';
+import { AlumnosService } from '../../services/alumnos.service';
 
 @Component({
   selector: 'app-grid-alumnos',
   templateUrl: './grid-alumnos.component.html',
   styleUrls: ['./grid-alumnos.component.css'],
 })
-export class GridAlumnosComponent implements OnInit {
-  alumnos: Alumno[] = listaAlumnos;
+export class GridAlumnosComponent implements OnInit, OnDestroy {
+  alumnos!: Alumno[];
+  alumnos$!: Observable<Alumno[]>;
+  subscription!: Subscription;
+
   cursos: Curso[] = listaCursos;
 
-  dataSource: MatTableDataSource<Alumno> = new MatTableDataSource<Alumno>(
-    this.alumnos
-  );
+  dataSource!: MatTableDataSource<Alumno>;
   columnas: string[] = [
     'id',
+    'foto',
     'nombreCompleto',
     'sexo',
     'edad',
@@ -34,27 +38,33 @@ export class GridAlumnosComponent implements OnInit {
     'acciones',
   ];
 
-  constructor(public dialog: MatDialog,
-              private _snackBar: MatSnackBar) {}
+  constructor(
+    private alumnosService: AlumnosService ,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.alumnos$ = this.alumnosService.getAlumnos();
+    this.subscription = this.alumnos$.subscribe((els) => {this.alumnos = els;
+      this.dataSource = new MatTableDataSource(this.alumnos);
+    });
+
+  }
 
   addAlumno(): void {
     const dialogAlta = this.dialog.open(FormAlumnoComponent, {
       width: '50%',
     });
 
-    dialogAlta.afterClosed().subscribe((res) => {
-      if (res) {
-        this.alumnos.push({
-          ...res,
-          id: this.alumnos.length + 1,
-        });
+    dialogAlta.afterClosed().subscribe((respAlumno) => {
+      if (respAlumno) {
 
+        this.alumnosService.addAlumno(respAlumno);
         this.dataSource.data = this.alumnos;
 
         this._snackBar.open(
-          `El alumno '${res.nombre}' fue agregado exitosamente.`,
+          `El alumno '${respAlumno.nombre}' fue agregado exitosamente.`,
           '',
           { duration: 1500 }
         );
@@ -68,12 +78,10 @@ export class GridAlumnosComponent implements OnInit {
       data: alumno,
     });
 
-    dialogEdit.afterClosed().subscribe((res) => {
-      if (res) {
-        let indice = this.alumnos.findIndex((a) => a.id == res.id);
+    dialogEdit.afterClosed().subscribe((respAlumno) => {
+      if (respAlumno) {
 
-        this.alumnos.splice(indice, 1, res);
-
+        this.alumnosService.editAlumno(respAlumno);
         this.dataSource.data = this.alumnos;
 
         this._snackBar.open(
@@ -102,8 +110,8 @@ export class GridAlumnosComponent implements OnInit {
   }
 
   deleteAlumno(alumno: Alumno): void {
-    let indice = this.alumnos.findIndex((a) => a.id == alumno.id);
-    this.alumnos.splice(indice, 1);
+
+    this.alumnosService.deleteAlumno(alumno.id);
     this.dataSource.data = this.alumnos;
 
     this._snackBar.open(
@@ -146,4 +154,10 @@ export class GridAlumnosComponent implements OnInit {
     };
     this.dataSource.filter = valorObtenido.trim().toLowerCase();
   }
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 }

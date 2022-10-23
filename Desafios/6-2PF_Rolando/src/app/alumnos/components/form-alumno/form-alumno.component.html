@@ -20,6 +20,11 @@
           <mat-radio-button class="sexo-radio-button" [value]="2">Femenino</mat-radio-button>
         </mat-radio-group>
 
+        <file-upload
+        [fileAttr]="fgAlumno.value.foto"
+        [tituloBoton]="botonFoto"
+        ></file-upload>
+
       </div>
 
       <div fxLayout="column" fxLayoutGap="10px" class="columna">

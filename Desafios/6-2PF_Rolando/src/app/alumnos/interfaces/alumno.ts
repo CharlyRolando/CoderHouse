@@ -6,6 +6,7 @@ export interface Alumno {
   edad: number;
   fechaInicio: Date;
   cursoId: number;
+  foto: string;
 }
 
 

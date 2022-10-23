@@ -14,13 +14,15 @@ export class CursosService {
     this.cursosSubect = new BehaviorSubject<Curso[]>(listaCursos);
   }
 
+
+  /* TODO: ejemplos de BehaviorSubject *************************/
   getCursos(): Observable<Curso[]> {
     return this.cursosSubect.asObservable();
   }
 
   getCurso(id: number): Observable<Curso[]> {
     return this.getCursos().pipe(
-      map((cursos: Curso[]) => cursos.filter((curso: Curso) => curso.id === id))
+      map((cs: Curso[]) => cs.filter((c: Curso) => c.id === id))
     );
   }
 
@@ -31,23 +33,18 @@ export class CursosService {
       foto: 'empty.png',
       logo: 'empty.png',
     });
-
-    this.cursosSubect.next(listaCursos);
   }
 
-  editCurso(curso: Curso) {
-    let indice = listaCursos.findIndex((a) => a.id == curso.id);
+  editCurso(curso: Curso): void {
+    let indice = listaCursos.findIndex((c) => c.id == curso.id);
     listaCursos.splice(indice, 1, curso);
-
-    this.cursosSubect.next(listaCursos);
   }
 
   deleteCurso(id: number): void {
-    let indice = listaCursos.findIndex((a) => a.id == id);
+    let indice = listaCursos.findIndex((c) => c.id == id);
     listaCursos.splice(indice, 1);
-
-    this.cursosSubect.next(listaCursos);
   }
+  /**************************************************************/
 
 
 }

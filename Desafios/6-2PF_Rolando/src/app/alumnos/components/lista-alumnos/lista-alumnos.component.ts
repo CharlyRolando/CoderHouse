@@ -20,14 +20,12 @@ export class ListaAlumnosComponent implements OnInit , OnDestroy{
 
 
   ngOnInit(): void {
-
     this.alumnos$ = this.alumnosService.getAlumnosCurso(this.cursoFiltro.id);
-
   }
 
 
   ngOnDestroy(): void {
-    /* El requerimiento de la entrega pide desubscribirse aquí
+    /* TODO: el requerimiento de la entrega pide desubscribirse aquí
       pero estoy usando Promesas, por lo tanto no hago nada */
   }
 

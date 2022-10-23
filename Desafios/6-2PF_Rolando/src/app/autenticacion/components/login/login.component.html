@@ -26,8 +26,10 @@
           Ingrese una contraseña válida.
         </mat-error>
       </mat-form-field>
-      <button class="submit" mat-raised-button color="primary"  >Login</button>  <!-- [disabled]="!loginForm.form.valid" -->
+      <button class="submit" mat-raised-button color="primary">Login</button>  <!-- [disabled]="!loginForm.form.valid" -->
     </form>
+
+  <button mat-button class="registrarse" (click)="registrarse()">(Si no está registrado pulse aqui...)</button>
 
   </mat-card-content>
 </mat-card>

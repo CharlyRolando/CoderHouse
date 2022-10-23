@@ -14,13 +14,5 @@ export class SidebarComponent implements OnInit {
   }
 
 
-  logout(){
-
-    //matar sesion...
-
-    this.router.navigate(['login']);
-
-  }
-
 
 }

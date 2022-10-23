@@ -16,9 +16,6 @@ import { FormCursoComponent } from '../form-curso/form-curso.component';
 })
 export class GridCursosComponent implements OnInit, OnDestroy {
 
-  suscripcion!: Subscription;
-  cursos!: Curso[];
-
   cursos$!: Observable<Curso[]>;
 
   constructor(
@@ -28,19 +25,6 @@ export class GridCursosComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-
-     /* Solo para cumplir con el requerimiento de la entrega ********************
-      (porque estoy usando el 'pipe async' que me desubscribe automáticamente) */
-    this.suscripcion = this.cursosService.getCursos().subscribe({
-      next: (respCursos: Curso[]) => {
-        this.cursos = respCursos;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
-    /****************************************************************************/
-
     this.cursos$ = this.cursosService.getCursos();
   }
 
@@ -125,9 +109,6 @@ export class GridCursosComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    /* Solo para cumplir con el requerimiento de la entrega
-      (porque estoy usando el 'pipe async' que me desubscribe automáticamente) */
-    this.suscripcion.unsubscribe();
   }
 
 }

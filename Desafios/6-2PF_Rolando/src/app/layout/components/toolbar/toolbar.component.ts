@@ -24,4 +24,16 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
+  registracion(){
+    this.router.navigate(['registracion']);
+  }
+
+  logout(){
+
+    //TODO: aquí hay que matar la sesión
+    this.router.navigate(['login']);
+
+  }
+
+
 }

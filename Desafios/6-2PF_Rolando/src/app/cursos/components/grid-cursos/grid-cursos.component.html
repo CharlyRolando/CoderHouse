@@ -1,6 +1,6 @@
 
 
-<div class="contenedorCursos">
+<div>
 
 <div class="row">
   <p appTemaTitulos style="display: inline-block;">Cursos</p>
@@ -9,7 +9,7 @@
   </button>
 </div>
 
-<div class="divTarjeta" >
+<div class="divTarjetas" >
   <mat-card class="tarjeta" *ngFor="let curso of cursos$ | async">
     <mat-card-header>
       <div mat-card-avatar class="profesor-image" style="background-image: url('assets/images/profesores/{{curso.foto}}')"></div>

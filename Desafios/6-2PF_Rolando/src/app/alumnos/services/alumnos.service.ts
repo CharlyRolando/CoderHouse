@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { listaAlumnos } from 'src/assets/data/alumnos';
 import { Alumno } from 'src/app/alumnos/interfaces/alumno';
+import { map, Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -14,26 +15,55 @@ export class AlumnosService {
 
   constructor() { }
 
+  /* TODO: ejemplos de Observables *************************/
+  getAlumnos(): Observable<Alumno[]>{
+    return of<Alumno[]>(listaAlumnos);
+  }
+
+  getAlumno(id: number): Observable<Alumno[]>{
+    return this.getAlumnos().pipe(
+      map((us: Alumno[]) => us.filter((a: Alumno) => a.id == id))
+      );
+  }
+
+  addAlumno(alumno: Alumno): void{
+    listaAlumnos.push({
+      ...alumno,
+      id: Math.round(Math.random() * 1000),
+      foto: 'empty.png',
+    });
+  }
+
+  editAlumno(alumno: Alumno): void{
+    let indice = listaAlumnos.findIndex((a) => a.id == alumno.id);
+    listaAlumnos.splice(indice, 1, alumno);
+  }
+
+  deleteAlumno(id: number): void {
+    let indice = listaAlumnos.findIndex((a) => a.id == id);
+    listaAlumnos.splice(indice, 1);
+  }
+  /****************************************************/
+
+  /* TODO: ejemplo de Promise ***********************/
   getAlumnosCurso(cursoId: number): Promise<Alumno[] | any>{
 
     return new Promise((resolve, reject) => {
-
       const alumnosCurso: Alumno[] = listaAlumnos.filter((alumno: Alumno) => alumno.cursoId == cursoId)
+      resolve(alumnosCurso);
 
-      if(alumnosCurso.length > 0){
+      // if(alumnosCurso.length > 0){
+      //   resolve(alumnosCurso);
+      // }else{
+      //   reject({
+      //     codigo: 0,
+      //     mensaje: 'No hay alumnos.'
+      //   });
+      // }
 
-        resolve(alumnosCurso);
-
-      }else{
-        // reject({
-        //   codigo: 0,
-        //   mensaje: 'No hay alumnos.'
-        // });
-      }
     });
-
   }
-
+/****************************************************/
 
 
 

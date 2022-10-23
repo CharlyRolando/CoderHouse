@@ -1,13 +1,7 @@
 
-.contenedorCursos{
-  margin: 40px 0 40px 40px;
-  max-width: 1000px;
-}
 
-
-.divTarjeta{
+.divTarjetas{
   flex-flow: row wrap;
-  box-sizing: border-box;
   display: flex;
   min-width: 220px;
 }

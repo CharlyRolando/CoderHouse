@@ -1,12 +1,7 @@
 
 
-.contenedorUsuarios{
-  margin: 40px 0 40px 40px;
-  max-width: 1000px;
-}
-
-
 .contenedorTabla{
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }

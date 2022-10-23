@@ -8,7 +8,8 @@ export let listaAlumnos: Alumno[] = [
     sexo: 1,
     edad: 21,
     fechaInicio: new Date(2021, 5, 23),
-    cursoId: 1
+    cursoId: 1,
+    foto: 'jromero.png'
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export let listaAlumnos: Alumno[] = [
     edad: 28,
     fechaInicio: new Date(2015, 4, 1),
     cursoId: 5,
+    foto: 'msalinas.png'
   },
   {
     id: 3,
@@ -26,7 +28,8 @@ export let listaAlumnos: Alumno[] = [
     sexo: 2,
     edad: 22,
     fechaInicio: new Date(2020, 2, 14),
-    cursoId: 3
+    cursoId: 3,
+    foto: 'orito.png'
   },
   {
     id: 4,
@@ -35,7 +38,8 @@ export let listaAlumnos: Alumno[] = [
     sexo: 2,
     edad: 21,
     fechaInicio: new Date(2021, 5, 23),
-    cursoId: 2
+    cursoId: 2,
+    foto: 'apatoruti.png'
   },
   {
     id: 5,
@@ -44,7 +48,8 @@ export let listaAlumnos: Alumno[] = [
     sexo: 1,
     edad: 21,
     fechaInicio: new Date(2018, 3, 20),
-    cursoId: 4
+    cursoId: 4,
+    foto: 'wravena.png'
   },
   {
     id: 6,
@@ -53,7 +58,8 @@ export let listaAlumnos: Alumno[] = [
     sexo: 2,
     edad: 38,
     fechaInicio: new Date(2006, 5, 20),
-    cursoId: 1
+    cursoId: 1,
+    foto: 'rlozada.png'
   },
   {
     id: 7,
@@ -62,7 +68,8 @@ export let listaAlumnos: Alumno[] = [
     sexo: 1,
     edad: 18,
     fechaInicio: new Date(2022, 7, 20),
-    cursoId: 2
+    cursoId: 2,
+    foto: 'mluque.png'
   },
   {
     id: 8,
@@ -71,7 +78,8 @@ export let listaAlumnos: Alumno[] = [
     sexo: 2,
     edad: 25,
     fechaInicio: new Date(2019, 4, 8),
-    cursoId: 3
+    cursoId: 3,
+    foto: 'smorando.png'
   },
   {
     id: 9,
@@ -80,7 +88,8 @@ export let listaAlumnos: Alumno[] = [
     sexo: 1,
     edad: 21,
     fechaInicio: new Date(2021, 10, 12),
-    cursoId: 3
+    cursoId: 3,
+    foto: 'lpetro.png'
   },
   {
     id: 10,
@@ -89,6 +98,7 @@ export let listaAlumnos: Alumno[] = [
     sexo: 2,
     edad: 24,
     fechaInicio: new Date(2020, 3, 2),
-    cursoId: 4
+    cursoId: 4,
+    foto: 'smartinez.png'
   }
 ];

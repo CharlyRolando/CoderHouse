@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registracion',
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registracion.component.css']
 })
 export class RegistracionComponent implements OnInit {
+  public registracionValid = true;
+  public username = '';
+  public password = '';
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
   }
+
+
+  public onSubmit(): void {
+    //this.registracionValid = true;
+
+    this._router.navigate(['login']);
+  }
+
 
 }

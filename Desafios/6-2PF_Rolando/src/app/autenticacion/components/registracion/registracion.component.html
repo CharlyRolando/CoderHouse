@@ -1,1 +1,35 @@
-<p>registracion works!</p>
+
+<div class="contenedor">
+
+  <mat-card>
+
+    <div class="header">
+      <img  class="logo" src="assets/images/icons/login.png">
+    </div>
+
+    <mat-card-content>
+      <mat-card-title>Registración</mat-card-title>
+
+      <form #registracionForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-error *ngIf="!registracionValid">
+          El usuario y contraseña no son válidos.
+        </mat-error>
+        <mat-form-field>
+          <input matInput placeholder="Usuario" [(ngModel)]="username" name="username" required>
+          <mat-error>
+            El nombre de usuario es obligatorio.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required>
+          <mat-error>
+            Ingrese una contraseña válida.
+          </mat-error>
+        </mat-form-field>
+        <button class="submit" mat-raised-button color="primary">Registrarse</button>  <!-- [disabled]="!registracionForm.form.valid" -->
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+
+  </div>

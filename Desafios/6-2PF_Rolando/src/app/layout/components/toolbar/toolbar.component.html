@@ -7,11 +7,14 @@
   <div class="barra">
     <mat-icon matTooltip="Menú" (click)="sidebarToggle()">menu</mat-icon>
     <div class="box">
-      <button mat-icon-button matTooltip="Loguin" (click)="login()">
+      <button mat-icon-button matTooltip="LogIn" (click)="login()">
         <mat-icon>input</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Registración">
+      <button mat-icon-button matTooltip="Registración" (click)="registracion()">
         <mat-icon>app_registration</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="LogOut" (click)="logout()">
+        <mat-icon>logout</mat-icon>
       </button>
       <button mat-icon-button matTooltip="Perfil">
         <mat-icon>account_circle</mat-icon>

@@ -16,19 +16,24 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private _router: Router) {}
 
-  public ngOnInit(): void {}
+  ngOnInit(): void {}
 
-  public ngOnDestroy(): void {
-    this._destroySub$.next();
-  }
 
-  public onSubmit(): void {
+
+  onSubmit(): void {
     //this.loginValid = true;
 
     this._router.navigate(['container']);
   }
 
-  redirigir() {
-    this._router.navigate(['container']);
+  registrarse(){
+    this._router.navigate(['registracion']);
   }
+
+
+  ngOnDestroy(): void {
+    this._destroySub$.next();
+  }
+
+
 }
