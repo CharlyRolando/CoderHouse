@@ -43,7 +43,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
       width: '50%',
     });
 
-    dialogAlta.afterClosed().subscribe((respUsuario) => {
+    dialogAlta.afterClosed().subscribe((respUsuario: Usuario) => {
       if (respUsuario) {
         this.usuariosService.addUsuario(respUsuario);
         this.dataSource.data = this.usuarios;
@@ -51,7 +51,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
         this._snackBar.open(
           `El usuario '${respUsuario.user}' fue agregado exitosamente.`,
           '',
-          { duration: 1500 }
+          { duration: 2000 }
         );
       }
     });
@@ -63,7 +63,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
       data: usuario,
     });
 
-    dialogEdit.afterClosed().subscribe((respUsuario) => {
+    dialogEdit.afterClosed().subscribe((respUsuario: Usuario) => {
       if (respUsuario) {
         this.usuariosService.editUsuario(respUsuario);
         this.dataSource.data = this.usuarios;
@@ -71,7 +71,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
         this._snackBar.open(
           `El usuario '${usuario.user}' fue modificado exitosamente.`,
           '',
-          { duration: 1500 }
+          { duration: 2000 }
         );
       }
     });
@@ -100,7 +100,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
     this._snackBar.open(
       `El usuario '${usuario.user}' fue eliminado exitosamente.`,
       '',
-      { duration: 1500 }
+      { duration: 2000 }
     );
   }
 

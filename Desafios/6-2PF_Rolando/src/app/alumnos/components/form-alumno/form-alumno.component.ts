@@ -22,12 +22,13 @@ export class FormAlumnoComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<FormAlumnoComponent>,
-    @Inject(MAT_DIALOG_DATA) public editData: Alumno
+    @Inject(MAT_DIALOG_DATA) public editData: any
   ) {}
 
   ngOnInit(): void {
     this.configurarFormulario();
-    if (this.editData) this.configurarEdicion();
+    if ('apellido' in this.editData ) this.configurarEdicionAlumno(this.editData);
+    if ('comision' in this.editData) this.configurarInscripcion(this.editData);
   }
 
 
@@ -37,16 +38,30 @@ export class FormAlumnoComponent implements OnInit {
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
       sexo: [],
-      edad: [''],
-      fechaInicio: ['', [Validators.required]],
+      edad: [, [Validators.min(17), Validators.max(100)]],
+      fechaInicio: [''],
       cursoId: [, [Validators.required]],
       foto:['']
     });
   }
 
-  configurarEdicion() {
+  errorHandling = (control: string, error: string) => {
+    if (this.fgAlumno.controls[control].touched) {
+      return this.fgAlumno.controls[control].hasError(error);
+    } else {
+      return false;
+    }
+  };
+
+  configurarEdicionAlumno(alumno: Alumno) {
     this.titulo = 'Modificación de alumno';
-    this.fgAlumno.setValue(this.editData);
+    this.fgAlumno.setValue(alumno);
+  }
+
+  configurarInscripcion(curso: Curso) {
+    this.titulo = 'Inscripción de alumno';
+    this.fgAlumno.controls['cursoId'].setValue(curso.id);
+    this.fgAlumno.controls['cursoId'].disable();
   }
 
   aceptar() {
@@ -54,6 +69,6 @@ export class FormAlumnoComponent implements OnInit {
       alert('Datos inválidos.');
     }
 
-    this.dialogRef.close(this.fgAlumno.value);
+    this.dialogRef.close(this.fgAlumno.getRawValue());
   }
 }

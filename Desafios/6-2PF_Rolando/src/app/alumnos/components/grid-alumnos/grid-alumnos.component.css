@@ -16,9 +16,13 @@
 }
 
 table {
-  width: 90%;
+  width: 100%;
 }
 
+.tabla{
+  display: block;
+  width: 90%;
+}
 
 .columna{
   width: 100%;

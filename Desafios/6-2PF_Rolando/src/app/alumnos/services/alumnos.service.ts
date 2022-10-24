@@ -24,10 +24,17 @@ export class AlumnosService {
     );
   }
 
+  getAlumnosCurso(cursoId: number): Observable<Alumno[]> {
+    return this.getAlumnos().pipe(
+      map((alumnos: Alumno[]) => alumnos.filter((a: Alumno) => a.cursoId == cursoId))
+    );
+  }
+
   addAlumno(alumno: Alumno): void {
     listaAlumnos.push({
       ...alumno,
       id: Math.round(Math.random() * 1000),
+      fechaInicio: new Date,
       foto: 'empty.png',
     });
   }
@@ -44,14 +51,14 @@ export class AlumnosService {
   /****************************************************/
 
   /* TODO: ejemplo de Promise ***********************/
-  getAlumnosCurso(cursoId: number): Promise<Alumno[] | any> {
-    return new Promise((resolve, reject) => {
-      const alumnosCurso: Alumno[] = listaAlumnos.filter(
-        (a: Alumno) => a.cursoId == cursoId
-      );
-      resolve(alumnosCurso);
-    });
-  }
+  // getAlumnosCurso(cursoId: number): Promise<Alumno[] | any> {
+  //   return new Promise((resolve, reject) => {
+  //     const alumnosCurso: Alumno[] = listaAlumnos.filter(
+  //       (a: Alumno) => a.cursoId == cursoId
+  //     );
+  //     resolve(alumnosCurso);
+  //   });
+  // }
   /****************************************************/
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Alumno } from 'src/app/alumnos/interfaces/alumno';
 import { listaAlumnos } from 'src/assets/data/alumnos';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,13 +13,14 @@ import { listaCursos } from 'src/assets/data/cursos';
 import { Curso } from 'src/app/cursos/interfaces/curso';
 import { Observable, Subscription } from 'rxjs';
 import { AlumnosService } from '../../services/alumnos.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-grid-alumnos',
   templateUrl: './grid-alumnos.component.html',
   styleUrls: ['./grid-alumnos.component.css'],
 })
-export class GridAlumnosComponent implements OnInit, OnDestroy {
+export class GridAlumnosComponent implements OnInit, AfterViewInit, OnDestroy {
   alumnos!: Alumno[];
   alumnos$!: Observable<Alumno[]>;
   subscription!: Subscription;
@@ -37,6 +38,12 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     'curso',
     'acciones',
   ];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   constructor(
     private alumnosService: AlumnosService,
@@ -57,15 +64,15 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
       width: '50%',
     });
 
-    dialogAlta.afterClosed().subscribe((respAlumno) => {
+    dialogAlta.afterClosed().subscribe((respAlumno: Alumno) => {
       if (respAlumno) {
         this.alumnosService.addAlumno(respAlumno);
         this.dataSource.data = this.alumnos;
 
         this._snackBar.open(
-          `El alumno '${respAlumno.nombre}' fue agregado exitosamente.`,
+          `El alumno '${respAlumno.nombre} ${respAlumno.apellido}' fue agregado exitosamente.`,
           '',
-          { duration: 1500 }
+          { duration: 2000 }
         );
       }
     });
@@ -77,15 +84,15 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
       data: alumno,
     });
 
-    dialogEdit.afterClosed().subscribe((respAlumno) => {
+    dialogEdit.afterClosed().subscribe((respAlumno: Alumno) => {
       if (respAlumno) {
         this.alumnosService.editAlumno(respAlumno);
         this.dataSource.data = this.alumnos;
 
         this._snackBar.open(
-          `El alumno '${alumno.nombre}' fue modificado exitosamente.`,
+          `El alumno '${alumno.nombre} ${alumno.apellido}' fue modificado exitosamente.`,
           '',
-          { duration: 1500 }
+          { duration: 2000 }
         );
       }
     });
@@ -112,9 +119,9 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     this.dataSource.data = this.alumnos;
 
     this._snackBar.open(
-      `El alumno '${alumno.nombre}' fue eliminado exitosamente.`,
+      `El alumno '${alumno.nombre} ${alumno.apellido}' fue eliminado exitosamente.`,
       '',
-      { duration: 1500 }
+      { duration: 2000 }
     );
   }
 

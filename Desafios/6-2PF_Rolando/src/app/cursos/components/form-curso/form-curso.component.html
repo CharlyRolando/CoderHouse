@@ -5,76 +5,66 @@
     <div fxLayout="row" fxLayoutGap="10px" class="formulario">
       <div fxLayout="column" fxLayoutGap="10px" class="columna">
         <mat-form-field appearance="fill" class="fill">
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre" />
+          <mat-label>Nombre del curso</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off" />
+          <mat-error *ngIf="errorHandling('nombre', 'required')">
+            El nombre del curso es requerido.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="fill">
           <mat-label>Comision</mat-label>
-          <input matInput formControlName="comision" />
+          <input matInput formControlName="comision" autocomplete="off" />
+          <mat-error *ngIf="errorHandling('comision', 'required')">
+            La comisión es requerida.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="fill">
           <mat-label>Profesor</mat-label>
-          <input matInput formControlName="profesor" />
+          <input matInput formControlName="profesor" autocomplete="off" />
+          <mat-error *ngIf="errorHandling('profesor', 'required')">
+            Debe ingresar un profesor.
+          </mat-error>
         </mat-form-field>
 
-        <file-upload
-          [fileAttr]="fgCurso.value.foto"
-          [tituloBoton]="botonFoto"
-        ></file-upload>
+        <file-upload [fileAttr]="fgCurso.value.foto" [tituloBoton]="botonFoto"></file-upload>
       </div>
 
       <div fxLayout="column" fxLayoutGap="10px" class="columna">
-        <file-upload
-          [fileAttr]="fgCurso.value.logo"
-          [tituloBoton]="botonLogo"
-        ></file-upload>
+        <file-upload [fileAttr]="fgCurso.value.logo" [tituloBoton]="botonLogo"></file-upload>
 
         <mat-form-field appearance="fill" class="fill">
           <mat-label>Inicio</mat-label>
-          <input
-            matInput
-            [matDatepicker]="fechaInicio"
-            formControlName="fechaInicio"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="fechaInicio"
-          ></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="fechaInicio" formControlName="fechaInicio" autocomplete="off" />
+          <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
           <mat-datepicker #fechaInicio></mat-datepicker>
+          <mat-error *ngIf="errorHandling('fechaInicio', 'required')">
+            La Fecha de inicio es requerida.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="fill">
           <mat-label>Fin</mat-label>
-          <input
-            matInput
-            [matDatepicker]="fechaFin"
-            formControlName="fechaFin"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="fechaFin"
-          ></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="fechaFin" formControlName="fechaFin" autocomplete="off" />
+          <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
           <mat-datepicker #fechaFin></mat-datepicker>
+          <mat-error *ngIf="errorHandling('fechaFin', 'required')">
+            La Fecha de fin es requerida.
+          </mat-error>
         </mat-form-field>
 
-        <mat-slide-toggle formControlName="inscripcionAbierta"
-          >Inscripcion abierta</mat-slide-toggle
-        >
+        <mat-slide-toggle formControlName="inscripcionAbierta">
+          Inscripcion abierta
+        </mat-slide-toggle>
+
       </div>
     </div>
   </form>
 </div>
 
 <div mat-dialog-actions [align]="'end'">
-  <button
-    mat-raised-button
-    color="primary"
-    style="margin-left: 8px"
-    [disabled]="fgCurso.invalid"
-    (click)="aceptar()"
-  >
+  <button mat-raised-button color="primary" style="margin-left: 8px" [disabled]="fgCurso.invalid" (click)="aceptar()">
     Aceptar
   </button>
   <button mat-raised-button color="warn" mat-dialog-close>Cancelar</button>

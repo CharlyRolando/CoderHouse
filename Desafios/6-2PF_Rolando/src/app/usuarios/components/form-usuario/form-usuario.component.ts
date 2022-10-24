@@ -102,6 +102,7 @@ export class FormUsuarioComponent implements OnInit {
       return false;
     }
   };
+
   checkPasswords(group: FormGroup) {
     let pass = group.controls['pass'].value;
     let confirmPass = group.controls['pass2'].value;

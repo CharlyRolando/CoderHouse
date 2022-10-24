@@ -8,8 +8,8 @@ export let listaCursos: Curso[] = [
     comision: '110',
     profesor: 'Alberto Ramirez',
     foto: 'ramirez.png',
-    fechaInicio: new Date(2022, 0, 1),
-    fechaFin: new Date(2022, 1, 28),
+    fechaInicio: new Date(2023, 0, 1),
+    fechaFin: new Date(2023, 1, 28),
     inscripcionAbierta: true
   },
   {
@@ -19,8 +19,8 @@ export let listaCursos: Curso[] = [
     comision: '220',
     profesor: 'Fernando Cuevas',
     foto: 'cuevas.png',
-    fechaInicio: new Date(2022, 2, 10),
-    fechaFin: new Date(2022, 3, 30),
+    fechaInicio: new Date(2023, 2, 10),
+    fechaFin: new Date(2023, 3, 30),
     inscripcionAbierta: true
   },
   {
@@ -32,7 +32,7 @@ export let listaCursos: Curso[] = [
     foto: 'mali.png',
     fechaInicio: new Date(2022, 11, 2),
     fechaFin: new Date(2022, 12, 28),
-    inscripcionAbierta: false,
+    inscripcionAbierta: true,
   },
   {
     id: 4,
@@ -63,8 +63,8 @@ export let listaCursos: Curso[] = [
     comision: '510',
     profesor: 'Gisella Benegas',
     foto: 'benegas.png',
-    fechaInicio: new Date(2022, 8, 18),
-    fechaFin: new Date(2022, 9, 5),
-    inscripcionAbierta: false,
+    fechaInicio: new Date(2023, 8, 18),
+    fechaFin: new Date(2023, 9, 5),
+    inscripcionAbierta: true,
   },
 ];

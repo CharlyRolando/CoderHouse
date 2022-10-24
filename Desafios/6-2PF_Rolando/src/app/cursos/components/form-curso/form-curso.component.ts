@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Curso } from 'src/app/cursos/interfaces/curso';
 
@@ -21,6 +21,7 @@ export class FormCursoComponent implements OnInit {
   fgCurso!: FormGroup;
 
   constructor(
+    private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<FormCursoComponent>,
     @Inject(MAT_DIALOG_DATA) public cursoEdit: Curso
   ) {}
@@ -32,18 +33,26 @@ export class FormCursoComponent implements OnInit {
 
 
   configurarFormulario() {
-    this.fgCurso = new FormGroup({
-      id: new FormControl(),
-      nombre: new FormControl(),
-      logo: new FormControl(),
-      comision: new FormControl(),
-      profesor: new FormControl(),
-      foto: new FormControl(),
-      fechaInicio: new FormControl(),
-      fechaFin: new FormControl(),
-      inscripcionAbierta: new FormControl()
+    this.fgCurso = this.formBuilder.group({
+      id: [],
+      nombre:['', [Validators.required]],
+      logo: [''],
+      comision: [, [Validators.required]],
+      profesor: ['', [Validators.required]],
+      foto: [''],
+      fechaInicio: ['', [Validators.required]],
+      fechaFin: ['', [Validators.required]],
+      inscripcionAbierta:[]
     });
   }
+
+  errorHandling = (control: string, error: string) => {
+    if (this.fgCurso.controls[control].touched) {
+      return this.fgCurso.controls[control].hasError(error);
+    } else {
+      return false;
+    }
+  };
 
   configurarEdicion() {
     this.titulo = 'Modificación de alumno';

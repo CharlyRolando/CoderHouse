@@ -1,14 +1,13 @@
-
-<div >
+<div>
 
   <div class="row">
     <p appTemaTitulos style="display: inline-block;">Usuarios</p>
-    <button  mat-icon-button matTooltip="Agregar usuario" color="primary" (click)="addUsuario()" >
-    <mat-icon>add_circle</mat-icon>
+    <button mat-icon-button matTooltip="Agregar usuario" color="primary" (click)="addUsuario()">
+      <mat-icon>add_circle</mat-icon>
     </button>
   </div>
 
-   <div class="contenedorTabla">
+  <div class="contenedorTabla">
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -29,34 +28,20 @@
 
       <ng-container matColumnDef="admin">
         <th mat-header-cell *matHeaderCellDef> Admin </th>
-        <td mat-cell *matCellDef="let usuario"><div [appTildeBooleano]="usuario.admin"></div></td>
-      </ng-container>
-      <!-- <ng-container matColumnDef="admin">
-        <th mat-header-cell *matHeaderCellDef> Admin </th>
         <td mat-cell *matCellDef="let usuario">
-          <mat-checkbox [checked]="usuario.admin"  [disableRipple]="true" (click)="$event.preventDefault()"></mat-checkbox>
+          <div [appTildeBooleano]="usuario.admin"></div>
         </td>
-      </ng-container> -->
+      </ng-container>
 
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef>
           Acciones
         </th>
         <td mat-cell *matCellDef="let usuario">
-          <button
-            mat-icon-button
-            color="primary"
-            matTooltip="Editar usuario"
-            (click)="editUsuario(usuario)"
-          >
+          <button mat-icon-button color="primary" matTooltip="Editar usuario" (click)="editUsuario(usuario)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button
-            mat-icon-button
-            color="warn"
-            matTooltip="Eliminar usuario"
-            (click)="deleteConfirmacion(usuario)"
-          >
+          <button mat-icon-button color="warn" matTooltip="Eliminar usuario" (click)="deleteConfirmacion(usuario)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

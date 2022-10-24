@@ -1,37 +1,37 @@
-
 <div class="contenedor">
 
-<mat-card>
+  <mat-card>
 
-  <div class="header">
-    <img  class="logo" src="assets/images/icons/login.png">
-  </div>
+    <div class="header">
+      <img class="logo" src="assets/images/icons/login.png">
+    </div>
 
-  <mat-card-content>
-    <mat-card-title>Iniciar sesión</mat-card-title>
+    <mat-card-content>
+      <mat-card-title>Iniciar sesión</mat-card-title>
 
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-      <mat-error *ngIf="!loginValid">
-        El usuario y contraseña no son válidos.
-      </mat-error>
-      <mat-form-field>
-        <input matInput placeholder="Usuario" [(ngModel)]="username" name="username" required>
-        <mat-error>
-          El nombre de usuario es obligatorio.
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-error *ngIf="!loginValid">
+          El usuario y contraseña no son válidos.
         </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required>
-        <mat-error>
-          Ingrese una contraseña válida.
-        </mat-error>
-      </mat-form-field>
-      <button class="submit" mat-raised-button color="primary">Login</button>  <!-- [disabled]="!loginForm.form.valid" -->
-    </form>
+        <mat-form-field>
+          <input matInput placeholder="Usuario" [(ngModel)]="username" name="username" required>
+          <mat-error>
+            El nombre de usuario es obligatorio.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required>
+          <mat-error>
+            Ingrese una contraseña válida.
+          </mat-error>
+        </mat-form-field>
+        <button class="submit" mat-raised-button color="primary">Login</button>
+        <!-- [disabled]="!loginForm.form.valid" -->
+      </form>
 
-  <button mat-button class="registrarse" (click)="registrarse()">(Si no está registrado pulse aqui...)</button>
+      <button mat-button class="registrarse" (click)="registrarse()">(Si no está registrado pulse aqui...)</button>
 
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
 
 </div>
