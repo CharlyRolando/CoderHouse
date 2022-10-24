@@ -4,7 +4,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
+import {
+  ConfirmacionDialogComponent,
+  ConfirmacionDialogModel,
+} from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { UsuariosService } from '../../services/usuarios.service';
+import { FormUsuarioComponent } from '../form-usuario/form-usuario.component';
 
 @Component({
   selector: 'app-grid-usuarios',
@@ -12,10 +17,9 @@ import { UsuariosService } from '../../services/usuarios.service';
   styleUrls: ['./grid-usuarios.component.css'],
 })
 export class GridUsuariosComponent implements OnInit, OnDestroy {
-
   usuarios!: Usuario[];
   usuarios$!: Observable<Usuario[]>;
-subscription!: Subscription;
+  subscription!: Subscription;
 
   dataSource!: MatTableDataSource<Usuario>;
   displayedColumns: string[] = ['user', 'nombre', 'email', 'admin', 'acciones'];
@@ -26,44 +30,84 @@ subscription!: Subscription;
     private _snackBar: MatSnackBar
   ) {}
 
-
   ngOnInit() {
     this.usuarios$ = this.usuariosService.getUsuarios();
-    this.subscription = this.usuarios$.subscribe((els) => {this.usuarios = els;
+    this.subscription = this.usuarios$.subscribe((els) => {
+      this.usuarios = els;
       this.dataSource = new MatTableDataSource(this.usuarios);
     });
   }
 
+  addUsuario(): void {
+    const dialogAlta = this.dialog.open(FormUsuarioComponent, {
+      width: '50%',
+    });
 
-  addUsuario(): void {}
+    dialogAlta.afterClosed().subscribe((respUsuario) => {
+      if (respUsuario) {
+        this.usuariosService.addUsuario(respUsuario);
+        this.dataSource.data = this.usuarios;
 
-  editUsuario(usuario: Usuario): void {}
+        this._snackBar.open(
+          `El usuario '${respUsuario.user}' fue agregado exitosamente.`,
+          '',
+          { duration: 1500 }
+        );
+      }
+    });
+  }
 
-  deleteConfirmacion(usuario: Usuario): void {}
+  editUsuario(usuario: Usuario): void {
+    const dialogEdit = this.dialog.open(FormUsuarioComponent, {
+      width: '50%',
+      data: usuario,
+    });
 
+    dialogEdit.afterClosed().subscribe((respUsuario) => {
+      if (respUsuario) {
+        this.usuariosService.editUsuario(respUsuario);
+        this.dataSource.data = this.usuarios;
 
+        this._snackBar.open(
+          `El usuario '${usuario.user}' fue modificado exitosamente.`,
+          '',
+          { duration: 1500 }
+        );
+      }
+    });
+  }
+
+  deleteConfirmacion(usuario: Usuario): void {
+    const message = `Confirma la eliminación de '${usuario.user}'?`;
+    const dialogData = new ConfirmacionDialogModel('Eliminar usuario', message);
+
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult) {
+        this.deleteUsuario(usuario);
+      }
+    });
+  }
+
+  deleteUsuario(usuario: Usuario): void {
+    this.usuariosService.deleteUsuario(usuario.user);
+    this.dataSource.data = this.usuarios;
+
+    this._snackBar.open(
+      `El usuario '${usuario.user}' fue eliminado exitosamente.`,
+      '',
+      { duration: 1500 }
+    );
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@Input() usuarios: Usuario[] = [];
 //   @Input() set usuarios(value: Usuario[] ) {

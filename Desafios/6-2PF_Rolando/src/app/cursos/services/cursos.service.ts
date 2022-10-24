@@ -7,22 +7,20 @@ import { Curso } from 'src/app/cursos/interfaces/curso';
   providedIn: 'root',
 })
 export class CursosService {
-
-  private cursosSubect: BehaviorSubject<Curso[]>;
+  private cursosSubject: BehaviorSubject<Curso[]>;
 
   constructor() {
-    this.cursosSubect = new BehaviorSubject<Curso[]>(listaCursos);
+    this.cursosSubject = new BehaviorSubject<Curso[]>(listaCursos);
   }
-
 
   /* TODO: ejemplos de BehaviorSubject *************************/
   getCursos(): Observable<Curso[]> {
-    return this.cursosSubect.asObservable();
+    return this.cursosSubject.asObservable();
   }
 
   getCurso(id: number): Observable<Curso[]> {
     return this.getCursos().pipe(
-      map((cs: Curso[]) => cs.filter((c: Curso) => c.id === id))
+      map((cursos: Curso[]) => cursos.filter((c: Curso) => c.id === id))
     );
   }
 
@@ -45,6 +43,4 @@ export class CursosService {
     listaCursos.splice(indice, 1);
   }
   /**************************************************************/
-
-
 }

@@ -1,9 +1,8 @@
-<h1 mat-dialog-title>{{titulo}}</h1>
+<h1 mat-dialog-title>{{ titulo }}</h1>
 <div mat-dialog-content>
-  <form [formGroup]="fgAlumno" >
+  <form [formGroup]="fgAlumno">
     <div fxLayout="row" fxLayoutGap="10px" class="formulario">
       <div fxLayout="column" fxLayoutGap="10px" class="columna">
-
         <mat-form-field appearance="fill">
           <mat-label>Nombre</mat-label>
           <input matInput formControlName="nombre" />
@@ -14,21 +13,23 @@
           <input matInput formControlName="apellido" />
         </mat-form-field>
 
-        <mat-radio-group class="sexo-radio-group" formControlName="sexo" >
+        <mat-radio-group class="sexo-radio-group" formControlName="sexo">
           <mat-label class="sexo-radio-label">Sexo</mat-label>
-          <mat-radio-button class="sexo-radio-button" [value]="1">Masculino</mat-radio-button>
-          <mat-radio-button class="sexo-radio-button" [value]="2">Femenino</mat-radio-button>
+          <mat-radio-button class="sexo-radio-button" [value]="1"
+            >Masculino</mat-radio-button
+          >
+          <mat-radio-button class="sexo-radio-button" [value]="2"
+            >Femenino</mat-radio-button
+          >
         </mat-radio-group>
 
         <file-upload
-        [fileAttr]="fgAlumno.value.foto"
-        [tituloBoton]="botonFoto"
+          [fileAttr]="fgAlumno.value.foto"
+          [tituloBoton]="botonFoto"
         ></file-upload>
-
       </div>
 
       <div fxLayout="column" fxLayoutGap="10px" class="columna">
-
         <mat-form-field appearance="fill">
           <mat-label>Edad</mat-label>
           <input soloNumeros matInput formControlName="edad" />
@@ -52,18 +53,19 @@
         <mat-form-field appearance="fill">
           <mat-label>Curso</mat-label>
           <mat-select formControlName="cursoId">
-            <mat-option *ngFor="let c of cursos" [value]="c.id">{{c.nombre}}</mat-option>
+            <mat-option *ngFor="let c of cursos" [value]="c.id">{{
+              c.nombre
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
-
       </div>
     </div>
   </form>
 </div>
 
 <div mat-dialog-actions [align]="'end'">
-  <button mat-raised-button color="warn" mat-dialog-close>Close</button>
-  <button mat-raised-button
+  <button
+    mat-raised-button
     color="primary"
     style="margin-left: 8px"
     [disabled]="fgAlumno.invalid"
@@ -71,4 +73,5 @@
   >
     Aceptar
   </button>
+  <button mat-raised-button color="warn" mat-dialog-close>Cancelar</button>
 </div>

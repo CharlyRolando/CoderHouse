@@ -39,17 +39,17 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private alumnosService: AlumnosService ,
+    private alumnosService: AlumnosService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.alumnos$ = this.alumnosService.getAlumnos();
-    this.subscription = this.alumnos$.subscribe((els) => {this.alumnos = els;
+    this.subscription = this.alumnos$.subscribe((els) => {
+      this.alumnos = els;
       this.dataSource = new MatTableDataSource(this.alumnos);
     });
-
   }
 
   addAlumno(): void {
@@ -59,7 +59,6 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
     dialogAlta.afterClosed().subscribe((respAlumno) => {
       if (respAlumno) {
-
         this.alumnosService.addAlumno(respAlumno);
         this.dataSource.data = this.alumnos;
 
@@ -80,7 +79,6 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
     dialogEdit.afterClosed().subscribe((respAlumno) => {
       if (respAlumno) {
-
         this.alumnosService.editAlumno(respAlumno);
         this.dataSource.data = this.alumnos;
 
@@ -110,7 +108,6 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
   }
 
   deleteAlumno(alumno: Alumno): void {
-
     this.alumnosService.deleteAlumno(alumno.id);
     this.dataSource.data = this.alumnos;
 
@@ -128,7 +125,9 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
       filtro: string
     ) {
       return (
-        alumno.nombre.toLocaleLowerCase().includes(filtro.toLocaleLowerCase()) ||
+        alumno.nombre
+          .toLocaleLowerCase()
+          .includes(filtro.toLocaleLowerCase()) ||
         alumno.apellido.toLocaleLowerCase().includes(filtro.toLocaleLowerCase())
       );
     };
@@ -155,9 +154,7 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     this.dataSource.filter = valorObtenido.trim().toLowerCase();
   }
 
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }
