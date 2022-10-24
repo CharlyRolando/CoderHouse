@@ -5,6 +5,10 @@ mat-toolbar {
   background-color: #0f172a;
 }
 
+.menu{
+  margin-top: 6px;
+}
+
 .titulo{
   display: inline-block;
   width: 230px;
@@ -29,12 +33,10 @@ mat-toolbar {
 .barra{
   display: flex;
   width: 100%;
-  padding-top: 10px;
   justify-content: space-between;
 }
 
 mat-toolbar mat-icon {
-  margin-left: 20px;
   color: #6d8299;
   cursor: pointer;
 }

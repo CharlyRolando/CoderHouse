@@ -1,11 +1,14 @@
 <mat-toolbar>
-  <div class="titulo">
-    <mat-icon>school</mat-icon>
-    <span>High School</span>
-  </div>
+
 
   <div class="barra">
-    <mat-icon matTooltip="Menú" (click)="sidebarToggle()">menu</mat-icon>
+    <mat-icon class="menu" matTooltip="Menú" (click)="sidebarToggle()">menu</mat-icon>
+
+    <div class="titulo">
+      <mat-icon>school</mat-icon>
+      <span>Freshman College</span>
+    </div>
+
     <div class="box">
       <button mat-icon-button matTooltip="LogIn" (click)="login()">
         <mat-icon>input</mat-icon>

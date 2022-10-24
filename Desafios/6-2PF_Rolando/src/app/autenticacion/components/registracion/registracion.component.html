@@ -5,10 +5,9 @@
     <div class="header">
       <img class="logo" src="assets/images/icons/login.png">
     </div>
-
+    <mat-card-title>Freshman College</mat-card-title>
+    <mat-card-subtitle>Registración</mat-card-subtitle>
     <mat-card-content>
-      <mat-card-title>Registración</mat-card-title>
-
       <form #registracionForm="ngForm" (ngSubmit)="onSubmit()">
         <mat-error *ngIf="!registracionValid">
           El usuario y contraseña no son válidos.
