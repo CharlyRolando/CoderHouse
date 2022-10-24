@@ -14,14 +14,14 @@ export let listaCursos: Curso[] = [
   },
   {
     id: 2,
-    nombre: 'React',
-    logo: 'react.png',
-    comision: '220',
-    profesor: 'Fernando Cuevas',
-    foto: 'cuevas.png',
-    fechaInicio: new Date(2023, 2, 10),
-    fechaFin: new Date(2023, 3, 30),
-    inscripcionAbierta: true
+    nombre: 'Node',
+    logo: 'node.png',
+    comision: '440',
+    profesor: 'Alejandro Fonseca',
+    foto: 'fonseca.png',
+    fechaInicio: new Date(2022, 5, 5),
+    fechaFin: new Date(2022, 6, 30),
+    inscripcionAbierta: false
   },
   {
     id: 3,
@@ -36,14 +36,14 @@ export let listaCursos: Curso[] = [
   },
   {
     id: 4,
-    nombre: 'Node',
-    logo: 'node.png',
-    comision: '440',
-    profesor: 'Alejandro Fonseca',
-    foto: 'fonseca.png',
-    fechaInicio: new Date(2022, 5, 5),
-    fechaFin: new Date(2022, 6, 30),
-    inscripcionAbierta: false
+    nombre: 'React',
+    logo: 'react.png',
+    comision: '220',
+    profesor: 'Fernando Cuevas',
+    foto: 'cuevas.png',
+    fechaInicio: new Date(2023, 2, 10),
+    fechaFin: new Date(2023, 3, 30),
+    inscripcionAbierta: true
   },
   {
     id: 5,

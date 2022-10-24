@@ -20,11 +20,11 @@
         <p style="margin-bottom: 0px;">Inicia: {{curso.fechaInicio | date:"dd-MM-yyyy"}}</p>
         <p style="margin-bottom: 0px;">Finaliza: {{curso.fechaFin | date:"dd-MM-yyyy"}}</p>
         <p style="display: inline-block; line-height: 40px; margin-bottom: -20px;">Comisión: {{curso.comision}}</p>
-        <button style="float: right;" mat-icon-button color="warn" matTooltip="Eliminar curso"
+        <button style="float: right;" mat-icon-button color="warn" matTooltip="Eliminar curso" [matTooltipPosition]="'above'"
           (click)="deleteConfirmacion(curso)">
           <mat-icon>delete</mat-icon>
         </button>
-        <button style="float: right;" mat-icon-button color="primary" matTooltip="Editar curso"
+        <button style="float: right;" mat-icon-button color="primary" matTooltip="Editar curso"  [matTooltipPosition]="'above'"
           (click)="editCurso(curso)">
           <mat-icon>edit</mat-icon>
         </button>

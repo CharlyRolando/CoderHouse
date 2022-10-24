@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
+
+/* TODO: A DESARROLLAR EN LAS PRÓXIMAS ENTREGAS */
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,22 +21,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-
-
   onSubmit(): void {
     //this.loginValid = true;
 
     this._router.navigate(['container']);
   }
 
-  registrarse(){
+  registrarse() {
     this._router.navigate(['registracion']);
   }
-
 
   ngOnDestroy(): void {
     this._destroySub$.next();
   }
-
-
 }

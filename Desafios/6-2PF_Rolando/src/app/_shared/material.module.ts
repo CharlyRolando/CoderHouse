@@ -21,7 +21,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-
+import {MatSortModule} from '@angular/material/sort';
 
 import {LayoutModule} from '@angular/cdk/layout';
 // import {FlexModule} from '@angular/flex-layout/flex';
@@ -52,6 +52,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatCardModule,
     MatSlideToggleModule,
     MatProgressBarModule,
+    MatSortModule,
     FlexLayoutModule
   ],
   exports: [
@@ -75,6 +76,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatCardModule,
     MatSlideToggleModule,
     MatProgressBarModule,
+    MatSortModule,
     FlexLayoutModule
   ],
   providers: [

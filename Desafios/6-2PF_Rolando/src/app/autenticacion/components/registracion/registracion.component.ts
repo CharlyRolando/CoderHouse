@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+/* TODO: A DESARROLLAR EN LAS PRÓXIMAS ENTREGAS */
+
 @Component({
   selector: 'app-registracion',
   templateUrl: './registracion.component.html',

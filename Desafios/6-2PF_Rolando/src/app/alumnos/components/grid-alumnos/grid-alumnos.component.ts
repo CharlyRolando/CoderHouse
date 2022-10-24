@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Alumno } from 'src/app/alumnos/interfaces/alumno';
 import { listaAlumnos } from 'src/assets/data/alumnos';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +21,7 @@ import { Curso } from 'src/app/cursos/interfaces/curso';
 import { Observable, Subscription } from 'rxjs';
 import { AlumnosService } from '../../services/alumnos.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-grid-alumnos',
@@ -40,12 +48,11 @@ export class GridAlumnosComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) tbSort!: MatSort;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
 
   constructor(
+    private deteccionCambios: ChangeDetectorRef,
     private alumnosService: AlumnosService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
@@ -58,6 +65,35 @@ export class GridAlumnosComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dataSource = new MatTableDataSource(this.alumnos);
     });
   }
+
+  ngAfterViewInit() {
+    /* Paginador */
+    this.dataSource.paginator = this.paginator;
+
+    /* Ordenamiento por defecto id desc */
+    this.tbSort.disableClear = true;
+    this.dataSource.sort = this.tbSort;
+    const sortState: Sort = {active: 'id', direction: 'desc'};
+    this.tbSort.active = sortState.active;
+    this.tbSort.direction = sortState.direction;
+    this.tbSort.sortChange.emit(sortState);
+
+    this.deteccionCambios.detectChanges();
+  }
+
+
+
+  sortData(sort: Sort) {
+    var ffff = this.alumnos.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'nombreCompleto': return compare(a.apellido, b.apellido, isAsc);
+        case 'curso': return compare(a.cursoId, b.cursoId, isAsc);
+        default: return 0;
+      }
+    });
+  }
+
 
   addAlumno(): void {
     const dialogAlta = this.dialog.open(FormAlumnoComponent, {
@@ -165,3 +201,12 @@ export class GridAlumnosComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 }
+
+
+
+/* Ordenamiento */
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+
