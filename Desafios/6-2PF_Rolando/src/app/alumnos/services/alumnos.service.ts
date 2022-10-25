@@ -26,7 +26,9 @@ export class AlumnosService {
 
   getAlumnosCurso(cursoId: number): Observable<Alumno[]> {
     return this.getAlumnos().pipe(
-      map((alumnos: Alumno[]) => alumnos.filter((a: Alumno) => a.cursoId == cursoId))
+      map((alumnos: Alumno[]) =>
+        alumnos.filter((a: Alumno) => a.cursoId == cursoId)
+      )
     );
   }
 
@@ -34,7 +36,7 @@ export class AlumnosService {
     listaAlumnos.push({
       ...alumno,
       id: Math.round(Math.random() * 1000),
-      fechaInicio: new Date,
+      fechaInicio: new Date(),
       foto: 'empty.png',
     });
   }
@@ -61,12 +63,3 @@ export class AlumnosService {
   // }
   /****************************************************/
 }
-
-// if(alumnosCurso.length > 0){
-//   resolve(alumnosCurso);
-// }else{
-//   reject({
-//     codigo: 0,
-//     mensaje: 'No hay alumnos.'
-//   });
-// }

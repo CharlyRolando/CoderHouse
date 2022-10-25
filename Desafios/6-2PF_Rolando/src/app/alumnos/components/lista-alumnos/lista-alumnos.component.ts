@@ -8,27 +8,25 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-lista-alumnos',
   templateUrl: './lista-alumnos.component.html',
-  styleUrls: ['./lista-alumnos.component.css']
+  styleUrls: ['./lista-alumnos.component.css'],
 })
-export class ListaAlumnosComponent implements OnInit , OnDestroy{
-
+export class ListaAlumnosComponent implements OnInit, OnDestroy {
   titulo: string = `Alumnos del curso de '${this.cursoFiltro.nombre}'`;
 
   //alumnos$!: Promise<Alumno[] | any>;
-  alumnos$!:Observable<Alumno[]>;
+  alumnos$!: Observable<Alumno[]>;
 
-  constructor(private alumnosService:AlumnosService,
-    @Inject(MAT_DIALOG_DATA) public cursoFiltro: Curso) { }
-
+  constructor(
+    private alumnosService: AlumnosService,
+    @Inject(MAT_DIALOG_DATA) public cursoFiltro: Curso
+  ) {}
 
   ngOnInit(): void {
     this.alumnos$ = this.alumnosService.getAlumnosCurso(this.cursoFiltro.id);
   }
 
-
   ngOnDestroy(): void {
     /* TODO: el requerimiento de la entrega pide desubscribirse aquí
       pero estoy usando Promesas, por lo tanto no hago nada */
   }
-
 }

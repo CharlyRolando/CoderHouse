@@ -1,11 +1,9 @@
-
-
-.divTarjetas{
+.divTarjetas {
   flex-flow: row wrap;
   display: flex;
   min-width: 220px;
+  margin-right: -50px;
 }
-
 
 .tarjeta {
   margin: 10px;
@@ -14,7 +12,7 @@
   padding: 26px 16px 26px 26px;
 }
 
-.profesor{
+.profesor {
   color: azure;
 }
 
@@ -22,8 +20,7 @@
   background-size: cover;
 }
 
-
-.logo{
-margin-left: 22px;
-width: 140px;
+.logo {
+  margin-left: 22px;
+  width: 140px;
 }

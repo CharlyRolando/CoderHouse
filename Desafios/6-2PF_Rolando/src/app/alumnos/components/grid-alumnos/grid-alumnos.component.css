@@ -1,16 +1,13 @@
-
-
-.contenedorFiltro{
+.contenedorFiltro {
   display: flex;
   justify-content: center;
 }
 
-.filtros{
+.filtros {
   width: 90%;
 }
 
-
-.contenedorTabla{
+.contenedorTabla {
   display: flex;
   justify-content: center;
 }
@@ -19,20 +16,16 @@ table {
   width: 100%;
 }
 
-.tabla{
+.tabla {
   display: block;
   width: 90%;
 }
 
-.columna{
+.columna {
   width: 100%;
 }
 
-
-.foto{
+.foto {
   width: 60px;
   height: 60px;
 }
-
-
-

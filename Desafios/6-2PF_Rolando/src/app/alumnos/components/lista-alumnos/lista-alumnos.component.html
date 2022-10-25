@@ -10,7 +10,7 @@
           <img src="assets/images/alumnos/{{alumno.foto}}" class="img-fluid foto" />
         </div>
         <div class="">
-          <h3 class="card-title">{{ alumno.nombre | titlecase }}</h3>
+          <h3 class="card-title">{{ alumno.nombre | nombreCompleto: alumno.nombre:alumno.apellido | titlecase }}</h3>
           <div style="height: 6px;" *ngIf="alumno.edad < 30"></div>
           <p class="nota" *ngIf="alumno.edad >= 30">Alumno mayor.</p>
           <p><b>Edad: </b> {{ alumno.edad }}</p>
