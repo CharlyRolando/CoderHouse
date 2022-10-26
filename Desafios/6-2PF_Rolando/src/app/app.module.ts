@@ -8,9 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './_shared/shared.module';
 import { ConfirmacionDialogComponent } from './_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { AutenticacionModule } from './autenticacion/autenticacion.module';
-import { LayoutModule } from '@angular/cdk/layout';
-import { AlumnosModule } from './alumnos/alumnos.module';
-import { CursosModule } from './cursos/cursos.module';
 
 
 @NgModule({
@@ -22,10 +19,7 @@ import { CursosModule } from './cursos/cursos.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    LayoutModule,
     AutenticacionModule,
-    AlumnosModule,
-    CursosModule
   ],
   providers: [],
   entryComponents: [ConfirmacionDialogComponent],
