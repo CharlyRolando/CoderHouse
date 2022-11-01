@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>{{ titulo }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="fgAlumno">
+    <div fxLayout="row" fxLayoutGap="10px" class="formulario">
+      <div fxLayout="column" fxLayoutGap="10px" class="columna">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off" />
+          <mat-error *ngIf="errorHandling('nombre', 'required')">
+            El Nombre es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido" autocomplete="off" />
+          <mat-error *ngIf="errorHandling('apellido', 'required')">
+            El Apellido es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-radio-group class="sexo-radio-group" formControlName="sexo">
+          <mat-label class="sexo-radio-label">Sexo</mat-label>
+          <mat-radio-button class="sexo-radio-button" [value]="1">Masculino</mat-radio-button>
+          <mat-radio-button class="sexo-radio-button" [value]="2">Femenino</mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="10px" class="columna">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Perfil</mat-label>
+          <input matInput formControlName="perfil" autocomplete="off" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Edad</mat-label>
+          <input soloNumeros matInput formControlName="edad" />
+          <mat-error *ngIf="errorHandling('edad', 'min') || errorHandling('edad', 'max')">
+            La edad debe estar entre 17 y 100 años.
+          </mat-error>
+        </mat-form-field>
+
+        <file-upload  (newUploadFileEvent)="addUrlFile($event)" [fileAttr]="fgAlumno.value.foto" [tituloBoton]="botonFoto"></file-upload>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button color="primary" style="margin-left: 8px" [disabled]="fgAlumno.invalid" (click)="aceptar()">
+    Aceptar
+  </button>
+  <button mat-raised-button color="warn" mat-dialog-close>Cancelar</button>
+</div>

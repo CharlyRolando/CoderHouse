@@ -1,0 +1,39 @@
+.contenedorFiltro {
+  display: flex;
+  justify-content: center;
+}
+
+.filtros {
+  width: 100%;
+}
+
+.contenedorTabla {
+  display: grid;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  background-color: transparent;
+}
+
+.tabla {
+  display: block;
+  width: 100%;
+}
+
+.columna {
+  width: 100%;
+}
+
+.foto {
+  width: 60px;
+  height: 60px;
+}
+
+
+.mat-paginator {
+  background-color: transparent;
+}
+
+

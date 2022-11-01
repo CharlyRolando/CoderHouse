@@ -1,0 +1,30 @@
+<ng-container  *ngIf="sesion$ | async as sesion">
+  <!-- <div *ngIf="sesion.sesionActiva"> -->
+    <mat-toolbar [ngClass]="{'admin': esAdmin}">
+      <div class="barra">
+        <mat-icon class="menu" matTooltip="Menú" (click)="sidebarToggle()">menu</mat-icon>
+
+        <div class="titulo">
+          <mat-icon>school</mat-icon>
+          <span>{{ app_name}}</span>
+        </div>
+
+        <div class="box">
+          <!-- <button mat-icon-button matTooltip="LogIn" (click)="login()">
+        <mat-icon>input</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Registración" (click)="registracion()">
+        <mat-icon>app_registration</mat-icon>
+      </button> -->
+          <div class="usuario">{{ sesion.usuarioActivo?.nombre }}</div>
+          <button mat-icon-button matTooltip="LogOut" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Perfil">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-toolbar>
+  <!-- </div> -->
+</ng-container>
