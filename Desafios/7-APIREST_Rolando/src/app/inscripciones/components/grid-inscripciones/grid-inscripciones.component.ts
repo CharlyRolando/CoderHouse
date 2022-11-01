@@ -122,6 +122,37 @@ export class GridInscripcionesComponent implements OnInit, AfterViewInit, OnDest
 
   }
 
+  filtrarXAlumno(event: Event) {
+    const valorObtenido = (event.target as HTMLInputElement).value;
+    this.dataSource.filterPredicate = function (
+      alumnoInscripto: AlumnoInscripto,
+      filtro: string
+    ) {
+      return (
+        alumnoInscripto.nombreAlumno
+          .toLocaleLowerCase()
+          .includes(filtro.toLocaleLowerCase()));
+    };
+    this.dataSource.filter = valorObtenido.trim().toLowerCase();
+  }
+
+
+  filtrarXCurso(event: Event) {
+    const valorObtenido = (event.target as HTMLInputElement).value;
+    this.dataSource.filterPredicate = function (
+      alumnoInscripto: AlumnoInscripto,
+      filtro: string
+    ) {
+      return (
+        alumnoInscripto.nombreCurso
+          .toLocaleLowerCase()
+          .includes(filtro.toLocaleLowerCase()));
+    };
+    this.dataSource.filter = valorObtenido.trim().toLowerCase();
+  }
+
+
+
 
   deleteConfirmacion(inscripto: AlumnoInscripto): void {
     const message = `Confirma la eliminación de la inscripción de '${inscripto.nombreAlumno}' al curso de '${inscripto.nombreCurso}'?`;

@@ -13,7 +13,7 @@ export class TemaTitulosDirective implements OnInit{
 
   ngOnInit(): void {
     this.renderer.setStyle(this.elemento.nativeElement, 'font-size', '20px');
-    this.renderer.setStyle(this.elemento.nativeElement, 'margin-left', '40px');
+    this.renderer.setStyle(this.elemento.nativeElement, 'margin-left', '8px');
     this.renderer.setStyle(this.elemento.nativeElement, 'margin-right', '10px');
     this.renderer.setStyle(this.elemento.nativeElement, 'font-weight', '600');
     this.renderer.setStyle(this.elemento.nativeElement, 'color', '#000000');

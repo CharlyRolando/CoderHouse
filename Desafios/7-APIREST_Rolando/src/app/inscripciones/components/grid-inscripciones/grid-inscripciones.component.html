@@ -4,6 +4,21 @@
     <p appTemaTitulos >{{pageTitle}}</p>
   </div>
 
+  <div class="contenedorFiltro">
+    <div class="filtros">
+      <div fxLayout="row" fxLayoutGap="80px">
+        <mat-form-field class="columna">
+          <mat-label>Filtrar por Alumno</mat-label>
+          <input type="text" matInput (keyup)="filtrarXAlumno($event)" autocomplete="off" />
+        </mat-form-field>
+        <mat-form-field class="columna">
+          <mat-label>Filtrar por Curso</mat-label>
+          <input type="text" matInput (keyup)="filtrarXCurso($event)" autocomplete="off" />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
   <div class="contenedorTabla">
     <div class="tabla">
 
