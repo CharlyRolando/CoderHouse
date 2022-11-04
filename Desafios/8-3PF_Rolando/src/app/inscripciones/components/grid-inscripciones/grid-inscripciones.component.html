@@ -1,0 +1,82 @@
+<div>
+
+  <div class="row">
+    <p appTemaTitulos >{{pageTitle}}</p>
+  </div>
+
+  <div class="contenedorFiltro">
+    <div class="filtros">
+      <div fxLayout="row" fxLayoutGap="80px">
+        <mat-form-field class="columna">
+          <mat-label>Filtrar por Alumno</mat-label>
+          <input type="text" matInput (keyup)="filtrarXAlumno($event)" autocomplete="off" />
+        </mat-form-field>
+        <mat-form-field class="columna">
+          <mat-label>Filtrar por Curso</mat-label>
+          <input type="text" matInput (keyup)="filtrarXCurso($event)" autocomplete="off" />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenedorTabla">
+    <div class="tabla">
+
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="id"
+        matSortDirection="desc" class="mat-elevation-z0">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let inscripto">{{ inscripto.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombreAlumno">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+          <td mat-cell *matCellDef="let inscripto">
+            {{ inscripto.nombreAlumno }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombreCurso">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Curso</th>
+          <td mat-cell *matCellDef="let inscripto">
+            {{ inscripto.nombreCurso }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombreUsuario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Inscripto por</th>
+          <td mat-cell *matCellDef="let inscripto">
+            {{ inscripto.nombreUsuario }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaInscripto">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+          <td mat-cell *matCellDef="let inscripto">
+            {{ inscripto.fechaInscripto | date:'dd-MM-yyyy'}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>
+            Acciones
+          </th>
+          <td mat-cell *matCellDef="let inscripto">
+            <button mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="deleteConfirmacion(inscripto)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let inscripto; columns: columnas"></tr>
+
+      </table>
+      </div>
+    <div class="contenedorPaginador">
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+    </div>
+  </div>
+
+</div>

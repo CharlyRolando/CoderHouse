@@ -1,0 +1,31 @@
+
+
+.contenedorTabla {
+  display: grid;
+  width: 100%;
+}
+
+
+
+table {
+  width: 100%;
+}
+
+.contenedorTabla {
+  display: grid;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  background-color: transparent;
+}
+
+.tabla {
+  display: block;
+  width: 100%;
+}
+
+.columna {
+  width: 100%;
+}
