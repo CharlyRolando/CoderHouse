@@ -18,16 +18,13 @@ export class FormAlumnoComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<FormAlumnoComponent>,
+    public dialogRef: MatDialogRef<FormAlumnoComponent>,
     @Inject(MAT_DIALOG_DATA) public editData: any
   ) { }
 
   ngOnInit(): void {
-    if (this.editData) {
-      this.configurarEdicionAlumno(this.editData);
-    } else {
-      this.configurarFormulario();
-    }
+    this.configurarFormulario();
+    if (this.editData) this.configurarEdicionAlumno(this.editData);
   }
 
 
@@ -45,7 +42,13 @@ export class FormAlumnoComponent implements OnInit {
 
   configurarEdicionAlumno(alumno: Alumno) {
     this.titulo = 'Modificación de alumno';
-    this.fgAlumno = this.formBuilder.group(alumno);
+    this.fgAlumno.controls['id'].setValue(alumno.id);
+    this.fgAlumno.controls['nombre'].setValue(alumno.nombre);
+    this.fgAlumno.controls['apellido'].setValue(alumno.apellido);
+    this.fgAlumno.controls['sexo'].setValue(alumno.sexo);
+    this.fgAlumno.controls['edad'].setValue(alumno.edad);
+    this.fgAlumno.controls['perfil'].setValue(alumno.perfil);
+    this.fgAlumno.controls['foto'].setValue(alumno.foto);
   }
 
 

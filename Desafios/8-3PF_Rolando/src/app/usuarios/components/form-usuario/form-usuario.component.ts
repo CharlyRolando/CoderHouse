@@ -49,7 +49,7 @@ export class FormUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurarFormulario();
-    if (this.editData) this.configurarEdicion();
+    if (this.editData) this.configurarEdicion(this.editData);
   }
 
   configurarFormulario() {
@@ -78,14 +78,14 @@ export class FormUsuarioComponent implements OnInit {
     );
   }
 
-  configurarEdicion() {
+  configurarEdicion(usuario: Usuario) {
     this.titulo = 'Modificación de usuario';
-    this.fgUsuario.controls['id'].setValue(this.editData.id);
-    this.fgUsuario.controls['email'].setValue(this.editData.email);
-    this.fgUsuario.controls['nombre'].setValue(this.editData.nombre);
-    this.fgUsuario.controls['direccion'].setValue(this.editData.direccion);
-    this.fgUsuario.controls['telefono'].setValue(this.editData.telefono);
-    this.fgUsuario.controls['admin'].setValue(this.editData.admin);
+    this.fgUsuario.controls['id'].setValue(usuario.id);
+    this.fgUsuario.controls['email'].setValue(usuario.email);
+    this.fgUsuario.controls['nombre'].setValue(usuario.nombre);
+    this.fgUsuario.controls['direccion'].setValue(usuario.direccion);
+    this.fgUsuario.controls['telefono'].setValue(usuario.telefono);
+    this.fgUsuario.controls['admin'].setValue(usuario.admin);
   }
 
 

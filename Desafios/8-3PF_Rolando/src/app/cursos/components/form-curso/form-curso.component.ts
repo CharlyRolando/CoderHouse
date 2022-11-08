@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Curso } from 'src/app/cursos/interfaces/curso';
 
@@ -27,11 +27,8 @@ export class FormCursoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.cursoEdit) {
-      this.configurarEdicion(this.cursoEdit);
-    } else {
-      this.configurarFormulario();
-    }
+    this.configurarFormulario();
+    if (this.cursoEdit) this.configurarEdicion(this.cursoEdit);
   }
 
 
@@ -51,7 +48,15 @@ export class FormCursoComponent implements OnInit {
 
   configurarEdicion(curso: Curso) {
     this.titulo = 'Modificación del curso';
-    this.fgCurso = this.formBuilder.group(curso);
+    this.fgCurso.controls['id'].setValue(curso.id);
+    this.fgCurso.controls['nombre'].setValue(curso.nombre);
+    this.fgCurso.controls['logo'].setValue(curso.logo);
+    this.fgCurso.controls['comision'].setValue(curso.comision);
+    this.fgCurso.controls['profesor'].setValue(curso.profesor);
+    this.fgCurso.controls['foto'].setValue(curso.foto);
+    this.fgCurso.controls['fechaInicio'].setValue(curso.fechaInicio);
+    this.fgCurso.controls['fechaFin'].setValue(curso.fechaFin);
+    this.fgCurso.controls['inscripcion'].setValue(curso.inscripcion);
   }
 
 

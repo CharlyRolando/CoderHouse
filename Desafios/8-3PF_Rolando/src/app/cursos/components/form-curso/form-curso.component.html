@@ -5,10 +5,6 @@
     <div fxLayout="row" fxLayoutGap="10px" class="formulario">
       <div fxLayout="column" fxLayoutGap="10px" class="columna">
 
-        <mat-form-field>
-          <input matInput formControlName="id" />
-        </mat-form-field>
-
         <mat-form-field appearance="fill" class="fill">
           <mat-label>Nombre del curso</mat-label>
           <input matInput formControlName="nombre" autocomplete="off" />
@@ -59,7 +55,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-slide-toggle formControlName="inscripcion">
+        <mat-slide-toggle ngDefaultControl formControlName="inscripcion">
           Inscripcion abierta
         </mat-slide-toggle>
 

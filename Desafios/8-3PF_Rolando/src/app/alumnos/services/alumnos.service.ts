@@ -35,7 +35,7 @@ export class AlumnosService {
   }
 
 
-  addAlumno(alumno: Alumno): Observable<Alumno>  {
+  addAlumno(alumno: Alumno): Observable<Alumno | never>  {
     alumno.id = '';
     return this.http.post<Alumno>(this.alumnosUrl, alumno)
       .pipe(
@@ -63,19 +63,22 @@ export class AlumnosService {
   }
 
 
-  private handleError(err: any) {
+  public handleError(err: any) : Observable<never> {
     let errorMessage: string;
-    if (err.error instanceof ErrorEvent) {
-      errorMessage = `Ocurrió un error: ${err.error.message}`;
-    } else {
-      errorMessage = `Backentd retornó código ${err.status}: ${err.body.error}`;
+    if(err === null || err === undefined){
+      errorMessage ="nulo";
     }
-    console.error(err);
+    else if (err.error === undefined) {
+      errorMessage = "undefined";
+    }
+    else if (err.error instanceof ErrorEvent) {
+      errorMessage = `Ocurrió un error: ${err.error.message}`;
+    }
     return throwError(() => errorMessage);
   }
 
 
-  private inicializarAlumno(): Alumno {
+  public inicializarAlumno(): Alumno {
     return {
       id: '',
       nombre: '',
