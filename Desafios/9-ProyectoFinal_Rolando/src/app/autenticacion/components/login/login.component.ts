@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { UsuariosService } from 'src/app/usuarios/services/usuarios.service';
-import { NotificacionDialogComponent, NotificacionDialogModel } from 'src/app/_shared/components/notificacion-dialog/notificacion-dialog.component';
-import { LoaderService } from 'src/app/_shared/services/loader.service';
+import { NotificacionDialogComponent, NotificacionDialogModel } from 'src/app/_core/components/notificacion-dialog/notificacion-dialog.component';
+import { LoaderService } from 'src/app/_core/services/loader.service';
 import { SesionService } from '../../services/sesion.service';
 
 

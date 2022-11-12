@@ -7,8 +7,8 @@ import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
-import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
-import { LoaderService } from 'src/app/_shared/services/loader.service';
+import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_core/components/confirmacion-dialog/confirmacion-dialog.component';
+import { LoaderService } from 'src/app/_core/services/loader.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { FormUsuarioComponent } from '../form-usuario/form-usuario.component';
 

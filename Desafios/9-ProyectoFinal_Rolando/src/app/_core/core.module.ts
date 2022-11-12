@@ -35,4 +35,4 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     { provide: MatDialogRef, useValue: {} }
   ],
 })
-export class SharedModule { }
+export class CoreModule { }

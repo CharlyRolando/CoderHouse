@@ -7,9 +7,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MainComponent } from './components/main/main.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { SharedModule } from '../_shared/shared.module';
-import { PipesModule } from '../_shared/pipes/pipes.module';
-import { DirectivesModule } from '../_shared/directives/directives.module';
+import { CoreModule } from '../_core/core.module';
+import { PipesModule } from '../_core/pipes/pipes.module';
+import { DirectivesModule } from '../_core/directives/directives.module';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { DirectivesModule } from '../_shared/directives/directives.module';
   imports: [
     CommonModule,
     LayoutRoutingModule,
-    SharedModule,
+    CoreModule,
     PipesModule,
     DirectivesModule
   ]

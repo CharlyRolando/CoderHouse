@@ -1,0 +1,32 @@
+[
+ {
+  "email": "sArana@gmail.com",
+  "password": "!Q2w3e4r5",
+  "nombre": "Santiago Arana",
+  "direccion": "Juan B. Justo 4543",
+  "telefono": "11 4387-8753",
+  "admin": true,
+  "id": "1",
+  "pass2": "!Q2w3e4r5"
+ },
+ {
+  "email": "aPerez@gmail.com",
+  "password": "!Q2w3e4r5",
+  "nombre": "Andrea Perez",
+  "direccion": "Cucha Cucha 69",
+  "telefono": "11 4444 4444",
+  "admin": false,
+  "id": "2",
+  "pass2": "!Q2w3e4r5"
+ },
+ {
+  "email": "mArriola@gmail.com",
+  "password": "!Q2w3e4r5",
+  "nombre": "Martin Arriola",
+  "direccion": "Ledesma 234",
+  "telefono": "11 4675-8976",
+  "admin": false,
+  "id": "3",
+  "pass2": "!Q2w3e4r5"
+ }
+]

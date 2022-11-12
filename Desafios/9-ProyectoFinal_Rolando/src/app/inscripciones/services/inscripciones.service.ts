@@ -91,7 +91,6 @@ export class InscripcionesService {
         const alumnos$ = this.alumnosService.getAlumnos();
         const cursos$ = this.cursosService.getCursos();
         const usuarios$ = this.usuariosService.getUsuarios();
-        //const inscripciones$ = this.getInscripciones();
 
         inscripciones$.pipe(
 

@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { AlumnosRoutingModule } from './alumnos-routing.module';
 import { GridAlumnosComponent } from './components/grid-alumnos/grid-alumnos.component';
-import { SharedModule } from '../_shared/shared.module';
-import { PipesModule } from '../_shared/pipes/pipes.module';
-import { DirectivesModule } from '../_shared/directives/directives.module';
+import { CoreModule } from '../_core/core.module';
+import { PipesModule } from '../_core/pipes/pipes.module';
+import { DirectivesModule } from '../_core/directives/directives.module';
 import { FormAlumnoComponent } from './components/form-alumno/form-alumno.component';
 import { ListaAlumnosComponent } from './components/lista-alumnos/lista-alumnos.component';
 import { DetallesAlumnoComponent } from './components/detalles-alumno/detalles-alumno.component';
@@ -21,7 +21,7 @@ import { DetallesAlumnoComponent } from './components/detalles-alumno/detalles-a
   imports: [
     CommonModule,
     AlumnosRoutingModule,
-    SharedModule,
+    CoreModule,
     PipesModule,
     DirectivesModule
   ]
