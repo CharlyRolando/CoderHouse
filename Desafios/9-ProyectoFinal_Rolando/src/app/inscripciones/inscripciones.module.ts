@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { InscripcionesRoutingModule } from './inscripciones-routing.module';
-import { CoreModule } from '../_core/core.module';
-import { PipesModule } from '../_core/pipes/pipes.module';
-import { DirectivesModule } from '../_core/directives/directives.module';
+import { SharedModule } from '../_shared/shared.module';
+import { PipesModule } from '../_shared/pipes/pipes.module';
+import { DirectivesModule } from '../_shared/directives/directives.module';
 import { GridInscripcionesComponent } from './components/grid-inscripciones/grid-inscripciones.component';
 import { FormInscripcionComponent } from './components/form-inscripcion/form-inscripcion.component';
 
@@ -17,7 +17,7 @@ import { FormInscripcionComponent } from './components/form-inscripcion/form-ins
   imports: [
     CommonModule,
     InscripcionesRoutingModule,
-    CoreModule,
+    SharedModule,
 
   ]
 })

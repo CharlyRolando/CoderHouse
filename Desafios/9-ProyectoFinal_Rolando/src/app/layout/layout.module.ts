@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MainComponent } from './components/main/main.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { CoreModule } from '../_core/core.module';
+import { SharedModule } from '../_shared/shared.module';
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import { CoreModule } from '../_core/core.module';
   imports: [
     CommonModule,
     LayoutRoutingModule,
-    CoreModule,
+    SharedModule,
   ]
 })
 export class LayoutModule { }

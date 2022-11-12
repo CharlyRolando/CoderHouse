@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GridInscripcionesComponent } from '../inscripciones/components/grid-inscripciones/grid-inscripciones.component';
 import { DetallesUsuarioComponent } from '../usuarios/components/detalles-usuario/detalles-usuario.component';
 import { AdminGuard } from '../_core/guards/admin.guard';
 import { AutenticacionGuard } from '../_core/guards/autenticacion.guard';

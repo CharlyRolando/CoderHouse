@@ -6,8 +6,8 @@ import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { InscripcionEntidades } from 'src/app/inscripciones/interfaces/inscripcion-entidades';
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
-import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_core/components/confirmacion-dialog/confirmacion-dialog.component';
-import { LoaderService } from 'src/app/_core/services/loader.service';
+import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
+import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Alumno } from '../../interfaces/alumno';
 import { AlumnosService } from '../../services/alumnos.service';
 

@@ -5,8 +5,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-import { CoreModule } from './_core/core.module';
-import { ConfirmacionDialogComponent } from './_core/components/confirmacion-dialog/confirmacion-dialog.component';
+import { SharedModule } from './_shared/shared.module';
+import { ConfirmacionDialogComponent } from './_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { AutenticacionModule } from './autenticacion/autenticacion.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -30,7 +30,7 @@ import { StoreModule } from '@ngrx/store';
     BrowserAnimationsModule,
     AutenticacionModule,
     AppRoutingModule,
-    CoreModule,
+    SharedModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,

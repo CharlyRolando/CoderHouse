@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { LoaderService } from 'src/app/_core/services/loader.service';
+import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Usuario } from '../../interfaces/usuario';
 import { UsuariosService } from '../../services/usuarios.service';
 

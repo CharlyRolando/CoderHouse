@@ -4,7 +4,9 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { map, Observable } from 'rxjs';
 import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { NotificacionDialogComponent, NotificacionDialogModel } from '../components/notificacion-dialog/notificacion-dialog.component';
+import { NotificacionDialogComponent, NotificacionDialogModel } from 'src/app/_shared/components/notificacion-dialog/notificacion-dialog.component';
+
+
 
 @Injectable({
   providedIn: 'root'
