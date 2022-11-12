@@ -5,8 +5,6 @@ import { CursosRoutingModule } from './cursos-routing.module';
 import { FormCursoComponent } from './components/form-curso/form-curso.component';
 import { GridCursosComponent } from './components/grid-cursos/grid-cursos.component';
 import { CoreModule } from '../_core/core.module';
-import { PipesModule } from '../_core/pipes/pipes.module';
-import { DirectivesModule } from '../_core/directives/directives.module';
 import { DetallesCursoComponent } from './components/detalles-curso/detalles-curso.component';
 
 
@@ -20,8 +18,6 @@ import { DetallesCursoComponent } from './components/detalles-curso/detalles-cur
     CommonModule,
     CursosRoutingModule,
     CoreModule,
-    PipesModule,
-    DirectivesModule
   ]
 })
 export class CursosModule { }

@@ -18,8 +18,7 @@ import { FormInscripcionComponent } from './components/form-inscripcion/form-ins
     CommonModule,
     InscripcionesRoutingModule,
     CoreModule,
-    PipesModule,
-    DirectivesModule
+
   ]
 })
 export class InscripcionesModule { }

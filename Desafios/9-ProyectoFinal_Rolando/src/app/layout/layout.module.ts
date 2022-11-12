@@ -8,8 +8,6 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MainComponent } from './components/main/main.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CoreModule } from '../_core/core.module';
-import { PipesModule } from '../_core/pipes/pipes.module';
-import { DirectivesModule } from '../_core/directives/directives.module';
 
 
 @NgModule({
@@ -24,8 +22,6 @@ import { DirectivesModule } from '../_core/directives/directives.module';
     CommonModule,
     LayoutRoutingModule,
     CoreModule,
-    PipesModule,
-    DirectivesModule
   ]
 })
 export class LayoutModule { }

@@ -6,6 +6,8 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { ConfirmacionDialogComponent } from './components/confirmacion-dialog/confirmacion-dialog.component';
 import { NotificacionDialogComponent } from './components/notificacion-dialog/notificacion-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { PipesModule } from './pipes/pipes.module';
+import { DirectivesModule } from './directives/directives.module';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    MatDialogModule
+    MatDialogModule,
+    PipesModule,
+    DirectivesModule
   ],
   entryComponents: [
     NotificacionDialogComponent,
@@ -30,6 +34,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     ReactiveFormsModule,
     MaterialModule,
     FileUploadComponent,
+    PipesModule,
+    DirectivesModule
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} }
