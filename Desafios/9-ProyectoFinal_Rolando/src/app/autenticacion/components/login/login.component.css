@@ -1,0 +1,119 @@
+
+.contenedor{
+  min-height: 100vh;
+  background-color: #E5E5E5;
+  display: flex;
+  justify-content: center;
+  background-image: url('/assets/images/highSchool.png');
+}
+
+
+mat-card {
+  width: 300px;
+  height: 500px;
+  margin-top: 100px;
+  justify-content: center;
+  text-align: center;
+}
+
+
+.header{
+  display: block;
+  width: 100%;
+  justify-content: center;
+}
+
+
+mat-form-field {
+  display: block;
+}
+
+
+.logo{
+  margin: 20px;
+  width: 120px;
+}
+
+
+.submit{
+  margin-top: 18px;
+  width: 100%;
+}
+
+
+.registrarse{
+  width: 100%;
+  font-style: italic;
+  color: rgba(0,0,0,.54);
+}
+
+
+.datosLogIn{
+  width: 100%;
+  font-style: italic;
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  text-align: left;
+  line-height: 13px;
+  margin-top: 10px;
+  margin-left: -50px;
+}
+
+
+/* Spin Start*/
+
+.file-loader {
+  background-color:
+rgba(0, 0, 0, .20);
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100000 !important;
+}
+
+.upload-loader {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+  .upload-loader .loader {
+    border: 5px solid
+#f3f3f3 !important;
+    border-radius: 50%;
+    border-top: 5px solid
+#005eb8 !important;
+    width: 80% !important;
+    height: 80% !important;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spin End*/
+

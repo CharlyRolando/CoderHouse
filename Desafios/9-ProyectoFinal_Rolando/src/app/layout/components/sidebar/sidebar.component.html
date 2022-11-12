@@ -1,0 +1,31 @@
+<div class="navbar">
+
+  <div class="menu-item">
+
+    <button mat-button class="menu-button" routerLink="cursos">
+      <mat-icon>import_contacts</mat-icon>
+      <span>Cursos</span>
+    </button>
+
+    <button mat-button class="menu-button" routerLink="alumnos">
+      <mat-icon>people icon</mat-icon>
+      <span>Alumnos</span>
+    </button>
+
+    <button mat-button class="menu-button" routerLink="inscripciones">
+      <mat-icon>import_contacts</mat-icon>
+      <span>Inscripciones</span>
+    </button>
+
+    <button  *ngIf="esAdmin"  mat-button class="menu-button" routerLink="usuarios">
+      <mat-icon>account_circle</mat-icon>
+      <span>Usuarios</span>
+    </button>
+
+    <button mat-button class="menu-button" (click)="logOut()">
+      <mat-icon>logout</mat-icon>
+      <span>LogOut</span>
+    </button>
+
+  </div>
+</div>

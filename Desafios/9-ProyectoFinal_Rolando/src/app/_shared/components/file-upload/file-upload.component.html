@@ -1,0 +1,22 @@
+<mat-form-field  class="matFormFile">
+  <div>
+    <div *ngIf="loading" class="spinner-border text-primary loading" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <mat-toolbar>
+      <!-- Display files names -->
+      <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+      <!-- Browse Button -->
+      <button mat-flat-button color="primary">{{tituloBoton}}</button>
+    </mat-toolbar>
+    <!-- Fetch selected filed on change -->
+    <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)"
+      name="uploadFile"  accept="image/*" class="inputFile" />
+      <!-- <div class="progress">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+        [style.width]="(uploadPercent | async) + '%' "></div>
+      </div> -->
+  </div>
+  <input type="hidden" #imageURL [value]="urlImage | async">
+
+</mat-form-field>

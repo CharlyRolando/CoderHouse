@@ -1,0 +1,72 @@
+
+
+mat-toolbar {
+  display: flexbox;
+  background-color: #0f172a;
+}
+
+.admin {
+  background-color: #2b0000 !important;
+}
+
+.menu{
+  margin-top: 6px;
+  vertical-align: text-bottom;
+}
+
+.page{
+  display: inline-block;
+  color: #466be0;
+  margin-left: 28px;
+  font-weight: normal;
+  font-size: 16px;
+  font-weight: 800;
+  vertical-align: middle;
+}
+
+
+.titulo{
+  display: inline-block;
+  width: 230px;
+}
+
+.titulo mat-icon{
+  color: #466be0;
+  font-family: 'Material Icons';
+  vertical-align: middle;
+  font-size: 30px;
+  width: 40px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.titulo span{
+  color: #466be0;
+  vertical-align: middle;
+  font-weight: 900;
+}
+
+.barra{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+mat-toolbar mat-icon {
+  color: #6d8299;
+  cursor: pointer;
+}
+
+mat-toolbar .box {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.usuario{
+  display: inline-block;
+  color: #466be0;
+  vertical-align: middle;
+  margin-right: 14px;
+  font-weight: normal;
+  font-size: 16px;
+}

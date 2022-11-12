@@ -1,0 +1,55 @@
+<div class="contenedor">
+
+  <mat-card>
+
+    <div class="file-loader" *ngIf="showLoader">
+      <div class="upload-loader">
+        <div class="loader"></div>
+      </div>
+    </div>
+
+    <div class="header">
+      <img class="logo" src="assets/images/icons/login.png">
+    </div>
+    <mat-card-title>{{ this.appService.app_name }}</mat-card-title>
+    <mat-card-subtitle>Iniciar sesión</mat-card-subtitle>
+    <mat-card-content>
+
+      <form [formGroup]="fgLogin" (ngSubmit)="login()">
+
+        <mat-error *ngIf="!fgLogin.valid">
+          El usuario y contraseña no son válidos.
+        </mat-error>
+
+        <mat-form-field>
+          <input matInput placeholder="Usuario" formControlName="email" name="email" required>
+          <mat-error>
+            El nombre de usuario es obligatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="password" placeholder="Contraseña" formControlName="password" name="password" required>
+          <mat-error>
+            Ingrese una contraseña válida.
+          </mat-error>
+        </mat-form-field>
+
+        <button class="submit" [disabled]="!fgLogin.valid" mat-raised-button color="primary">Login</button>
+
+      </form>
+
+      <!-- <button mat-button class="registrarse" (click)="registrarse()">(Si no está registrado pulse aqui...)</button> -->
+
+      <pre class="datosLogIn">
+        admin: sArana@gmail.com
+        pass: !Q2w3e4r5
+
+        user: aPerez@gmail.com
+        pass: !Q2w3e4r5
+      </pre>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>

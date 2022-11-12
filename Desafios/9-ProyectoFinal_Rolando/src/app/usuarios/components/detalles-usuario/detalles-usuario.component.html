@@ -1,0 +1,46 @@
+<div class="row">
+  <p appTemaTitulos>{{ this.appService.titulo }}</p>
+  <button *ngIf="esAdmin"  mat-icon-button matTooltip="Volver" color="primary" routerLink="/container/usuarios">
+    <mat-icon>undo</mat-icon>
+  </button>
+</div>
+
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card *ngIf="usuario!=null" fxFlex="320px" fxFlex.xs="100%">
+
+    <mat-card-content class="detalles">
+
+      <div fxLayout="column wrap">
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>eMail:</strong></div>
+          <div>{{usuario.email}}</div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Nombre:</strong></div>
+          <div>{{usuario.nombre}}</div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Dirección:</strong></div>
+          <div>{{usuario.direccion}}</div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Teléfono:</strong></div>
+          <div>{{usuario.telefono}}</div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Administrador:</strong></div>
+          <div [appTildeBooleano]="usuario.admin"></div>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</section>

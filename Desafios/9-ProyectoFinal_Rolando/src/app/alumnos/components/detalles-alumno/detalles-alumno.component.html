@@ -1,0 +1,98 @@
+
+<div class="row">
+  <p appTemaTitulos>{{ this.appService.titulo }}</p>
+  <button mat-icon-button matTooltip="Volver" color="primary" routerLink="/container/alumnos">
+    <mat-icon>undo</mat-icon>
+  </button>
+</div>
+
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card *ngIf="alumno!=null" fxFlex="300px" fxFlex.xs="100%"  >
+
+    <mat-card-title><img  [src]="alumno.foto" class="img-fluid foto" /></mat-card-title>
+
+    <mat-card-content class="detalles">
+
+      <div fxLayout="column wrap">
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Nombre:</strong></div>
+          <div>{{alumno.nombre}}</div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Apellido:</strong></div>
+          <div>{{alumno.apellido}}</div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Sexo:</strong></div>
+          <div> {{ alumno.sexo | idToValue: "Masculino":"Femenino" }}</div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Edad:</strong></div>
+          <div>{{alumno.edad}}</div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <div><strong>Perfil:</strong></div>
+          <div>{{alumno.perfil}}</div>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</section>
+
+
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+
+  <mat-card class="tarjetaInscripciones" fxFlex="440px" fxFlex.xs="100%">
+
+    <mat-card-title>Inscripciones</mat-card-title>
+
+    <mat-card-content class="detalles">
+
+      <div fxLayout="column wrap">
+
+        <div *ngFor="let inscripcion of inscripciones$ | async" class="row">
+
+          <div class="lineaInscripcion" fxLayout="row" fxLayoutGap="0px">
+
+            <div fxFlex>
+              <img [src]="inscripcion.curso.logo" class="img-fluid logo" />
+            </div>
+
+            <div fxFlex>
+              {{ inscripcion.curso.nombre}}
+            </div>
+
+            <div fxFlex>
+              {{ inscripcion.curso.comision}}
+            </div>
+
+            <div fxFlex>
+              {{ inscripcion.fechaInscripcion | date:'dd-MM-yyyy' }}
+            </div>
+
+            <div fxFlex style="text-align: end;">
+              <button mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="desinscribirConfirmacion(inscripcion)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</section>
