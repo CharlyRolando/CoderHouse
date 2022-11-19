@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { InscripcionEntidades } from 'src/app/inscripciones/interfaces/inscripcion-entidades';
+import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Curso } from '../../interfaces/curso';
 import { CursosService } from '../../services/cursos.service';
+import { loadCursos } from '../../state/cursos.actions';
+import { CursosState } from '../../state/cursos.reducer';
+import { selectCurso } from '../../state/cursos.selectors';
 
 
 @Component({
@@ -20,19 +24,19 @@ import { CursosService } from '../../services/cursos.service';
 export class DetallesCursoComponent implements OnInit {
 
   curso!: Curso;
-  inscripciones$!:Observable<InscripcionEntidades[]>;
+  inscripciones$!:Observable<InscripcionEntidad[]>;
   suscripcion!: Subscription;
   errorMessage: string = '';
   esAdmin: boolean = false;
 
   constructor(
     private sesionService: SesionService,
-    private cursosService: CursosService,
     private inscripcionesService: InscripcionesService,
     private loader: LoaderService,
     private activatedRoute: ActivatedRoute,
     public appService: AppService,
     public dialog: MatDialog,
+    private storeCursos: Store<CursosState>
   ) { }
 
   ngOnInit(): void {
@@ -49,15 +53,11 @@ export class DetallesCursoComponent implements OnInit {
 
 
   getCurso(cursoId: string) {
-    this.loader.show();
 
-    this.cursosService.getCurso(cursoId)
-      .subscribe( (curso:Curso) => {
+    this.storeCursos.select(selectCurso(cursoId)).subscribe((curso: Curso) =>{
+      this.curso = curso;
+    });
 
-        this.curso = curso;
-        this.loader.hide();
-
-      });
   }
 
 
@@ -68,7 +68,7 @@ export class DetallesCursoComponent implements OnInit {
   }
 
 
-  desinscribirConfirmacion(inscripcion: InscripcionEntidades) {
+  desinscribirConfirmacion(inscripcion: InscripcionEntidad) {
 
     const message = `Confirma la desinscripción de ${inscripcion.alumno.nombre} al curso de '${inscripcion.curso.nombre}'?`;
     const dialogData = new ConfirmacionDialogModel('Eliminar inscripción', message);
@@ -103,8 +103,6 @@ export class DetallesCursoComponent implements OnInit {
 
     }
   }
-
-
 
 
 

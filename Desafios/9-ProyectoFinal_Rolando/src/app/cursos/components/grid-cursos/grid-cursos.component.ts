@@ -13,6 +13,10 @@ import { FormInscripcionComponent } from 'src/app/inscripciones/components/form-
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
 import { ActivatedRoute, Route, RouterModule, Routes } from '@angular/router';
 import { AppService } from 'src/app/app.service';
+import { CursosState } from '../../state/cursos.reducer';
+import { Store } from '@ngrx/store';
+import { addCurso, deleteCurso, editCurso, loadCursos } from '../../state/cursos.actions';
+import { selectCursos } from '../../state/cursos.selectors';
 
 
 @Component({
@@ -35,7 +39,8 @@ export class GridCursosComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
-    public appService: AppService
+    public appService: AppService,
+    private storeCursos: Store<CursosState>
   ) {
 
   }
@@ -52,21 +57,11 @@ export class GridCursosComponent implements OnInit, OnDestroy {
 
   getCursosData() {
 
-    this.loader.show();
-    this.suscripcion = this.cursosService.getCursos().subscribe({
+    this.storeCursos.dispatch(loadCursos());
 
-      next: (cursos) => {
+    this.suscripcion = this.storeCursos.select(selectCursos).subscribe((cursos: Curso[]) => {
         this.cursos = cursos;
-      },
-      error: (err) => {
-        this.errorMessage = <any>err;
-        this.loader.hide();
-      },
-      complete: () => {
-        this.loader.hide();
-      }
-    });
-
+      });
   }
 
 
@@ -79,19 +74,7 @@ export class GridCursosComponent implements OnInit, OnDestroy {
     dialogAlta.afterClosed().subscribe((curso: Curso) => {
       if (curso) {
 
-        this.loader.show();
-        this.cursosService.addCurso(curso)
-          .subscribe({
-            next: () => this.onSaveComplete(),
-            error: (err) => {
-              this.errorMessage = <any>err;
-              this.loader.hide();
-            },
-            complete: () => {
-              //console.info('addCurso');
-              this.loader.hide();
-            }
-          });
+        this.storeCursos.dispatch(addCurso({ curso }));
 
         this._snackBar.open(
           `El curso '${curso.nombre}' fue agregado exitosamente.`,
@@ -112,19 +95,7 @@ export class GridCursosComponent implements OnInit, OnDestroy {
     dialogEdit.afterClosed().subscribe((curso: Curso) => {
       if (curso) {
 
-        this.loader.show();
-        this.cursosService.editCurso(curso)
-          .subscribe({
-            next: () => this.onSaveComplete(),
-            error: (err) => {
-              this.errorMessage = <any>err;
-              this.loader.hide();
-            },
-            complete: () => {
-              //console.info('editCurso');
-              this.loader.hide();
-            }
-          });
+        this.storeCursos.dispatch(editCurso({ curso }));
 
         this._snackBar.open(
           `El curso '${curso.nombre}' fue modificado exitosamente.`,
@@ -156,32 +127,10 @@ export class GridCursosComponent implements OnInit, OnDestroy {
   deleteCurso(cursoId: string): void {
 
     if (cursoId === '') {
-      this.loader.show();
-      this.cursosService.deleteCurso(cursoId)
-        .subscribe({
-          next: () => {
-
-            this.inscripcionesService.deleteInscripcionesXcurso(cursoId);
-
-            this.onSaveComplete();
-
-            this.loader.hide();
-            this._snackBar.open(
-              `El curso fue eliminado exitosamente.`, '', { duration: 2000 }
-            );
-
-          },
-          error: (err) => {
-            this.errorMessage = <any>err;
-            this.loader.hide();
-          },
-          complete: () => {
-            this.loader.hide();
-          }
-        });
+      this.onSaveComplete();
+    } else {
+      this.storeCursos.dispatch(deleteCurso({id: cursoId}))
     }
-
-
 
   }
 

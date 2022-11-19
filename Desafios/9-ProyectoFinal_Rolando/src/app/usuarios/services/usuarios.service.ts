@@ -46,7 +46,6 @@ export class UsuariosService {
 
 
   addUsuario(usuario: Usuario):  Observable<Usuario>  {
-    usuario.id = '';
     return this.http.post<Usuario>(this.usuariosUrl, usuario)
       .pipe(
         catchError(this.handleError)

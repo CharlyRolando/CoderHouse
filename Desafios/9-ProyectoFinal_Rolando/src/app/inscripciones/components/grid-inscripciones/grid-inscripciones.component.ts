@@ -15,9 +15,14 @@ import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { UsuariosService } from 'src/app/usuarios/services/usuarios.service';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
-import { InscripcionEntidades } from '../../interfaces/inscripcion-entidades';
+import { InscripcionEntidad } from '../../interfaces/inscripcion-entidad';
 import { Inscripcion } from '../../interfaces/inscripcion';
 import { InscripcionesService } from '../../services/inscripciones.service';
+import { InscripcionesState } from '../../state/inscripciones.reducer';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { deleteInscripcion, loadInscripciones } from '../../state/inscripciones.actions';
+import { selectInscripciones } from '../../state/inscripciones.selectors';
 
 
 @Component({
@@ -29,8 +34,10 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
   errorMessage = '';
   esAdmin: boolean = true;
-  alumnosInscriptos: InscripcionEntidades[] = [];
-  dataSource!: MatTableDataSource<InscripcionEntidades>;
+  alumnosInscriptos: InscripcionEntidad[] = [];
+  suscripcion!: Subscription;
+
+  dataSource!: MatTableDataSource<InscripcionEntidad>;
   columnas: string[] = ['id', 'nombreAlumno', 'nombreCurso', 'comisionCurso', 'fechaInscripto', 'nombreUsuario', 'acciones'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) tbSort!: MatSort;
@@ -43,7 +50,8 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
-    public appService: AppService
+    public appService: AppService,
+    private storeInscripciones: Store<InscripcionesState>
   ) {
 
   }
@@ -63,10 +71,22 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
   getInscripcionesAlumno() {
 
     this.loader.show();
-    this.alumnosInscriptos = [];
 
-    this.inscripcionesService.getInscripcionesEntidades()
-      .subscribe((inscripciones: InscripcionEntidades[]) => {
+    // this.storeInscripciones.dispatch(loadInscripciones());
+
+    // this.suscripcion = this.storeInscripciones.select(selectInscripciones)
+    //   .subscribe((inscripciones: InscripcionEntidad[]) => {
+
+    //     this.alumnosInscriptos = inscripciones.map(alumnos => { return { ...inscripciones }; });  //para que no de error 'Sort'
+
+    //     this.configurarTabla(inscripciones);
+
+    //   });
+
+
+
+      this.suscripcion = this.inscripcionesService.getInscripcionesEntidades()
+      .subscribe((inscripciones: InscripcionEntidad[]) => {
 
         this.loader.hide();
 
@@ -80,111 +100,98 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
 
 
-configurarTabla(alumnosInscriptos: InscripcionEntidades[]) {
+  configurarTabla(alumnosInscriptos: InscripcionEntidad[]) {
 
-  this.dataSource = new MatTableDataSource(alumnosInscriptos);
-  /* Ordenamiento por defecto id desc */
-  this.tbSort.disableClear = true;
-  const sortState: Sort = { active: 'id', direction: 'desc' };
-  this.tbSort.active = sortState.active;
-  this.tbSort.direction = sortState.direction;
-  this.tbSort.sortChange.emit(sortState);
-  this.dataSource.paginator = this.paginator;
-  this.dataSource.sort = this.tbSort;
+    this.dataSource = new MatTableDataSource(alumnosInscriptos);
+    /* Ordenamiento por defecto id desc */
+    this.tbSort.disableClear = true;
+    const sortState: Sort = { active: 'id', direction: 'desc' };
+    this.tbSort.active = sortState.active;
+    this.tbSort.direction = sortState.direction;
+    this.tbSort.sortChange.emit(sortState);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.tbSort;
 
-}
+  }
 
-sortData(e: any) {
+  sortData(e: any) {
 
-}
-
-
-filtrarXAlumno(event: Event) {
-  const valorObtenido = (event.target as HTMLInputElement).value;
-  this.dataSource.filterPredicate = function (
-    alumnoInscripto: InscripcionEntidades,
-    filtro: string
-  ) {
-    return (
-     `${alumnoInscripto.alumno.apellido} ${alumnoInscripto.alumno.nombre}`
-        .toLocaleLowerCase()
-        .includes(filtro.toLocaleLowerCase()));
-  };
-  this.dataSource.filter = valorObtenido.trim().toLowerCase();
-}
-
-
-filtrarXCurso(event: Event) {
-  const valorObtenido = (event.target as HTMLInputElement).value;
-  this.dataSource.filterPredicate = function (
-    alumnoInscripto: InscripcionEntidades,
-    filtro: string
-  ) {
-    return (
-      alumnoInscripto.curso.nombre
-        .toLocaleLowerCase()
-        .includes(filtro.toLocaleLowerCase()));
-  };
-  this.dataSource.filter = valorObtenido.trim().toLowerCase();
-}
-
-
-
-deleteConfirmacion(inscripto: InscripcionEntidades): void {
-  const message = `Confirma la eliminación de la inscripción de '${inscripto.alumno.nombre}' al curso de '${inscripto.curso.nombre}'?`;
-  const dialogData = new ConfirmacionDialogModel('Eliminar inscripción', message);
-
-  const dialogRef = this.dialog.open(ConfirmacionDialogComponent, {
-    maxWidth: '500px',
-    data: dialogData,
-  });
-
-  dialogRef.afterClosed().subscribe((dialogResult) => {
-    if (dialogResult) {
-      this.deleteInscripcion(inscripto.id);
-    }
-  });
-}
-
-deleteInscripcion(id: string): void {
-  if(id === '') {
-  this.onSaveComplete();
-} else {
-  this.loader.show();
-  this.inscripcionesService.deleteInscripcion(id)
-    .subscribe({
-      next: () => this.onSaveComplete(),
-      error: (err) => {
-        this.errorMessage = <any>err;
-        this.loader.hide();
-      },
-      complete: () => {
-        //console.info('deleteInscripcion');
-        this.loader.hide();
-      }
-    });
-
-}
   }
 
 
-onSaveComplete(): void {
-  this.inscripcionesService.getInscripciones()
-    .subscribe({
-      next: (inscriptos) => {
+  filtrarXAlumno(event: Event) {
+    const valorObtenido = (event.target as HTMLInputElement).value;
+    this.dataSource.filterPredicate = function (
+      alumnoInscripto: InscripcionEntidad,
+      filtro: string
+    ) {
+      return (
+        `${alumnoInscripto.alumno.apellido} ${alumnoInscripto.alumno.nombre}`
+          .toLocaleLowerCase()
+          .includes(filtro.toLocaleLowerCase()));
+    };
+    this.dataSource.filter = valorObtenido.trim().toLowerCase();
+  }
 
-        this.getInscripcionesAlumno();
 
-      },
-      error: (err) => this.errorMessage = <any>err,
-      complete: () => console.info('onSaveComplete')
+  filtrarXCurso(event: Event) {
+    const valorObtenido = (event.target as HTMLInputElement).value;
+    this.dataSource.filterPredicate = function (
+      alumnoInscripto: InscripcionEntidad,
+      filtro: string
+    ) {
+      return (
+        alumnoInscripto.curso.nombre
+          .toLocaleLowerCase()
+          .includes(filtro.toLocaleLowerCase()));
+    };
+    this.dataSource.filter = valorObtenido.trim().toLowerCase();
+  }
+
+
+
+  deleteConfirmacion(inscripto: InscripcionEntidad): void {
+    const message = `Confirma la eliminación de la inscripción de '${inscripto.alumno.nombre}' al curso de '${inscripto.curso.nombre}'?`;
+    const dialogData = new ConfirmacionDialogModel('Eliminar inscripción', message);
+
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent, {
+      maxWidth: '500px',
+      data: dialogData,
     });
-}
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult) {
+        this.deleteInscripcion(inscripto.id);
+      }
+    });
+  }
+
+  deleteInscripcion(inscripcionId: string): void {
+    if (inscripcionId === '') {
+      this.onSaveComplete();
+    } else {
+      this.storeInscripciones.dispatch(deleteInscripcion({ id: inscripcionId }));
+    }
+  }
 
 
-ngOnDestroy(): void {
+  onSaveComplete(): void {
+    this.inscripcionesService.getInscripciones()
+      .subscribe({
+        next: (inscriptos) => {
 
-}
+          this.getInscripcionesAlumno();
+
+        },
+        error: (err) => this.errorMessage = <any>err,
+        complete: () => console.info('onSaveComplete')
+      });
+  }
+
+
+  ngOnDestroy(): void {
+    this.suscripcion.unsubscribe();
+  }
 
 
 }

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DetallesUsuarioComponent } from '../usuarios/components/detalles-usuario/detalles-usuario.component';
-import { AdminGuard } from '../_core/guards/admin.guard';
-import { AutenticacionGuard } from '../_core/guards/autenticacion.guard';
+import { AdminGuard } from 'src/app/_core/guards/admin.guard';
+import { AutenticacionGuard } from 'src/app/_core/guards/autenticacion.guard';
 import { ContainerComponent } from './components/container/container.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 

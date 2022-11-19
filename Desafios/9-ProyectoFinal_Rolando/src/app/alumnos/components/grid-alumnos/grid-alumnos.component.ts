@@ -10,10 +10,14 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { FormAlumnoComponent } from '../form-alumno/form-alumno.component';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
+import { AlumnosState } from '../../state/alumnos.reducer';
+import { Store } from '@ngrx/store';
+import { addAlumno, deleteAlumno, editAlumno, loadAlumnos } from '../../state/alumnos.actions';
+import { selectAlumnos } from '../../state/alumnos.selectors';
 
 
 @Component({
@@ -23,11 +27,11 @@ import { InscripcionesService } from 'src/app/inscripciones/services/inscripcion
 })
 export class GridAlumnosComponent implements OnInit, OnDestroy {
 
-  alumnos: Alumno[] = [];
-  errorMessage:string = '';
+  alumnos!: Alumno[];
+  errorMessage: string = '';
   suscripcion!: Subscription;
   dataSource!: MatTableDataSource<Alumno>;
-  columnas: string[] = ['id', 'foto', 'nombreCompleto', 'perfil', 'sexo', 'edad', 'acciones' ];
+  columnas: string[] = ['id', 'foto', 'nombreCompleto', 'perfil', 'sexo', 'edad', 'acciones'];
   esAdmin: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) tbSort!: MatSort;
@@ -38,11 +42,11 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     private sesionService: SesionService,
     private loader: LoaderService,
     private alumnosService: AlumnosService,
-    private inscripcionesService: InscripcionesService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
-    public appService: AppService
+    public appService: AppService,
+    private storeAlumnos: Store<AlumnosState>
   ) { }
 
 
@@ -56,33 +60,37 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
   getAlumnosData() {
 
-    this.loader.show();
-    this.suscripcion = this.alumnosService.getAlumnos()
-      .subscribe({
-        next: (alumnos) => {
+    this.storeAlumnos.dispatch(loadAlumnos());
 
-          this.alumnos = alumnos;
-          this.dataSource = new MatTableDataSource(this.alumnos);
-          /* Ordenamiento por defecto id desc */
-          this.tbSort.disableClear = true;
-          const sortState: Sort = {active: 'id', direction: 'desc'};
-          this.tbSort.active = sortState.active;
-          this.tbSort.direction = sortState.direction;
-          this.tbSort.sortChange.emit(sortState);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.tbSort;
+    this.suscripcion = this.storeAlumnos.select(selectAlumnos)
+      .subscribe((alumnos: Alumno[]) => {
 
-        },
-        error: (err) => {
-          this.errorMessage = <any>err;
-          this.loader.hide();
-        },
-        complete: () => {
-          this.loader.hide();
-        }
+        this.alumnos = alumnos.map(alumnos => { return {...alumnos}; });  //para que no de error 'Sort'
+        this.configurarTabla();
+
       });
 
   }
+
+
+
+configurarTabla() {
+
+  this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
+
+  if(this.alumnos.length > 0 ){
+  /* Ordenamiento por defecto id desc */
+  this.tbSort.disableClear = true;
+  const sortState: Sort = { active: 'id', direction: 'desc' };
+  this.tbSort.active = sortState.active;
+  this.tbSort.direction = sortState.direction;
+  this.tbSort.sortChange.emit(sortState);
+  this.dataSource.sort = this.tbSort;
+  this.dataSource.paginator = this.paginator;
+  }
+}
+
+
 
 
   sortData(sort: Sort) {
@@ -105,22 +113,10 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     dialogAlta.afterClosed().subscribe((alumno: Alumno) => {
       if (alumno) {
 
-          this.loader.show();
-          this.alumnosService.addAlumno(alumno)
-            .subscribe({
-              next: () => this.onSaveComplete(),
-              error: (err) => {
-                this.errorMessage = <any>err;
-                this.loader.hide();
-              },
-              complete: () => {
-                //console.info('addAlumno');
-                this.loader.hide();
-              }
-            });
+        this.storeAlumnos.dispatch(addAlumno({ alumno }));
 
-            this._snackBar.open(
-          `El alumno '${alumno.nombre} ${alumno.apellido}' fue agregado exitosamente.`,  '',
+        this._snackBar.open(
+          `El alumno '${alumno.nombre} ${alumno.apellido}' fue agregado exitosamente.`, '',
           { duration: 2000 }
         );
       }
@@ -137,19 +133,7 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     dialogEdit.afterClosed().subscribe((alumno: Alumno) => {
       if (alumno) {
 
-        this.loader.show();
-          this.alumnosService.editAlumno(alumno)
-            .subscribe({
-              next: () => this.onSaveComplete(),
-              error: (err) => {
-                this.errorMessage = <any>err;
-                this.loader.hide();
-              },
-              complete: () => {
-                //console.info('editAlumno');
-                this.loader.hide();
-              }
-            });
+        this.storeAlumnos.dispatch(editAlumno({ alumno }));
 
         this._snackBar.open(
           `El alumno '${alumno.nombre} ${alumno.apellido}' fue modificado exitosamente.`,
@@ -179,33 +163,12 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
 
   deleteAlumno(alumnoId: string): void {
-    if (alumnoId != '') {
-
-      this.loader.show();
-      this.alumnosService.deleteAlumno(alumnoId)
-        .subscribe({
-          next: () => {
-
-            this.inscripcionesService.deleteInscripcionesXalumno(alumnoId);
-
-            this.onSaveComplete();
-
-            this.loader.hide();
-            this._snackBar.open(
-              `El alumno fue eliminado exitosamente.`, '', { duration: 2000 }
-            );
-          },
-          error: (err) => {
-            this.errorMessage = <any>err;
-            this.loader.hide();
-          },
-          complete: () => {
-            this.loader.hide();
-          }
-        });
-
+    if (alumnoId === '') {
+      this.onSaveComplete();
+    } else {
+      this.storeAlumnos.dispatch(deleteAlumno({ id: alumnoId }));
     }
-  }
+  };
 
 
   onSaveComplete(): void {

@@ -1,5 +1,4 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
@@ -17,8 +16,8 @@ export class MainComponent implements OnInit, AfterContentChecked {
   constructor(
     private loader: LoaderService,
     private ref: ChangeDetectorRef,
-    public appService: AppService
-  ) {  }
+    public appService: AppService,
+  ) { }
 
 
   ngOnInit() {

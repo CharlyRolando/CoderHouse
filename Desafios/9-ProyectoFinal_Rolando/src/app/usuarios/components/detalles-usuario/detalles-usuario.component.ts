@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Usuario } from '../../interfaces/usuario';
-import { UsuariosService } from '../../services/usuarios.service';
+import { loadUsuarios } from '../../state/usuarios.actions';
+import { UsuariosState } from '../../state/usuarios.reducer';
+import { selectUsuario } from '../../state/usuarios.selectors';
 
 
 @Component({
@@ -20,9 +22,8 @@ export class DetallesUsuarioComponent implements OnInit {
   constructor(
     private sesionService: SesionService,
     public appService: AppService,
-    private loader: LoaderService,
-    private usuariosService: UsuariosService,
     private activatedRoute: ActivatedRoute,
+    private storeUsuarios: Store<UsuariosState>
   ) { }
 
   ngOnInit(): void {
@@ -41,15 +42,11 @@ export class DetallesUsuarioComponent implements OnInit {
 
 
   getUsuario(usuarioId: string) {
-    this.loader.show();
 
-    this.usuariosService.getUsuario(usuarioId)
-      .subscribe( (usuario:Usuario) => {
+    this.storeUsuarios.select(selectUsuario(usuarioId)).subscribe((usuario: Usuario) =>{
+      this.usuario = usuario;
+    });
 
-        this.usuario = usuario;
-        this.loader.hide();
-
-      });
   }
 
 

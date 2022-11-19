@@ -1,15 +1,19 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { InscripcionEntidades } from 'src/app/inscripciones/interfaces/inscripcion-entidades';
+import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Alumno } from '../../interfaces/alumno';
 import { AlumnosService } from '../../services/alumnos.service';
+import { loadAlumnos } from '../../state/alumnos.actions';
+import { AlumnosState } from '../../state/alumnos.reducer';
+import { selectAlumno } from '../../state/alumnos.selectors';
 
 
 @Component({
@@ -20,7 +24,7 @@ import { AlumnosService } from '../../services/alumnos.service';
 export class DetallesAlumnoComponent implements OnInit {
 
   alumno!: Alumno;
-  inscripciones$!:Observable<InscripcionEntidades[]>;
+  inscripciones$!:Observable<InscripcionEntidad[]>;
   suscripcion!: Subscription;
   errorMessage: string = '';
   esAdmin: boolean = false;
@@ -33,6 +37,7 @@ export class DetallesAlumnoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public appService: AppService,
     public dialog: MatDialog,
+    private storeAlumnos: Store<AlumnosState>
   ) { }
 
 
@@ -51,15 +56,11 @@ export class DetallesAlumnoComponent implements OnInit {
 
 
   getAlumno(alumnoId: string) {
-    this.loader.show();
 
-    this.alumnosService.getAlumno(alumnoId)
-      .subscribe( (alumno:Alumno) => {
+    this.storeAlumnos.select(selectAlumno(alumnoId)).subscribe((alumno: Alumno) =>{
+      this.alumno = alumno;
+    });
 
-        this.alumno = alumno;
-        this.loader.hide();
-
-      });
   }
 
 
@@ -70,7 +71,7 @@ export class DetallesAlumnoComponent implements OnInit {
   }
 
 
-  desinscribirConfirmacion(inscripcion: InscripcionEntidades) {
+  desinscribirConfirmacion(inscripcion: InscripcionEntidad) {
 
     const message = `Confirma la desinscripción de ${this.alumno.nombre} al curso de '${inscripcion.curso.nombre}'?`;
     const dialogData = new ConfirmacionDialogModel('Eliminar inscripción', message);

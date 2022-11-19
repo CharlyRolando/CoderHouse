@@ -82,6 +82,8 @@ export class FormUsuarioComponent implements OnInit {
     this.titulo = 'Modificación de usuario';
     this.fgUsuario.controls['id'].setValue(usuario.id);
     this.fgUsuario.controls['email'].setValue(usuario.email);
+    this.fgUsuario.controls['password'].setValue(usuario.password);
+    this.fgUsuario.controls['pass2'].setValue(usuario.password);
     this.fgUsuario.controls['nombre'].setValue(usuario.nombre);
     this.fgUsuario.controls['direccion'].setValue(usuario.direccion);
     this.fgUsuario.controls['telefono'].setValue(usuario.telefono);

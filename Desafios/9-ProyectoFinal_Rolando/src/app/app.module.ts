@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './_core/core.module';
 import { SharedModule } from './_shared/shared.module';
 import { ConfirmacionDialogComponent } from './_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { AutenticacionModule } from './autenticacion/autenticacion.module';
@@ -16,8 +17,10 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 // configuracion de Firebase
-import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -30,11 +33,15 @@ import { StoreModule } from '@ngrx/store';
     BrowserAnimationsModule,
     AutenticacionModule,
     AppRoutingModule,
+    CoreModule,
     SharedModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([])
   ],
   providers: [],
   entryComponents: [ConfirmacionDialogComponent],

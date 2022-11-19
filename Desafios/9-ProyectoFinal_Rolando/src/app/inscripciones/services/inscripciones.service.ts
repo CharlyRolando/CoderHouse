@@ -8,7 +8,7 @@ import { CursosService } from 'src/app/cursos/services/cursos.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { UsuariosService } from 'src/app/usuarios/services/usuarios.service';
 import { environment } from 'src/environments/environment';
-import { InscripcionEntidades } from '../interfaces/inscripcion-entidades';
+import { InscripcionEntidad } from '../interfaces/inscripcion-entidad';
 import { Inscripcion } from '../interfaces/inscripcion';
 
 
@@ -62,31 +62,31 @@ export class InscripcionesService {
 
   }
 
-  getInscripcionesEntidades(): Observable<InscripcionEntidades[]> {
+  getInscripcionesEntidades(): Observable<InscripcionEntidad[]> {
 
     return this.getInscripcionesEntidad(this.getInscripciones());
 
   }
 
-  getInscripcionesEntidadesXalumno(alumnoId: string): Observable<InscripcionEntidades[]> {
+  getInscripcionesEntidadesXalumno(alumnoId: string): Observable<InscripcionEntidad[]> {
 
     return this.getInscripcionesEntidad(this.getInscripcionesXalumno(alumnoId));
 
   }
 
-  getInscripcionesEntidadesXcurso(cursoId: string): Observable<InscripcionEntidades[]> {
+  getInscripcionesEntidadesXcurso(cursoId: string): Observable<InscripcionEntidad[]> {
 
     return this.getInscripcionesEntidad(this.getInscripcionesXcurso(cursoId));
 
   }
 
-  getInscripcionesEntidad( inscripciones$:Observable<Inscripcion[]> ): Observable<InscripcionEntidades[]> {
+  getInscripcionesEntidad( inscripciones$:Observable<Inscripcion[]> ): Observable<InscripcionEntidad[]> {
 
-    return new Observable<InscripcionEntidades[]>(
+    return new Observable<InscripcionEntidad[]>(
 
       (observador) => {
 
-        let inscripcionAlumnoArray: InscripcionEntidades[] = [];
+        let inscripcionAlumnoArray: InscripcionEntidad[] = [];
 
         const alumnos$ = this.alumnosService.getAlumnos();
         const cursos$ = this.cursosService.getCursos();
@@ -100,9 +100,9 @@ export class InscripcionesService {
 
           inscripciones.forEach(i => {
 
-            const insc: InscripcionEntidades = {
+            const insc: InscripcionEntidad = {
               id: i.id,
-              fechaInscripcion: i.fecha,
+              fecha: i.fecha,
               alumno: alumnos.filter((a) => a.id == i.alumnoId)[0],
               curso: cursos.filter((c) => c.id == i.cursoId)[0],
               usuario: usuarios.filter((u) => u.id == i.usuarioId)[0],
@@ -126,7 +126,7 @@ export class InscripcionesService {
   limpiarInscripciones() {
 
     this.getInscripcionesEntidades()
-      .subscribe((inscripciones: InscripcionEntidades[]) => {
+      .subscribe((inscripciones: InscripcionEntidad[]) => {
 
         inscripciones.forEach(i => {
 
@@ -145,8 +145,6 @@ export class InscripcionesService {
 
 
   addInscripcion(inscripcion: Inscripcion): Observable<Inscripcion> {
-
-    inscripcion.id = '';
     return this.http.post<Inscripcion>(this.inscripcionesUrl, inscripcion)
       .pipe(
         catchError(this.handleError)
@@ -154,6 +152,14 @@ export class InscripcionesService {
 
   }
 
+  editInscripcion(inscripcion: Inscripcion): Observable<Inscripcion> {
+    return this.http.post<Inscripcion>(this.inscripcionesUrl, inscripcion)
+      .pipe(
+        map(() => inscripcion),
+        catchError(this.handleError)
+      );
+
+  }
 
   deleteInscripcion(id: string): Observable<{}> {
     const url = `${this.inscripcionesUrl}/${id}`;

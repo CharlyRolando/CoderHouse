@@ -36,7 +36,6 @@ export class CursosService {
 
 
   addCurso(curso: Curso):  Observable<Curso>  {
-    curso.id = '';
     return this.http.post<Curso>(this.cursosUrl, curso)
       .pipe(
         catchError(this.handleError)

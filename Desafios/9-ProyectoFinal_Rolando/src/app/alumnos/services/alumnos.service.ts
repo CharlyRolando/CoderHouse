@@ -34,7 +34,6 @@ export class AlumnosService {
 
 
   addAlumno(alumno: Alumno): Observable<Alumno | never>  {
-    alumno.id = '';
     return this.http.post<Alumno>(this.alumnosUrl, alumno)
       .pipe(
         catchError(this.handleError)
