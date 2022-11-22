@@ -4,8 +4,11 @@ import { Usuario } from "src/app/usuarios/interfaces/usuario";
 
 export interface InscripcionEntidad {
   id: string,
+  alumnoId: string,
+  cursoId: string,
+  usuarioId: string,
+  fecha: Date,
   alumno: Alumno,
   curso: Curso,
   usuario: Usuario,
-  fecha: Date,
 }

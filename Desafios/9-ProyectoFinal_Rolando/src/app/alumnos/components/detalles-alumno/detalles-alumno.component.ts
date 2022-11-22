@@ -6,12 +6,11 @@ import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
+import { InscripcionesEntidadService } from 'src/app/inscripciones/services/inscripciones-entidad.service';
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Alumno } from '../../interfaces/alumno';
-import { AlumnosService } from '../../services/alumnos.service';
-import { loadAlumnos } from '../../state/alumnos.actions';
 import { AlumnosState } from '../../state/alumnos.reducer';
 import { selectAlumno } from '../../state/alumnos.selectors';
 
@@ -31,8 +30,8 @@ export class DetallesAlumnoComponent implements OnInit {
 
   constructor(
     private sesionService: SesionService,
-    private alumnosService: AlumnosService,
     private inscripcionesService: InscripcionesService,
+    private inscripcionesEntidadService: InscripcionesEntidadService,
     private loader: LoaderService,
     private activatedRoute: ActivatedRoute,
     public appService: AppService,
@@ -66,7 +65,7 @@ export class DetallesAlumnoComponent implements OnInit {
 
   getInscripcionesEntidadesXAlumno(alumnoId: string){
 
-   this.inscripciones$ = this.inscripcionesService.getInscripcionesEntidadesXalumno(alumnoId);
+   this.inscripciones$ = this.inscripcionesEntidadService.getInscripcionesEntidadXalumno(alumnoId);
 
   }
 

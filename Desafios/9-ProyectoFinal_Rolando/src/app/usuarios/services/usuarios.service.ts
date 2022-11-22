@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../interfaces/usuario';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +16,10 @@ export class UsuariosService {
   constructor(private http: HttpClient) {}
 
   getUsuarios(): Observable<Usuario[]> {
+
+delay(100000);
+
+
     return this.http.get<Usuario[]>(this.usuariosUrl)
     .pipe(
       catchError(this.handleError)

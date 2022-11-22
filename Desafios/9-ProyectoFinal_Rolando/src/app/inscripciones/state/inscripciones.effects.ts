@@ -16,11 +16,10 @@ export class InscripcionesEffects {
   ) { }
 
 
-  loadInscripcioness$ = createEffect(() => {
+  loadAPIInscripciones$ = createEffect(() => {
     return this.actions$.pipe(ofType(InscripcionesActions.loadInscripciones),
       concatMap(() => this.inscripcionesService.getInscripciones().pipe(
         map((inscripciones: Inscripcion[]) =>
-
           InscripcionesActions.loadInscripcionesSuccess({ inscripciones })
         ),
         catchError(error => of(InscripcionesActions.loadInscripcionesFailure({ error }))))

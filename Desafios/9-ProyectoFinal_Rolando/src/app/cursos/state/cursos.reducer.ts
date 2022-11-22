@@ -16,9 +16,6 @@ cursos:[]
 
 
 
-
-
-
 export const cursoReducer = createReducer(
   cursosInitialState,
 

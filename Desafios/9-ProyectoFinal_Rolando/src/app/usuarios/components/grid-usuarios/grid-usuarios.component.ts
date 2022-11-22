@@ -9,11 +9,10 @@ import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
-import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { addUsuario, deleteUsuario, editUsuario, loadUsuarios } from '../../state/usuarios.actions';
 import { UsuariosState } from '../../state/usuarios.reducer';
-import { selectUsuariosLoading, selectUsuarios } from '../../state/usuarios.selectors';
+import { selectUsuarios } from '../../state/usuarios.selectors';
 import { FormUsuarioComponent } from '../form-usuario/form-usuario.component';
 
 
@@ -25,7 +24,6 @@ import { FormUsuarioComponent } from '../form-usuario/form-usuario.component';
 export class GridUsuariosComponent implements OnInit, OnDestroy {
 
   usuarios: Usuario[] = [];
-  loading$!: Observable<boolean>;
   suscripcion!: Subscription;
   errorMessage = '';
   dataSource!: MatTableDataSource<Usuario>;
@@ -36,7 +34,6 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
 
   constructor(
     private sesionService: SesionService,
-    private loader: LoaderService,
     private usuariosService: UsuariosService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
@@ -49,7 +46,6 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.esAdmin = this.sesionService.esAdmin();
-    this.loading$ = this.storeUsuarios.select(selectUsuariosLoading);
 
     this.getUsuariosData();
   }
@@ -59,7 +55,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
 
     this.storeUsuarios.dispatch(loadUsuarios());
 
-    this.storeUsuarios.select(selectUsuarios).subscribe((usuarios: Usuario[]) => {
+    this.suscripcion = this.storeUsuarios.select(selectUsuarios).subscribe((usuarios: Usuario[]) => {
       this.dataSource = new MatTableDataSource<Usuario>(usuarios);
     });
 
@@ -154,7 +150,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-//    this.suscripcion.unsubscribe();
+    this.suscripcion.unsubscribe();
   }
 
 

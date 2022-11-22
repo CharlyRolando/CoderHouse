@@ -22,7 +22,9 @@ export const selectInscripciones = createSelector(
 );
 
 
-export const selectInscripcion = (inscripcionId:string) => createSelector(
+
+
+export const selectInscripcion = (inscripcionId: string) => createSelector(
   selectInscripciones,
   (inscripciones: Inscripcion[]) => {
     return inscripciones.filter(u => u.id == inscripcionId)[0]
@@ -31,4 +33,20 @@ export const selectInscripcion = (inscripcionId:string) => createSelector(
 
 
 
+
+// export const selectInscripcionesEntity = createSelector(
+//   selectInscripciones,
+//   selectAlumnos,
+//   selectCursos,
+//   selectUsuarios,
+//   (inscripciones: Inscripcion[], alumnos: Alumno[], cursos: Curso[], usuarios:Usuario[]) => {
+
+//     return inscripciones.map((inscripcion: Inscripcion) => ({
+//         ...inscripcion,
+//         alumno: alumnos.filter(a => a.id == inscripcion.alumnoId)[0],
+//         curso: cursos.filter(a => a.id == inscripcion.cursoId)[0],
+//         usuario: usuarios.filter(a => a.id == inscripcion.usuarioId)[0],
+//       }));
+
+//   });
 

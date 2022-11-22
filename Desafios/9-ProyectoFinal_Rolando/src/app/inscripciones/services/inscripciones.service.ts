@@ -1,14 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, combineLatest, combineLatestWith, filter, forkJoin, map, mergeMap, Observable, of, throwError } from 'rxjs';
-import { Alumno } from 'src/app/alumnos/interfaces/alumno';
-import { AlumnosService } from 'src/app/alumnos/services/alumnos.service';
-import { Curso } from 'src/app/cursos/interfaces/curso';
-import { CursosService } from 'src/app/cursos/services/cursos.service';
-import { Usuario } from 'src/app/usuarios/interfaces/usuario';
-import { UsuariosService } from 'src/app/usuarios/services/usuarios.service';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { InscripcionEntidad } from '../interfaces/inscripcion-entidad';
 import { Inscripcion } from '../interfaces/inscripcion';
 
 
@@ -23,9 +16,6 @@ export class InscripcionesService {
 
   constructor(
     private http: HttpClient,
-    private cursosService: CursosService,
-    private alumnosService: AlumnosService,
-    private usuariosService: UsuariosService
   ) { }
 
 
@@ -41,8 +31,7 @@ export class InscripcionesService {
 
   getInscripcionesXcurso(cursoId: string): Observable<Inscripcion[]> {
 
-    return this.http.get<Inscripcion[]>(this.inscripcionesUrl)
-      .pipe(
+    return this.getInscripciones().pipe(
         map(
           (inscripciones: Inscripcion[]) => inscripciones.filter((i: Inscripcion) => i.cursoId === cursoId)
         )
@@ -53,8 +42,7 @@ export class InscripcionesService {
 
   getInscripcionesXalumno(alumnoId: string): Observable<Inscripcion[]> {
 
-    return this.http.get<Inscripcion[]>(this.inscripcionesUrl)
-      .pipe(
+    return this.getInscripciones().pipe(
         map(
           (inscripciones: Inscripcion[]) => inscripciones.filter((i: Inscripcion) => i.alumnoId === alumnoId)
         )
@@ -62,91 +50,12 @@ export class InscripcionesService {
 
   }
 
-  getInscripcionesEntidades(): Observable<InscripcionEntidad[]> {
-
-    return this.getInscripcionesEntidad(this.getInscripciones());
-
-  }
-
-  getInscripcionesEntidadesXalumno(alumnoId: string): Observable<InscripcionEntidad[]> {
-
-    return this.getInscripcionesEntidad(this.getInscripcionesXalumno(alumnoId));
-
-  }
-
-  getInscripcionesEntidadesXcurso(cursoId: string): Observable<InscripcionEntidad[]> {
-
-    return this.getInscripcionesEntidad(this.getInscripcionesXcurso(cursoId));
-
-  }
-
-  getInscripcionesEntidad( inscripciones$:Observable<Inscripcion[]> ): Observable<InscripcionEntidad[]> {
-
-    return new Observable<InscripcionEntidad[]>(
-
-      (observador) => {
-
-        let inscripcionAlumnoArray: InscripcionEntidad[] = [];
-
-        const alumnos$ = this.alumnosService.getAlumnos();
-        const cursos$ = this.cursosService.getCursos();
-        const usuarios$ = this.usuariosService.getUsuarios();
-
-        inscripciones$.pipe(
-
-          combineLatestWith(alumnos$, cursos$, usuarios$)
-
-        ).subscribe(([inscripciones, alumnos, cursos, usuarios]) => {
-
-          inscripciones.forEach(i => {
-
-            const insc: InscripcionEntidad = {
-              id: i.id,
-              fecha: i.fecha,
-              alumno: alumnos.filter((a) => a.id == i.alumnoId)[0],
-              curso: cursos.filter((c) => c.id == i.cursoId)[0],
-              usuario: usuarios.filter((u) => u.id == i.usuarioId)[0],
-            };
-
-            inscripcionAlumnoArray.push(insc);
-
-          });
-
-          observador.next(inscripcionAlumnoArray);
-          observador.complete();
-
-        });
-
-      });
-
-  }
-
-
-
-  limpiarInscripciones() {
-
-    this.getInscripcionesEntidades()
-      .subscribe((inscripciones: InscripcionEntidad[]) => {
-
-        inscripciones.forEach(i => {
-
-          if (i.curso === undefined) {
-            // this.deleteInscripcion(i.id);
-            console.log('inscripcion.id = ' + i.id);
-
-          }
-
-        });
-
-      });
-
-
-  }
 
 
   addInscripcion(inscripcion: Inscripcion): Observable<Inscripcion> {
     return this.http.post<Inscripcion>(this.inscripcionesUrl, inscripcion)
       .pipe(
+        map(() => inscripcion),
         catchError(this.handleError)
       );
 

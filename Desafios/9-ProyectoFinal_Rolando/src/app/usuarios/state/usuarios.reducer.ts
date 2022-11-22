@@ -19,6 +19,15 @@ export const usuarioReducer = createReducer(
   usuariosInitialState,
 
 
+  on(UsuariosActions.loadUsuarios, (state) => (
+    {
+      ...state,
+      loading: true,
+      usuarios: []
+    }
+  )),
+
+
   on(UsuariosActions.loadUsuariosSuccess, (state, action) => (
     {
       ...state,

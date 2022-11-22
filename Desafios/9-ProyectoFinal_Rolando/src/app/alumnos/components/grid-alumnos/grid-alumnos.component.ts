@@ -10,10 +10,9 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { FormAlumnoComponent } from '../form-alumno/form-alumno.component';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { ActivatedRoute } from '@angular/router';
-import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
 import { AlumnosState } from '../../state/alumnos.reducer';
 import { Store } from '@ngrx/store';
 import { addAlumno, deleteAlumno, editAlumno, loadAlumnos } from '../../state/alumnos.actions';
@@ -40,8 +39,6 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
   constructor(
     private sesionService: SesionService,
-    private loader: LoaderService,
-    private alumnosService: AlumnosService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
@@ -163,28 +160,10 @@ configurarTabla() {
 
 
   deleteAlumno(alumnoId: string): void {
-    if (alumnoId === '') {
-      this.onSaveComplete();
-    } else {
+    if (alumnoId != '') {
       this.storeAlumnos.dispatch(deleteAlumno({ id: alumnoId }));
     }
   };
-
-
-  onSaveComplete(): void {
-    this.alumnosService.getAlumnos()
-      .subscribe({
-        next: (alumnos) => {
-
-          this.alumnos = alumnos;
-          this.dataSource.data = alumnos;
-          this.dataSource.paginator = this.paginator;
-
-        },
-        error: (err) => this.errorMessage = <any>err,
-        complete: () => console.info('onSaveComplete')
-      });
-  }
 
 
 

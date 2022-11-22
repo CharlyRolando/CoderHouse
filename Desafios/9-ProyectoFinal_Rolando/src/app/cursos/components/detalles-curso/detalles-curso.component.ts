@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
+import { InscripcionesEntidadService } from 'src/app/inscripciones/services/inscripciones-entidad.service';
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
@@ -32,6 +33,7 @@ export class DetallesCursoComponent implements OnInit {
   constructor(
     private sesionService: SesionService,
     private inscripcionesService: InscripcionesService,
+    private inscripcionesEntidadService: InscripcionesEntidadService,
     private loader: LoaderService,
     private activatedRoute: ActivatedRoute,
     public appService: AppService,
@@ -63,7 +65,7 @@ export class DetallesCursoComponent implements OnInit {
 
   getInscripcionesEntidadesXCurso(cursoId: string){
 
-   this.inscripciones$ = this.inscripcionesService.getInscripcionesEntidadesXcurso(cursoId);
+   this.inscripciones$ = this.inscripcionesEntidadService.getInscripcionesEntidadXcurso(cursoId);
 
   }
 

@@ -5,25 +5,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { Alumno } from 'src/app/alumnos/interfaces/alumno';
-import { AlumnosService } from 'src/app/alumnos/services/alumnos.service';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { Curso } from 'src/app/cursos/interfaces/curso';
-import { CursosService } from 'src/app/cursos/services/cursos.service';
-import { Usuario } from 'src/app/usuarios/interfaces/usuario';
-import { UsuariosService } from 'src/app/usuarios/services/usuarios.service';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { InscripcionEntidad } from '../../interfaces/inscripcion-entidad';
-import { Inscripcion } from '../../interfaces/inscripcion';
-import { InscripcionesService } from '../../services/inscripciones.service';
-import { InscripcionesState } from '../../state/inscripciones.reducer';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { deleteInscripcion, loadInscripciones } from '../../state/inscripciones.actions';
-import { selectInscripciones } from '../../state/inscripciones.selectors';
-
+import { InscripcionesEntidadState } from '../../state/inscripciones-entidad.reducer';
+import { deleteInscripcionEntidad, loadInscripcionesEntidad } from '../../state/inscripciones-entidad.actions';
+import { selectInscripcionesEntidad } from '../../state/inscripciones-entidad.selectors';
 
 @Component({
   selector: 'app-grid-inscripciones',
@@ -34,11 +25,13 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
   errorMessage = '';
   esAdmin: boolean = true;
-  alumnosInscriptos: InscripcionEntidad[] = [];
+
+  inscripciones!: InscripcionEntidad[];
+
   suscripcion!: Subscription;
 
   dataSource!: MatTableDataSource<InscripcionEntidad>;
-  columnas: string[] = ['id', 'nombreAlumno', 'nombreCurso', 'comisionCurso', 'fechaInscripto', 'nombreUsuario', 'acciones'];
+  columnas: string[] = ['id', 'nombreAlumno', 'nombreCurso', 'comisionCurso', 'fecha', 'nombreUsuario', 'acciones'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) tbSort!: MatSort;
 
@@ -46,12 +39,11 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
   constructor(
     private loader: LoaderService,
     private sesionService: SesionService,
-    private inscripcionesService: InscripcionesService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
     public appService: AppService,
-    private storeInscripciones: Store<InscripcionesState>
+    private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
   ) {
 
   }
@@ -63,46 +55,34 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
     this._snackBar
     this.esAdmin = this.sesionService.esAdmin();
 
-    this.getInscripcionesAlumno();
+    this.getInscripciones();
 
   }
 
 
-  getInscripcionesAlumno() {
+  getInscripciones() {
 
-    this.loader.show();
+    this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
 
-    // this.storeInscripciones.dispatch(loadInscripciones());
+    this.suscripcion = this.storeInscripcionesEntidad.select(selectInscripcionesEntidad)
+    .subscribe((inscripciones: InscripcionEntidad[]) => {
 
-    // this.suscripcion = this.storeInscripciones.select(selectInscripciones)
-    //   .subscribe((inscripciones: InscripcionEntidad[]) => {
+      this.inscripciones = inscripciones.map(inscripciones => { return {...inscripciones}; });
+      this.configurarTabla();
 
-    //     this.alumnosInscriptos = inscripciones.map(alumnos => { return { ...inscripciones }; });  //para que no de error 'Sort'
+    });
 
-    //     this.configurarTabla(inscripciones);
-
-    //   });
-
-
-
-      this.suscripcion = this.inscripcionesService.getInscripcionesEntidades()
-      .subscribe((inscripciones: InscripcionEntidad[]) => {
-
-        this.loader.hide();
-
-        this.alumnosInscriptos = inscripciones;
-
-        this.configurarTabla(inscripciones);
-
-      });
   }
 
 
 
 
-  configurarTabla(alumnosInscriptos: InscripcionEntidad[]) {
+  configurarTabla() {
 
-    this.dataSource = new MatTableDataSource(alumnosInscriptos);
+
+    this.dataSource = new MatTableDataSource(this.inscripciones);
+
+    if(this.inscripciones.length > 0 ){
     /* Ordenamiento por defecto id desc */
     this.tbSort.disableClear = true;
     const sortState: Sort = { active: 'id', direction: 'desc' };
@@ -111,11 +91,21 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
     this.tbSort.sortChange.emit(sortState);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.tbSort;
-
+    }
   }
 
-  sortData(e: any) {
 
+  sortData(sort: Sort) {
+    var orden = this.inscripciones.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'nombreAlumno': return compare(a.alumno.apellido, b.alumno.apellido, isAsc);
+        case 'nombreCurso': return compare(a.curso.nombre, b.curso.nombre, isAsc);
+        case 'comisionCurso': return compare(a.curso.comision, b.curso.comision, isAsc);
+        case 'nombreUsuario': return compare(a.usuario.nombre, b.usuario.nombre, isAsc);
+        default: return 0;
+      }
+    });
   }
 
 
@@ -167,26 +157,12 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
   }
 
   deleteInscripcion(inscripcionId: string): void {
-    if (inscripcionId === '') {
-      this.onSaveComplete();
-    } else {
-      this.storeInscripciones.dispatch(deleteInscripcion({ id: inscripcionId }));
+    if (inscripcionId != '') {
+      this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: inscripcionId }));
     }
   }
 
 
-  onSaveComplete(): void {
-    this.inscripcionesService.getInscripciones()
-      .subscribe({
-        next: (inscriptos) => {
-
-          this.getInscripcionesAlumno();
-
-        },
-        error: (err) => this.errorMessage = <any>err,
-        complete: () => console.info('onSaveComplete')
-      });
-  }
 
 
   ngOnDestroy(): void {
@@ -197,51 +173,10 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 }
 
 
-
-
-
-
-
-
-  // getAlumnosInscriptos() {
-  //   this.loader.show();
-  //   this.alumnosInscriptos=[];
-  //   this.inscripcionesService.getInscripciones().subscribe({
-  //     next: (inscripciones: Inscripcion[]) => {
-  //       if(inscripciones.length > 0){
-  //       inscripciones.map((i) => {
-  //         const alumno$: Promise<Alumno | undefined> = this.alumnosService.getAlumno(i.alumnoId).toPromise();
-  //         const curso$: Promise<Curso | undefined> = this.cursosService.getCurso(i.cursoId).toPromise();
-  //         const usuario$: Promise<Usuario | undefined> = this.usuariosService.getUsuario(i.usuarioId).toPromise();
-  //         Promise.all([alumno$, curso$, usuario$]).then( (values) => {
-  //           const alumno: Alumno | undefined = values[0];
-  //           const curso: Curso | undefined = values[1];
-  //           const usuario: Usuario | undefined = values[2];
-  //           if (alumno && curso && usuario) {
-  //             const inscripto: AlumnoInscripto = {
-  //               id: i.id,
-  //               nombreAlumno: `${alumno.nombre} ${alumno.apellido}`,
-  //               nombreCurso: curso.nombre,
-  //               nombreUsuario: usuario.nombre,
-  //               fechaInscripto: i.fecha
-  //             };
-  //             if (inscripto) {
-  //               this.alumnosInscriptos.push(inscripto);
-  //             }
-  //           }
-  //           this.dataSource = new MatTableDataSource(this.alumnosInscriptos);
-  //           this.loader.hide();
-  //         });
-  //       })
-  //     }else{
-  //       this.dataSource = new MatTableDataSource(this.alumnosInscriptos);
-  //       this.loader.hide();
-  //     }
-  //     }
-  //   });
-  // }
-
-
+/* Ordenamiento */
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
 
 
 

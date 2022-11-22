@@ -4,16 +4,16 @@ import { Inscripcion } from '../interfaces/inscripcion';
 
 
 export const loadInscripciones = createAction(
-  '[Inscripciones] Load Inscripcioness'
+  '[Inscripciones] Load Inscripciones'
 );
 
 export const loadInscripcionesSuccess = createAction(
-  '[Inscripciones] Load Inscripcioness Success',
+  '[Inscripciones] Load Inscripciones Success',
   props<{ inscripciones: Inscripcion[] }>()
 );
 
 export const loadInscripcionesFailure = createAction(
-  '[Inscripciones] Load Inscripcioness Failure',
+  '[Inscripciones] Load Inscripciones Failure',
   props<{ error: any }>()
 );
 

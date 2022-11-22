@@ -20,7 +20,8 @@ export class CursosEffects {
     return this.actions$.pipe(ofType(CursosActions.loadCursos),
 
       concatMap(() => this.cursosService.getCursos().pipe(
-          map((cursos: Curso[]) => CursosActions.loadCursosSuccess({ cursos })),
+          map((cursos: Curso[]) =>
+          CursosActions.loadCursosSuccess({ cursos })),
           catchError(error => of(CursosActions.loadCursosFailure({ error }))))
       )
     );

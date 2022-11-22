@@ -23,6 +23,8 @@ export const selectAlumnos = createSelector(
 export const selectAlumno = (alumnoId:string) => createSelector(
   selectAlumnos,
   (alumnos: Alumno[]) => {
-    return alumnos.filter(u => u.id == alumnoId)[0]
+    return alumnos.filter(a => a.id == alumnoId)[0]
   }
 );
+
+

@@ -18,7 +18,8 @@ export class UsuariosEffects {
 
   loadAPIUsuarios$ = createEffect(() => {
     return this.actions$.pipe(ofType(UsuariosActions.loadUsuarios),
-      exhaustMap(() => this.usuariosService.getUsuarios().pipe(
+
+      concatMap(() => this.usuariosService.getUsuarios().pipe(
           map((usuarios: Usuario[]) => UsuariosActions.loadUsuariosSuccess({ usuarios })),
           catchError(error => of(UsuariosActions.loadUsuariosFailure({ error })))
         )

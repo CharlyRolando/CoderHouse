@@ -6,8 +6,10 @@ import { GridInscripcionesComponent } from './components/grid-inscripciones/grid
 import { FormInscripcionComponent } from './components/form-inscripcion/form-inscripcion.component';
 import { EffectsModule } from '@ngrx/effects';
 import { InscripcionesEffects } from './state/inscripciones.effects';
-import { inscripcionesFeatureKey, inscripcionReducer } from './state/inscripciones.reducer';
 import { StoreModule } from '@ngrx/store';
+import { inscripcionesFeatureKey, inscripcionReducer } from './state/inscripciones.reducer';
+import { inscripcionEntidadReducer, inscripcionesEntidadFeatureKey } from './state/inscripciones-entidad.reducer';
+import { InscripcionesEntidadEffects } from './state/inscripciones-entidad.effects';
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { StoreModule } from '@ngrx/store';
     InscripcionesRoutingModule,
     SharedModule,
     StoreModule.forFeature(inscripcionesFeatureKey, inscripcionReducer),
-    EffectsModule.forFeature([InscripcionesEffects]),
+    StoreModule.forFeature(inscripcionesEntidadFeatureKey, inscripcionEntidadReducer),
+    EffectsModule.forFeature([InscripcionesEffects, InscripcionesEntidadEffects]),
   ]
 })
 export class InscripcionesModule { }
