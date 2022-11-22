@@ -23,11 +23,14 @@ import { selectAlumno } from '../../state/alumnos.selectors';
 })
 export class DetallesAlumnoComponent implements OnInit, OnDestroy {
 
+  esAdmin: boolean = false;
+  suscripcionLoading!: Subscription;
+
   alumno!: Alumno;
   inscripciones$!:Observable<InscripcionEntidad[]>;
-  suscripcion!: Subscription;
+  suscripcionAlumnos!: Subscription;
   errorMessage: string = '';
-  esAdmin: boolean = false;
+
 
   constructor(
     private loader: LoaderService,
@@ -38,9 +41,7 @@ export class DetallesAlumnoComponent implements OnInit, OnDestroy {
     private storeAlumnos: Store<AlumnosState>,
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
   ) {
-
-    this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
-
+    this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
    }
 
 
@@ -62,7 +63,7 @@ export class DetallesAlumnoComponent implements OnInit, OnDestroy {
 
   getAlumno(alumnoId: string) {
 
-    this.suscripcion = this.storeAlumnos.select(selectAlumno(alumnoId)).subscribe((alumno: Alumno) =>{
+    this.suscripcionAlumnos = this.storeAlumnos.select(selectAlumno(alumnoId)).subscribe((alumno: Alumno) =>{
       this.alumno = alumno;
     });
 
@@ -105,7 +106,8 @@ export class DetallesAlumnoComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.suscripcion.unsubscribe();
+    this.suscripcionAlumnos.unsubscribe();
+    this.suscripcionLoading.unsubscribe();
   }
 
 

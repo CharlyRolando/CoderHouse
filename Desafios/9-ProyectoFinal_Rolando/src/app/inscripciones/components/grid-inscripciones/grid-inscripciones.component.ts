@@ -26,10 +26,10 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
   errorMessage = '';
   esAdmin: boolean = true;
+  suscripcionLoading!: Subscription;
 
   inscripciones!: InscripcionEntidad[];
-
-  suscripcion!: Subscription;
+  suscripcionInscripciones!: Subscription;
 
   dataSource!: MatTableDataSource<InscripcionEntidad>;
   columnas: string[] = ['id', 'nombreAlumno', 'nombreCurso', 'comisionCurso', 'fecha', 'nombreUsuario', 'acciones'];
@@ -46,7 +46,7 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
     public appService: AppService,
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
   ) {
-    this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
+    this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
   }
 
 
@@ -65,7 +65,7 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
     this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
 
-    this.suscripcion = this.storeInscripcionesEntidad.select(selectInscripcionesEntidad)
+    this.suscripcionInscripciones = this.storeInscripcionesEntidad.select(selectInscripcionesEntidad)
     .subscribe((inscripciones: InscripcionEntidad[]) => {
 
       this.inscripciones = inscripciones.map(inscripciones => { return {...inscripciones}; });
@@ -167,7 +167,8 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.suscripcion.unsubscribe();
+    this.suscripcionInscripciones.unsubscribe();
+    this.suscripcionLoading.unsubscribe();
   }
 
 

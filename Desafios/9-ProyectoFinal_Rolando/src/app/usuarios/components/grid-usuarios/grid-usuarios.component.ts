@@ -23,12 +23,15 @@ import { FormUsuarioComponent } from '../form-usuario/form-usuario.component';
 })
 export class GridUsuariosComponent implements OnInit, OnDestroy {
 
+  esAdmin: boolean = false;
+  suscripcionLoading!: Subscription;
+
   usuarios: Usuario[] = [];
-  suscripcion!: Subscription;
+  suscripcionUsuarios!: Subscription;
   errorMessage = '';
   dataSource!: MatTableDataSource<Usuario>;
   displayedColumns: string[] = ['nombre', 'email', 'direccion', 'telefono', 'admin', 'acciones'];
-  esAdmin: boolean = false;
+
 
 
 
@@ -41,7 +44,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
     public appService: AppService,
     private storeUsuarios: Store<UsuariosState>
   ) {
-    this.storeUsuarios.select(selectUsuariosLoading).subscribe(this.loader.controlLoader);
+    this.suscripcionLoading = this.storeUsuarios.select(selectUsuariosLoading).subscribe(this.loader.controlLoader);
    }
 
 
@@ -57,7 +60,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
 
     this.storeUsuarios.dispatch(loadUsuarios());
 
-    this.suscripcion = this.storeUsuarios.select(selectUsuarios).subscribe((usuarios: Usuario[]) => {
+    this.suscripcionUsuarios = this.storeUsuarios.select(selectUsuarios).subscribe((usuarios: Usuario[]) => {
       this.dataSource = new MatTableDataSource<Usuario>(usuarios);
     });
 
@@ -137,7 +140,8 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.suscripcion.unsubscribe();
+    this.suscripcionUsuarios.unsubscribe();
+    this.suscripcionLoading.unsubscribe();
   }
 
 

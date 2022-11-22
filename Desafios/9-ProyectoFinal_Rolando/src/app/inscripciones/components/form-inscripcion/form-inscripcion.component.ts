@@ -25,7 +25,8 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
   fgInscripcion!: FormGroup;
   alumnos: any[] = [];
   alumnosSeleccion = this.alumnos;
-  suscripcion!: Subscription;
+  suscripcionInscripcion!: Subscription;
+  suscripcionAlumnos!: Subscription;
   curso!: Curso;
 
 
@@ -41,17 +42,28 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
   }
 
 
-/* Solo los alumnos que no están inscriptos todavía */
+
+  ngOnInit(): void {
+
+    this.getAlumnosData();
+
+    this.configurarFormulario();
+
+  }
+
+
+
+  /* Solo debe mostrar los alumnos que no están inscriptos todavía */
   getAlumnosData() {
 
     this.storeAlumnos.dispatch(loadAlumnos());
     this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
 
-    this.suscripcion = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXcurso(this.curso.id)).subscribe({
+    this.suscripcionInscripcion = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXcurso(this.curso.id)).subscribe({
       next: (inscrCurso: InscripcionEntidad[]) => {
         const alumnosId: string[] = inscrCurso.map((i) => i.alumnoId);
 
-        this.storeAlumnos.select(selectAlumnos).subscribe({
+        this.suscripcionAlumnos = this.storeAlumnos.select(selectAlumnos).subscribe({
           next: (alumnos) => {
 
             alumnos = alumnos.filter((a) => !alumnosId.includes(a.id));
@@ -71,19 +83,9 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
   }
 
 
-
-  ngOnInit(): void {
-
-    this.getAlumnosData();
-
-    this.configurarFormulario();
-
-  }
-
-
   configurarFormulario() {
 
-    this.titulo = `Inscripción al curso de ${this.curso.nombre}`;
+    this.titulo = `Inscripción al curso de '${this.curso.nombre}'`;
 
     this.fgInscripcion = this.formBuilder.group({
       id: '',
@@ -128,7 +130,8 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.suscripcion.unsubscribe();
+    this.suscripcionInscripcion.unsubscribe();
+    this.suscripcionAlumnos.unsubscribe();
   }
 
 

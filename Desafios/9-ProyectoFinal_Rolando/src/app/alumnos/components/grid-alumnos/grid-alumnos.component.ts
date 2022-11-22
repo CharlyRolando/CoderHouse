@@ -25,12 +25,15 @@ import { selectAlumnos, selectAlumnosLoading } from '../../state/alumnos.selecto
 })
 export class GridAlumnosComponent implements OnInit, OnDestroy {
 
+  esAdmin: boolean = false;
+  suscripcionLoading!: Subscription;
+
   alumnos!: Alumno[];
   errorMessage: string = '';
-  suscripcion!: Subscription;
+  suscripcionAlumnos!: Subscription;
   dataSource!: MatTableDataSource<Alumno>;
   columnas: string[] = ['id', 'foto', 'nombreCompleto', 'perfil', 'sexo', 'edad', 'acciones'];
-  esAdmin: boolean = false;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) tbSort!: MatSort;
 
@@ -45,7 +48,7 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     public appService: AppService,
     private storeAlumnos: Store<AlumnosState>
   ) {
-    this.storeAlumnos.select(selectAlumnosLoading).subscribe(this.loader.controlLoader);
+    this.suscripcionLoading = this.storeAlumnos.select(selectAlumnosLoading).subscribe(this.loader.controlLoader);
   }
 
 
@@ -65,7 +68,7 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
     this.storeAlumnos.dispatch(loadAlumnos());
 
-    this.suscripcion = this.storeAlumnos.select(selectAlumnos)
+    this.suscripcionAlumnos = this.storeAlumnos.select(selectAlumnos)
       .subscribe((alumnos: Alumno[]) => {
 
         this.alumnos = alumnos.map(alumnos => { return {...alumnos}; });  //para que no de error 'Sort'
@@ -191,7 +194,8 @@ configurarTabla() {
 
 
   ngOnDestroy(): void {
-    this.suscripcion.unsubscribe();
+    this.suscripcionAlumnos.unsubscribe();
+    this.suscripcionLoading.unsubscribe();
   }
 
 

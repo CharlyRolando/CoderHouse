@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   showLoader!: boolean;
   fgLogin: FormGroup;
-  suscripcion!: Subscription;
+  suscripcionLoading!: Subscription;
 
   constructor(
     public dialog: MatDialog,
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.suscripcion = this.loader.controlLoader.subscribe((result) => {
+    this.suscripcionLoading = this.loader.controlLoader.subscribe((result) => {
       this.showLoader = result;
     });
   }
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.suscripcion.unsubscribe();
+    this.suscripcionLoading.unsubscribe();
   }
 
 

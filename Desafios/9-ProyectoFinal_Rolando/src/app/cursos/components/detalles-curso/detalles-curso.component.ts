@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -21,13 +21,16 @@ import { selectCurso } from '../../state/cursos.selectors';
   templateUrl: './detalles-curso.component.html',
   styleUrls: ['./detalles-curso.component.css']
 })
-export class DetallesCursoComponent implements OnInit {
+export class DetallesCursoComponent implements OnInit, OnDestroy {
+
+  esAdmin: boolean = false;
+  suscripcionLoading!: Subscription;
 
   curso!: Curso;
   inscripciones$!:Observable<InscripcionEntidad[]>;
-  suscripcion!: Subscription;
+  suscripcionCursos!: Subscription;
   errorMessage: string = '';
-  esAdmin: boolean = false;
+
 
   constructor(
     private loader: LoaderService,
@@ -38,7 +41,7 @@ export class DetallesCursoComponent implements OnInit {
     private storeCursos: Store<CursosState>,
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
   ) {
-    this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
+     this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
    }
 
   ngOnInit(): void {
@@ -57,7 +60,7 @@ export class DetallesCursoComponent implements OnInit {
 
   getCurso(cursoId: string) {
 
-    this.storeCursos.select(selectCurso(cursoId)).subscribe((curso: Curso) =>{
+    this.suscripcionCursos = this.storeCursos.select(selectCurso(cursoId)).subscribe((curso: Curso) =>{
       this.curso = curso;
     });
 
@@ -97,6 +100,12 @@ export class DetallesCursoComponent implements OnInit {
     }
   }
 
+
+
+  ngOnDestroy(): void {
+    this.suscripcionCursos.unsubscribe();
+    this.suscripcionLoading.unsubscribe();
+  }
 
 
 }

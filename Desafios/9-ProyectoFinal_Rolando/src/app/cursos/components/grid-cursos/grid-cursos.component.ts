@@ -26,10 +26,14 @@ import { addInscripcionEntidad } from 'src/app/inscripciones/state/inscripciones
 })
 export class GridCursosComponent implements OnInit, OnDestroy {
 
+
+  esAdmin: boolean = false;
+  suscripcionLoading!: Subscription;
+
   cursos!: Curso[];
   errorMessage = '';
-  esAdmin: boolean = false;
-  suscripcion!: Subscription;
+
+  suscripcionCursos!: Subscription;
 
   constructor(
     private loader: LoaderService,
@@ -41,7 +45,7 @@ export class GridCursosComponent implements OnInit, OnDestroy {
     private storeCursos: Store<CursosState>,
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
   ) {
-    this.storeCursos.select(selectCursosLoading).subscribe(this.loader.controlLoader);
+    this.suscripcionLoading = this.storeCursos.select(selectCursosLoading).subscribe(this.loader.controlLoader);
   }
 
 
@@ -58,7 +62,7 @@ export class GridCursosComponent implements OnInit, OnDestroy {
 
     this.storeCursos.dispatch(loadCursos());
 
-    this.suscripcion = this.storeCursos.select(selectCursos).subscribe((cursos: Curso[]) => {
+    this.suscripcionCursos = this.storeCursos.select(selectCursos).subscribe((cursos: Curso[]) => {
         this.cursos = cursos;
       });
   }
@@ -161,7 +165,8 @@ export class GridCursosComponent implements OnInit, OnDestroy {
   /**********************************************************************************/
 
   ngOnDestroy() {
-    this.suscripcion.unsubscribe();
+    this.suscripcionCursos.unsubscribe();
+    this.suscripcionLoading.unsubscribe();
   }
 
 
