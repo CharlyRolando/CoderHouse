@@ -11,6 +11,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AlumnosEffects } from './state/alumnos.effects';
 import { StoreModule } from '@ngrx/store';
 import { alumnoReducer, alumnosFeatureKey } from './state/alumnos.reducer';
+import { InscripcionesEntidadEffects } from '../inscripciones/state/inscripciones-entidad.effects';
+import { inscripcionEntidadReducer, inscripcionesEntidadFeatureKey } from '../inscripciones/state/inscripciones-entidad.reducer';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { alumnoReducer, alumnosFeatureKey } from './state/alumnos.reducer';
     AlumnosRoutingModule,
     SharedModule,
     StoreModule.forFeature(alumnosFeatureKey, alumnoReducer),
-    EffectsModule.forFeature([AlumnosEffects]),
+    StoreModule.forFeature(inscripcionesEntidadFeatureKey, inscripcionEntidadReducer),
+    EffectsModule.forFeature([AlumnosEffects, InscripcionesEntidadEffects]),
   ]
 })
 export class AlumnosModule { }

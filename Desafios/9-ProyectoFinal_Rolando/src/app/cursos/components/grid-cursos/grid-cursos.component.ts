@@ -3,20 +3,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subscription } from 'rxjs';
 import { Curso } from 'src/app/cursos/interfaces/curso';
-import { CursosService } from 'src/app/cursos/services/cursos.service';
 import { ListaAlumnosComponent } from 'src/app/alumnos/components/lista-alumnos/lista-alumnos.component';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { FormCursoComponent } from '../form-curso/form-curso.component';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { FormInscripcionComponent } from 'src/app/inscripciones/components/form-inscripcion/form-inscripcion.component';
-import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
-import { ActivatedRoute, Route, RouterModule, Routes } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { CursosState } from '../../state/cursos.reducer';
 import { Store } from '@ngrx/store';
 import { addCurso, deleteCurso, editCurso, loadCursos } from '../../state/cursos.actions';
-import { selectCursos } from '../../state/cursos.selectors';
+import { selectCursos, selectCursosLoading } from '../../state/cursos.selectors';
+import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
+import { addInscripcionEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
 
 
 @Component({
@@ -33,16 +33,15 @@ export class GridCursosComponent implements OnInit, OnDestroy {
 
   constructor(
     private loader: LoaderService,
-    private inscripcionesService: InscripcionesService,
     private sesionService: SesionService,
-    private cursosService: CursosService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
     public appService: AppService,
-    private storeCursos: Store<CursosState>
+    private storeCursos: Store<CursosState>,
+    private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
   ) {
-
+    this.storeCursos.select(selectCursosLoading).subscribe(this.loader.controlLoader);
   }
 
 
@@ -126,28 +125,11 @@ export class GridCursosComponent implements OnInit, OnDestroy {
 
   deleteCurso(cursoId: string): void {
 
-    if (cursoId === '') {
-      this.onSaveComplete();
-    } else {
+    if (cursoId != '') {
       this.storeCursos.dispatch(deleteCurso({id: cursoId}))
     }
 
   }
-
-
-  onSaveComplete(): void {
-
-    this.cursosService.getCursos()
-      .subscribe({
-        next: (cursos) => {
-          this.cursos = cursos;
-        },
-        error: (err) => this.errorMessage = <any>err,
-        complete: () => console.info('onSaveComplete')
-      });
-
-  }
-
 
 
   /* Inscripción de alumnos *************************************/
@@ -160,19 +142,7 @@ export class GridCursosComponent implements OnInit, OnDestroy {
     dialogEdit.afterClosed().subscribe((inscripcion) => {
       if (inscripcion) {
 
-        this.loader.show();
-        this.inscripcionesService.addInscripcion(inscripcion)
-          .subscribe({
-            next: () => this.onSaveComplete(),
-            error: (err) => {
-              this.errorMessage = <any>err;
-              this.loader.hide();
-            },
-            complete: () => {
-              //console.info('inscripcion');
-              this.loader.hide();
-            }
-          });
+        this.storeInscripcionesEntidad.dispatch(addInscripcionEntidad({inscripcion}));
 
         this._snackBar.open(
           'Inscripción exitosa', '',

@@ -8,11 +8,12 @@ import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
 import { InscripcionesEntidadService } from 'src/app/inscripciones/services/inscripciones-entidad.service';
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
+import { deleteInscripcionEntidad, loadInscripcionesEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
+import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
+import { selectInscripcionEntidadXcurso, selectInscripcionesEntidadLoading } from 'src/app/inscripciones/state/inscripciones-entidad.selectors';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Curso } from '../../interfaces/curso';
-import { CursosService } from '../../services/cursos.service';
-import { loadCursos } from '../../state/cursos.actions';
 import { CursosState } from '../../state/cursos.reducer';
 import { selectCurso } from '../../state/cursos.selectors';
 
@@ -31,15 +32,16 @@ export class DetallesCursoComponent implements OnInit {
   esAdmin: boolean = false;
 
   constructor(
-    private sesionService: SesionService,
-    private inscripcionesService: InscripcionesService,
-    private inscripcionesEntidadService: InscripcionesEntidadService,
     private loader: LoaderService,
+    private sesionService: SesionService,
     private activatedRoute: ActivatedRoute,
     public appService: AppService,
     public dialog: MatDialog,
-    private storeCursos: Store<CursosState>
-  ) { }
+    private storeCursos: Store<CursosState>,
+    private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
+  ) {
+    this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
+   }
 
   ngOnInit(): void {
     this.esAdmin = this.sesionService.esAdmin();
@@ -47,9 +49,10 @@ export class DetallesCursoComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((parametro: any) => {
 
       let cursoId: string = parametro.get('id');
-      this.getInscripcionesEntidadesXCurso(cursoId);
+
       this.getCurso(cursoId);
 
+      this.getInscripcionesEntidadesXCurso(cursoId);
     })
   }
 
@@ -65,7 +68,9 @@ export class DetallesCursoComponent implements OnInit {
 
   getInscripcionesEntidadesXCurso(cursoId: string){
 
-   this.inscripciones$ = this.inscripcionesEntidadService.getInscripcionesEntidadXcurso(cursoId);
+   this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
+
+   this.inscripciones$ = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXcurso(cursoId));
 
   }
 
@@ -90,19 +95,7 @@ export class DetallesCursoComponent implements OnInit {
 
   deleteInscripcion(inscripcionId: string): void {
     if (inscripcionId != '') {
-
-      this.loader.show();
-      this.inscripcionesService.deleteInscripcion(inscripcionId)
-        .subscribe({
-          error: (err) => {
-            this.errorMessage = <any>err;
-            this.loader.hide();
-          },
-          complete: () => {
-            this.loader.hide();
-          }
-        });
-
+      this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: inscripcionId }));
     }
   }
 

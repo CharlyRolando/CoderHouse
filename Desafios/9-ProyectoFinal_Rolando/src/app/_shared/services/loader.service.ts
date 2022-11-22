@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 export class LoaderService {
 
   controlLoader!: Subject<boolean>;
+
   constructor() {
     this.controlLoader = new Subject<boolean>();
   }

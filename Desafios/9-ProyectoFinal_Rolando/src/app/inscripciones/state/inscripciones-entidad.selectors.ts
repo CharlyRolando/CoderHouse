@@ -27,9 +27,23 @@ export const selectInscripcionesEntidad = createSelector(
 export const selectInscripcionEntidad = (inscripcionId: string) => createSelector(
   selectInscripcionesEntidad,
   (inscripciones: InscripcionEntidad[]) => {
-    return inscripciones.filter(u => u.id == inscripcionId)[0]
+    return inscripciones.filter(i => i.id === inscripcionId)[0]
   }
 );
 
 
 
+export const selectInscripcionEntidadXalumno = (alumnoId: string) => createSelector(
+  selectInscripcionesEntidadState,
+  (state: fromInscripcionesEntidad.InscripcionesEntidadState) => (
+    state.inscripciones.filter(i => i.alumnoId === alumnoId)
+  )
+);
+
+
+export const selectInscripcionEntidadXcurso = (cursoId: string) => createSelector(
+  selectInscripcionesEntidadState,
+  (state: fromInscripcionesEntidad.InscripcionesEntidadState) => (
+    state.inscripciones.filter(i => i.cursoId === cursoId)
+  )
+);

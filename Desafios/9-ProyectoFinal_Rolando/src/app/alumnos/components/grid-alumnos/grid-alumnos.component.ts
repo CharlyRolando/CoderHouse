@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlumnosState } from '../../state/alumnos.reducer';
 import { Store } from '@ngrx/store';
 import { addAlumno, deleteAlumno, editAlumno, loadAlumnos } from '../../state/alumnos.actions';
-import { selectAlumnos } from '../../state/alumnos.selectors';
+import { selectAlumnos, selectAlumnosLoading } from '../../state/alumnos.selectors';
 
 
 @Component({
@@ -38,18 +38,25 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    private loader: LoaderService,
     private sesionService: SesionService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
     public appService: AppService,
     private storeAlumnos: Store<AlumnosState>
-  ) { }
+  ) {
+    this.storeAlumnos.select(selectAlumnosLoading).subscribe(this.loader.controlLoader);
+  }
 
 
   ngOnInit(): void {
 
     this.esAdmin = this.sesionService.esAdmin();
+
+
+
+
     this.getAlumnosData();
 
   }

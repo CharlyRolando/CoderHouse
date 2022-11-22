@@ -9,10 +9,11 @@ import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
+import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { addUsuario, deleteUsuario, editUsuario, loadUsuarios } from '../../state/usuarios.actions';
 import { UsuariosState } from '../../state/usuarios.reducer';
-import { selectUsuarios } from '../../state/usuarios.selectors';
+import { selectUsuarios, selectUsuariosLoading } from '../../state/usuarios.selectors';
 import { FormUsuarioComponent } from '../form-usuario/form-usuario.component';
 
 
@@ -33,6 +34,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    private loader: LoaderService,
     private sesionService: SesionService,
     private usuariosService: UsuariosService,
     public dialog: MatDialog,
@@ -40,7 +42,9 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
     public activatedRoute: ActivatedRoute,
     public appService: AppService,
     private storeUsuarios: Store<UsuariosState>
-  ) { }
+  ) {
+    this.storeUsuarios.select(selectUsuariosLoading).subscribe(this.loader.controlLoader);
+   }
 
 
   ngOnInit() {
