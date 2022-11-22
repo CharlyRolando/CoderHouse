@@ -1,7 +1,7 @@
 <div class="contenedorMain">
-  <div class="file-loader" *ngIf="showLoader">
-    <div class="upload-loader">
-      <div class="loader"></div>
+  <div class="back-loader" *ngIf="showLoader">
+    <div class="frame-loader">
+      <div class="spin-loader"></div>
     </div>
   </div>
   <router-outlet (activate)="onActivate($event)"></router-outlet>

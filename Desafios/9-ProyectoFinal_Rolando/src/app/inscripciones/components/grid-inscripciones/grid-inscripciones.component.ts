@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { InscripcionesEntidadState } from '../../state/inscripciones-entidad.reducer';
 import { deleteInscripcionEntidad, loadInscripcionesEntidad } from '../../state/inscripciones-entidad.actions';
-import { selectInscripcionesEntidad } from '../../state/inscripciones-entidad.selectors';
+import { selectInscripcionesEntidad, selectInscripcionesEntidadLoading } from '../../state/inscripciones-entidad.selectors';
 
 @Component({
   selector: 'app-grid-inscripciones',
@@ -45,7 +45,7 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
     public appService: AppService,
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
   ) {
-
+    this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
   }
 
 
