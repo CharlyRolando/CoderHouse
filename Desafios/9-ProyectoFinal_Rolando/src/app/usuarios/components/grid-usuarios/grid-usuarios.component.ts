@@ -4,13 +4,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
-import { UsuariosService } from '../../services/usuarios.service';
 import { addUsuario, deleteUsuario, editUsuario, loadUsuarios } from '../../state/usuarios.actions';
 import { UsuariosState } from '../../state/usuarios.reducer';
 import { selectUsuarios, selectUsuariosLoading } from '../../state/usuarios.selectors';
@@ -36,7 +35,6 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
   constructor(
     private loader: LoaderService,
     private sesionService: SesionService,
-    private usuariosService: UsuariosService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
@@ -130,27 +128,12 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
 
   deleteUsuario(usuarioId: string): void {
 
-    if (usuarioId === '') {
-      this.onSaveComplete();
-    } else {
+    if (usuarioId != '') {
       this.storeUsuarios.dispatch(deleteUsuario({id: usuarioId}))
     }
 
   }
 
-
-  onSaveComplete(): void {
-
-    this.usuariosService.getUsuarios()
-      .subscribe({
-        next: (usuarios) => {
-          this.dataSource.data = usuarios;
-        },
-        error: (err) => this.errorMessage = <any>err,
-        complete: () => console.info('onSaveComplete')
-      });
-
-  }
 
 
   ngOnDestroy(): void {

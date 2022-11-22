@@ -12,6 +12,8 @@ import { StoreModule } from '@ngrx/store';
 import { cursoReducer, cursosFeatureKey } from './state/cursos.reducer';
 import { InscripcionesEntidadEffects } from '../inscripciones/state/inscripciones-entidad.effects';
 import { inscripcionEntidadReducer, inscripcionesEntidadFeatureKey } from '../inscripciones/state/inscripciones-entidad.reducer';
+import { alumnoReducer, alumnosFeatureKey } from '../alumnos/state/alumnos.reducer';
+import { AlumnosEffects } from '../alumnos/state/alumnos.effects';
 
 
 @NgModule({
@@ -25,8 +27,9 @@ import { inscripcionEntidadReducer, inscripcionesEntidadFeatureKey } from '../in
     CursosRoutingModule,
     SharedModule,
     StoreModule.forFeature(cursosFeatureKey, cursoReducer),
+    StoreModule.forFeature(alumnosFeatureKey, alumnoReducer),
     StoreModule.forFeature(inscripcionesEntidadFeatureKey, inscripcionEntidadReducer),
-    EffectsModule.forFeature([CursosEffects, InscripcionesEntidadEffects]),
+    EffectsModule.forFeature([CursosEffects, AlumnosEffects, InscripcionesEntidadEffects]),
   ]
 })
 export class CursosModule { }

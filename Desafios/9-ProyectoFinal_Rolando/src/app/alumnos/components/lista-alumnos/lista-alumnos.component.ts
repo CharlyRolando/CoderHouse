@@ -2,10 +2,13 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Alumno } from 'src/app/alumnos/interfaces/alumno';
 import { Curso } from 'src/app/cursos/interfaces/curso';
-import { AlumnosService } from 'src/app/alumnos/services/alumnos.service';
-import { Observable } from 'rxjs';
-import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
-import { Inscripcion } from 'src/app/inscripciones/interfaces/inscripcion';
+import { Observable, Subscription } from 'rxjs';
+import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
+import { Store } from '@ngrx/store';
+import { loadInscripcionesEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
+import { selectInscripcionEntidadXcurso } from 'src/app/inscripciones/state/inscripciones-entidad.selectors';
+import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
+
 
 
 @Component({
@@ -18,10 +21,10 @@ export class ListaAlumnosComponent implements OnInit, OnDestroy {
   titulo: string = `Alumnos del curso de '${this.cursoFiltro.nombre}'`;
   alumnos$!: Observable<Alumno[]>;
   alumnos: Alumno[] = [];
+  suscripcion!: Subscription;
 
   constructor(
-    private inscripcionesService: InscripcionesService,
-    private alumnosService: AlumnosService,
+    private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
     @Inject(MAT_DIALOG_DATA) public cursoFiltro: Curso
   ) { }
 
@@ -33,15 +36,16 @@ export class ListaAlumnosComponent implements OnInit, OnDestroy {
 
   getAlumonsXcurso(cursoId: string) {
 
-    this.alumnosService.getAlumnos().subscribe((alumnos: Alumno[]) => {
-      this.inscripcionesService.getInscripcionesXcurso(cursoId)
-        .subscribe((inscripciones: Inscripcion[]) => {
+    this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
 
-          const alumnosId: string[] = inscripciones.map((i) => i.alumnoId);
-          this.alumnos = alumnos.filter((a) => alumnosId.includes(a.id));
-
-        })
+    this.suscripcion = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXcurso(cursoId))
+    .subscribe((inscripciones: InscripcionEntidad[]) => {
+      this.alumnos = inscripciones?.map((inscripcion) => {
+        return inscripcion.alumno
+      })
     });
+
+
 
   }
 
@@ -49,8 +53,7 @@ export class ListaAlumnosComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    /* TODO: el requerimiento de la entrega pide desubscribirse aquí
-      pero estoy usando Promesas, por lo tanto no hago nada */
+   this.suscripcion.unsubscribe();
   }
 
 

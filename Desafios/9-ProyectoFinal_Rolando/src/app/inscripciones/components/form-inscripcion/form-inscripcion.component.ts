@@ -2,13 +2,17 @@ import { formatDate } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map, Observable, Subscription } from 'rxjs';
-import { Alumno } from 'src/app/alumnos/interfaces/alumno';
-import { AlumnosService } from 'src/app/alumnos/services/alumnos.service';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { loadAlumnos } from 'src/app/alumnos/state/alumnos.actions';
+import { AlumnosState } from 'src/app/alumnos/state/alumnos.reducer';
+import { selectAlumnos } from 'src/app/alumnos/state/alumnos.selectors';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { Curso } from 'src/app/cursos/interfaces/curso';
-import { Inscripcion } from '../../interfaces/inscripcion';
-import { InscripcionesService } from '../../services/inscripciones.service';
+import { InscripcionEntidad } from '../../interfaces/inscripcion-entidad';
+import { loadInscripcionesEntidad } from '../../state/inscripciones-entidad.actions';
+import { InscripcionesEntidadState } from '../../state/inscripciones-entidad.reducer';
+import { selectInscripcionEntidadXcurso } from '../../state/inscripciones-entidad.selectors';
 
 @Component({
   selector: 'app-form-inscripcion',
@@ -27,24 +31,27 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
 
   constructor(
     private sesionService: SesionService,
-    private inscripcionesService: InscripcionesService,
-    private alumnosService: AlumnosService,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<FormInscripcionComponent>,
+    private storeAlumnos: Store<AlumnosState>,
+    private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
     @Inject(MAT_DIALOG_DATA) public editData: any
   ) {
     this.curso = editData;
   }
 
 
-
+/* Solo los alumnos que no están inscriptos todavía */
   getAlumnosData() {
 
-    this.suscripcion = this.inscripcionesService.getInscripcionesXcurso(this.curso.id).subscribe({
-      next: (inscrCurso: Inscripcion[]) => {
+    this.storeAlumnos.dispatch(loadAlumnos());
+    this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
+
+    this.suscripcion = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXcurso(this.curso.id)).subscribe({
+      next: (inscrCurso: InscripcionEntidad[]) => {
         const alumnosId: string[] = inscrCurso.map((i) => i.alumnoId);
 
-        this.alumnosService.getAlumnos().subscribe({
+        this.storeAlumnos.select(selectAlumnos).subscribe({
           next: (alumnos) => {
 
             alumnos = alumnos.filter((a) => !alumnosId.includes(a.id));
@@ -68,19 +75,20 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.getAlumnosData();
-    this.configurarFormulario(this.curso);
+
+    this.configurarFormulario();
 
   }
 
 
-  configurarFormulario(curso: Curso) {
+  configurarFormulario() {
 
-    this.titulo = `Inscripción al curso de ${curso.nombre}`;
+    this.titulo = `Inscripción al curso de ${this.curso.nombre}`;
 
     this.fgInscripcion = this.formBuilder.group({
       id: '',
       alumnoId: '',
-      cursoId: curso.id,
+      cursoId: this.curso.id,
       usuarioId: this.sesionService.sesion.usuarioActivo?.id,
       fecha: new Date() //formatDate(new Date(), 'yyyy/MM/dd', 'en')
     });
