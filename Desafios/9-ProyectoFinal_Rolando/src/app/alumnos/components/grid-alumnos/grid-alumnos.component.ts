@@ -56,9 +56,6 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
     this.esAdmin = this.sesionService.esAdmin();
 
-
-
-
     this.getAlumnosData();
 
   }

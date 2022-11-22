@@ -38,15 +38,15 @@ delay(100000);
   }
 
 
-  getUsuarioXemail(email: string | null): Observable<Usuario | undefined> {
-    if (email === '') {
-      return of(undefined);
-    }
-    return this.http.get<Usuario[]>(this.usuariosUrl)
-      .pipe(
-        map((usuarios: Usuario[]) => usuarios.find((u: Usuario) => u.email === email))
-      );
-  }
+  // getUsuarioXemail(email: string | null): Observable<Usuario | undefined> {
+  //   if (email === '') {
+  //     return of(undefined);
+  //   }
+  //   return this.http.get<Usuario[]>(this.usuariosUrl)
+  //     .pipe(
+  //       map((usuarios: Usuario[]) => usuarios.find((u: Usuario) => u.email === email))
+  //     );
+  // }
 
 
   addUsuario(usuario: Usuario):  Observable<Usuario>  {

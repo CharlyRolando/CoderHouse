@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { UsuariosService } from 'src/app/usuarios/services/usuarios.service';
 import { Sesion } from '../interfaces/sesion';
 
@@ -10,6 +11,7 @@ import { Sesion } from '../interfaces/sesion';
 export class SesionService {
 
   sesionSubject!: BehaviorSubject<Sesion>;
+
   sesion: Sesion = {
     sesionActiva: false,
   };
@@ -17,6 +19,14 @@ export class SesionService {
 
   constructor(private usuariosService: UsuariosService) {
     this.sesionSubject = new BehaviorSubject(this.sesion);
+  }
+
+
+  login(email: string, password: string): Observable<Usuario> {
+   return this.usuariosService.getUsuarios().pipe(
+    map((usuarios: Usuario[]) => {
+      return usuarios.filter((u: Usuario) => u.email === email && u.password===password)[0]
+    }));
   }
 
 
