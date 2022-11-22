@@ -16,6 +16,7 @@ import { InscripcionesEntidadState } from '../../state/inscripciones-entidad.red
 import { deleteInscripcionEntidad, loadInscripcionesEntidad } from '../../state/inscripciones-entidad.actions';
 import { selectInscripcionesEntidad, selectInscripcionesEntidadLoading } from '../../state/inscripciones-entidad.selectors';
 
+
 @Component({
   selector: 'app-grid-inscripciones',
   templateUrl: './grid-inscripciones.component.html',

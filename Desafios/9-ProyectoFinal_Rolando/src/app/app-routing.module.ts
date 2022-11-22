@@ -4,6 +4,7 @@ import { LoginComponent } from './autenticacion/components/login/login.component
 import { RegistracionComponent } from './autenticacion/components/registracion/registracion.component';
 import { PageNotFoundComponent } from './layout/components/page-not-found/page-not-found.component';
 
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent, title: 'LogIn' },
   { path: 'registracion', component: RegistracionComponent, title: 'Registración' },

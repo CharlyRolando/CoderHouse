@@ -1,11 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-toolbar',

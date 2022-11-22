@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { Alumno } from '../interfaces/alumno';
 import * as AlumnosActions from './alumnos.actions';
 

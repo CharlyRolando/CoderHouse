@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DetallesUsuarioComponent } from './components/detalles-usuario/detalles-usuario.component';
 import { GridUsuariosComponent } from './components/grid-usuarios/grid-usuarios.component';
+
 
 const routes: Routes = [
   { path: '', component: GridUsuariosComponent, title:'Usuarios'},

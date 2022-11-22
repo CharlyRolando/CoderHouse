@@ -23,9 +23,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSortModule} from '@angular/material/sort';
 
-import {LayoutModule} from '@angular/cdk/layout';
-// import {FlexModule} from '@angular/flex-layout/flex';
-// import {GridModule} from '@angular/flex-layout/grid';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 

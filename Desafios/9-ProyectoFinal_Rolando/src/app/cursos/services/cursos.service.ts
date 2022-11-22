@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Curso } from 'src/app/cursos/interfaces/curso';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap, exhaustMap } from 'rxjs/operators';
+import { catchError, map, concatMap } from 'rxjs/operators';
 import * as UsuariosActions from './usuarios.actions';
 import { UsuariosService } from '../services/usuarios.service';
 import { Usuario } from '../interfaces/usuario';

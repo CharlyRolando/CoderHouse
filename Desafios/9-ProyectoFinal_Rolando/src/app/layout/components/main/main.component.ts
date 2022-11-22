@@ -3,6 +3,7 @@ import { AppService } from 'src/app/app.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',

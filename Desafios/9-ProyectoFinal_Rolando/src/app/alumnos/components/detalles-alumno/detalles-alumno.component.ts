@@ -1,4 +1,4 @@
-import { AfterContentChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,7 +13,7 @@ import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_s
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Alumno } from '../../interfaces/alumno';
 import { AlumnosState } from '../../state/alumnos.reducer';
-import { selectAlumno, selectAlumnosLoading } from '../../state/alumnos.selectors';
+import { selectAlumno } from '../../state/alumnos.selectors';
 
 
 @Component({

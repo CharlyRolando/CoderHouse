@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { Inscripcion } from '../interfaces/inscripcion';
 
 
-
 @Injectable({
   providedIn: 'root'
 })

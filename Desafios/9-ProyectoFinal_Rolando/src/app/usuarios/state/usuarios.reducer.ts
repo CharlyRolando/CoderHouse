@@ -4,6 +4,7 @@ import * as UsuariosActions from './usuarios.actions';
 
 export const usuariosFeatureKey = 'usuarios';
 
+
 export interface UsuariosState {
   loading: boolean,
   usuarios: Usuario[]

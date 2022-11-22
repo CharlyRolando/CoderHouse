@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { Curso } from '../interfaces/curso';
 import * as CursosActions from './cursos.actions';
 

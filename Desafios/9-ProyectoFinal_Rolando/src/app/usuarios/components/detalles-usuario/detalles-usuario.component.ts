@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { AppService } from 'src/app/app.service';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { Usuario } from '../../interfaces/usuario';
-import { loadUsuarios } from '../../state/usuarios.actions';
 import { UsuariosState } from '../../state/usuarios.reducer';
 import { selectUsuario } from '../../state/usuarios.selectors';
 

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AlumnosRoutingModule } from './alumnos-routing.module';
 import { GridAlumnosComponent } from './components/grid-alumnos/grid-alumnos.component';
 import { SharedModule } from '../_shared/shared.module';

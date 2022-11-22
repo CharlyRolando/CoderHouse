@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
+import { of } from 'rxjs';
 import * as CursosActions from './cursos.actions';
 import { CursosService } from '../services/cursos.service';
 import { Curso } from '../interfaces/curso';

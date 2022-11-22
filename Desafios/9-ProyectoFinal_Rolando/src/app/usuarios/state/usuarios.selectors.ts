@@ -3,7 +3,6 @@ import { Usuario } from '../interfaces/usuario';
 import * as fromUsuarios from './usuarios.reducer';
 
 
-
 export const selectUsuariosState = createFeatureSelector<fromUsuarios.UsuariosState>(
   fromUsuarios.usuariosFeatureKey
 );
