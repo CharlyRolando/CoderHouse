@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
-import { SesionService } from 'src/app/autenticacion/services/sesion.service';
+import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
+import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
+import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Usuario } from '../../interfaces/usuario';
+import { loadUsuarios } from '../../state/usuarios.actions';
 import { UsuariosState } from '../../state/usuarios.reducer';
-import { selectUsuario } from '../../state/usuarios.selectors';
+import { selectUsuario, selectUsuariosLoading } from '../../state/usuarios.selectors';
 
 
 @Component({
@@ -13,21 +17,29 @@ import { selectUsuario } from '../../state/usuarios.selectors';
   templateUrl: './detalles-usuario.component.html',
   styleUrls: ['./detalles-usuario.component.css']
 })
-export class DetallesUsuarioComponent implements OnInit {
+export class DetallesUsuarioComponent implements OnInit, OnDestroy {
 
+  suscripcionLoading!: Subscription;
+  suscripcionUsuario!: Subscription;
+
+  sesion$!: Observable<Sesion>;
   usuario!: Usuario;
-  esAdmin: boolean = false;
 
   constructor(
-    private sesionService: SesionService,
+    private loader: LoaderService,
     public appService: AppService,
     private activatedRoute: ActivatedRoute,
-    private storeUsuarios: Store<UsuariosState>
-  ) { }
+    private storeUsuarios: Store<UsuariosState>,
+    private storeSesion: Store<Sesion>,
+  ) {
+
+    this.sesion$ = this.storeSesion.select(selectSesionActiva);
+
+    this.suscripcionLoading = this.storeUsuarios.select(selectUsuariosLoading).subscribe(this.loader.controlLoader);
+  }
+
 
   ngOnInit(): void {
-
-    this.esAdmin = this.sesionService.esAdmin();
 
     this.activatedRoute.paramMap.subscribe((parametro: any) => {
 
@@ -39,18 +51,20 @@ export class DetallesUsuarioComponent implements OnInit {
   }
 
 
-
   getUsuario(usuarioId: string) {
 
-    this.storeUsuarios.select(selectUsuario(usuarioId)).subscribe((usuario: Usuario) =>{
+    this.storeUsuarios.dispatch(loadUsuarios());
+    this.suscripcionUsuario = this.storeUsuarios.select(selectUsuario(usuarioId)).subscribe((usuario: Usuario) => {
       this.usuario = usuario;
     });
 
   }
 
 
-
-
+  ngOnDestroy(): void {
+    this.suscripcionUsuario.unsubscribe();
+    this.suscripcionLoading.unsubscribe();
+  }
 
 
 }

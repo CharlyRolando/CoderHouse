@@ -4,8 +4,7 @@ import { GridUsuariosComponent } from './components/grid-usuarios/grid-usuarios.
 
 
 const routes: Routes = [
-  { path: '', component: GridUsuariosComponent, title:'Usuarios'},
-  // { path: 'usuarioDetalles/:id', component: DetallesUsuarioComponent, title: 'Detalles del usuario'}
+  { path: '', component: GridUsuariosComponent, title: 'Usuarios' },
 ];
 
 @NgModule({

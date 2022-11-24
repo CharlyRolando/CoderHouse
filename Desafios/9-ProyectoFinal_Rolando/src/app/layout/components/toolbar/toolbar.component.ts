@@ -16,18 +16,20 @@ export class ToolbarComponent implements OnInit {
   @Output() toggleSidebar: EventEmitter<void> = new EventEmitter();
 
   sesion$!: Observable<Sesion>;
-  esAdmin: boolean = false;
+
 
   constructor(
     private sesionService: SesionService,
     public appService: AppService,
     private router: Router,
-  ) { }
+  ) {
+
+    this.sesion$ = this.sesionService.obtenerSesion();
+
+  }
 
 
   ngOnInit(): void {
-    this.esAdmin = this.sesionService.esAdmin();
-    this.sesion$ = this.sesionService.obtenerSesion();
   }
 
   sidebarToggle(): void {

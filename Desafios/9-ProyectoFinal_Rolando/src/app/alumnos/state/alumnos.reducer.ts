@@ -28,29 +28,29 @@ export const alumnoReducer = createReducer(
     }
   )),
 
-on(AlumnosActions.loadAlumnosSuccess, (state, action) => (
-  {
-    ...state,
-    loading: false,
-    alumnos: action.alumnos
-  }
-)),
+  on(AlumnosActions.loadAlumnosSuccess, (state, action) => (
+    {
+      ...state,
+      loading: false,
+      alumnos: action.alumnos
+    }
+  )),
 
-on(AlumnosActions.loadAlumnosFailure, (state, {error}) => (
-state
-)),
+  on(AlumnosActions.loadAlumnosFailure, (state, { error }) => (
+    state
+  )),
 
-on(AlumnosActions.addAlumno, (state, action) => (
-  state
-)),
+  on(AlumnosActions.addAlumno, (state, action) => (
+    state
+  )),
 
-on(AlumnosActions.editAlumno, (state, action) => (
-  state
-)),
+  on(AlumnosActions.editAlumno, (state, action) => (
+    state
+  )),
 
-on(AlumnosActions.deleteAlumno, (state, action) => (
-  state
-))
+  on(AlumnosActions.deleteAlumno, (state, action) => (
+    state
+  ))
 
 
 );

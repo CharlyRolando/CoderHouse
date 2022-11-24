@@ -1,4 +1,4 @@
-<div>
+<ng-container *ngIf="sesion$ | async as sesion">
 
   <div class="row">
     <p appTemaTitulos >{{this.appService.titulo}}</p>
@@ -70,7 +70,7 @@
             Acciones
           </th>
           <td mat-cell *matCellDef="let inscripto">
-            <button mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="deleteConfirmacion(inscripto)">
+            <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="deleteConfirmacion(inscripto)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -86,4 +86,4 @@
     </div>
   </div>
 
-</div>
+</ng-container>

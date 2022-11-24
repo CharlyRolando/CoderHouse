@@ -7,6 +7,7 @@ describe('Alumnos Selectors', () => {
       [fromAlumnos.alumnosFeatureKey]: {}
     });
 
-    expect(result).toEqual({});
+    expect(result).toBeTruthy;
+
   });
 });

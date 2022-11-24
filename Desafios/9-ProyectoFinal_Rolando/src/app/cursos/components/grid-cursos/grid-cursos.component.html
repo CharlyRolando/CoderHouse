@@ -1,8 +1,8 @@
-<div>
+<ng-container *ngIf="sesion$ | async as sesion">
 
   <div class="row">
     <p appTemaTitulos>{{ this.appService.titulo }}</p>
-    <button *ngIf="esAdmin" mat-icon-button matTooltip="Agregar curso" color="primary" (click)="addCurso()">
+    <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button matTooltip="Agregar curso" color="primary" (click)="addCurso()">
       <mat-icon>add_circle</mat-icon>
     </button>
   </div>
@@ -26,10 +26,10 @@
         <p style="margin-bottom: 0px;">Inicia: {{curso.fechaInicio | date:"dd-MM-yyyy"}}</p>
         <p style="margin-bottom: 0px;">Finaliza: {{curso.fechaFin | date:"dd-MM-yyyy"}}</p>
         <p style="display: inline-block; line-height: 40px; margin-bottom: -20px;">Comisión: {{curso.comision}}</p>
-        <button *ngIf="esAdmin" style="float: right;" mat-icon-button color="warn" matTooltip="Eliminar curso"  (click)="deleteConfirmacion(curso)">
+        <button *ngIf="sesion.usuarioActivo?.admin" style="float: right;" mat-icon-button color="warn" matTooltip="Eliminar curso"  (click)="deleteConfirmacion(curso)">
           <mat-icon>delete</mat-icon>
         </button>
-        <button *ngIf="esAdmin" style="float: right;" mat-icon-button color="primary" matTooltip="Editar curso"  (click)="editCurso(curso)">
+        <button *ngIf="sesion.usuarioActivo?.admin" style="float: right;" mat-icon-button color="primary" matTooltip="Editar curso"  (click)="editCurso(curso)">
           <mat-icon>edit</mat-icon>
         </button>
       </mat-card-content>
@@ -39,87 +39,5 @@
       </mat-card-actions>
     </mat-card>
   </div>
-</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-   <h1>Cursos</h1>
-<div class="row">
-    <mat-form-field class="col-md-6">
-        <mat-label>Filtrar por nombre del curso</mat-label>
-        <input type="text" matInput (keyup)="filtrarCurso($event)">
-    </mat-form-field>
-
-    <mat-form-field class="col-md-6">
-        <mat-label>Filtrar por numero de comision</mat-label>
-        <input type="text" matInput (keyup)="filtrarComision($event)">
-    </mat-form-field>
-</div>
-
-
-<div class="row">
-    <table mat-table [dataSource]="dataSource" class="col-md-12">
-
-        <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef>Nombre</th>
-            <td mat-cell *matCellDef="let curso">{{ curso.nombre | uppercase }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="comision">
-            <th mat-header-cell *matHeaderCellDef>Comision</th>
-            <td mat-cell *matCellDef="let curso">{{ curso.comision }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="profesor">
-            <th mat-header-cell *matHeaderCellDef>Profesor</th>
-            <td mat-cell *matCellDef="let curso">{{ curso.profesor }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="fechaInicio">
-            <th mat-header-cell *matHeaderCellDef>Inicia</th>
-            <td mat-cell *matCellDef="let curso">{{ curso.fechaInicio | date: 'dd/MM/YYYY' }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="fechaFin">
-            <th mat-header-cell *matHeaderCellDef>Finaliza</th>
-            <td mat-cell *matCellDef="let curso">{{ curso.fechaFin | date: 'dd/MM/YYYY' }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="inscripcion">
-            <th mat-header-cell *matHeaderCellDef>Inscripcion Abierta</th>
-            <td mat-cell *matCellDef="let curso">
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef>Acciones</th>
-            <td mat-cell *matCellDef>
-                <button mat-icon-button (click)="editar()">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button (click)="eliminar()">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-    </table>
-</div> -->
+</ng-container>

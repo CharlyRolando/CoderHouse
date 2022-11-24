@@ -1,4 +1,4 @@
-<div class="navbar">
+<div class="navbar" *ngIf="sesion$ | async as sesion">
 
   <div class="menu-item">
 
@@ -17,7 +17,7 @@
       <span>Inscripciones</span>
     </button>
 
-    <button  *ngIf="esAdmin"  mat-button class="menu-button" routerLink="usuarios">
+    <button  *ngIf="sesion.usuarioActivo?.admin"  mat-button class="menu-button" routerLink="usuarios">
       <mat-icon>account_circle</mat-icon>
       <span>Usuarios</span>
     </button>

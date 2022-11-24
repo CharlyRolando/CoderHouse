@@ -32,7 +32,7 @@ const routes: Routes = [
         loadChildren: () => import('src/app/inscripciones/inscripciones.module').then((m) => m.InscripcionesModule),
         canActivate: [AutenticacionGuard]
       },
-      { path: 'usuarioDetalles/:id', component: DetallesUsuarioComponent, title: 'Detalles del usuario'},
+      { path: 'usuarioDetalles/:id', component: DetallesUsuarioComponent, title: 'Detalles del usuario' },
       { path: '', redirectTo: 'cursos', pathMatch: 'full' },
       { path: '**', component: PageNotFoundComponent },
     ],
@@ -43,4 +43,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }

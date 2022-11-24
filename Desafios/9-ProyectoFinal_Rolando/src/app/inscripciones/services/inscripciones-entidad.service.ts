@@ -28,244 +28,144 @@ export class InscripcionesEntidadService {
 
   getInscripcionesEntidad(): Observable<InscripcionEntidad[]> {
 
-  return new Observable<InscripcionEntidad[]>(
+    return new Observable<InscripcionEntidad[]>(
 
-    (observador) => {
+      (observador) => {
 
-      const inscripcionesEntidad: InscripcionEntidad[] = [];
+        const inscripcionesEntidad: InscripcionEntidad[] = [];
 
-      const alumnos$ = this.alumnosService.getAlumnos();
-      const cursos$ = this.cursosService.getCursos();
-      const usuarios$ = this.usuariosService.getUsuarios();
+        const alumnos$ = this.alumnosService.getAlumnos();
+        const cursos$ = this.cursosService.getCursos();
+        const usuarios$ = this.usuariosService.getUsuarios();
 
-      return this.http.get<Inscripcion[]>(this.inscripcionesUrl).pipe(
+        return this.http.get<Inscripcion[]>(this.inscripcionesUrl).pipe(
 
-        combineLatestWith(alumnos$, cursos$, usuarios$)
+          combineLatestWith(alumnos$, cursos$, usuarios$)
 
-      ).subscribe(([inscripciones, alumnos, cursos, usuarios]) => {
+        ).subscribe(([inscripciones, alumnos, cursos, usuarios]) => {
 
-        inscripciones.forEach(i => {
+          inscripciones.forEach(i => {
 
-          const insc: InscripcionEntidad = {
-            id: i.id,
-            alumnoId: i.alumnoId,
-            cursoId: i.cursoId,
-            usuarioId: i.usuarioId,
-            fecha: i.fecha,
-            alumno: alumnos.filter((a) => a.id == i.alumnoId)[0],
-            curso: cursos.filter((c) => c.id == i.cursoId)[0],
-            usuario: usuarios.filter((u) => u.id == i.usuarioId)[0],
-          };
+            const insc: InscripcionEntidad = {
+              id: i.id,
+              alumnoId: i.alumnoId,
+              cursoId: i.cursoId,
+              usuarioId: i.usuarioId,
+              fecha: i.fecha,
+              alumno: alumnos.filter((a) => a.id == i.alumnoId)[0],
+              curso: cursos.filter((c) => c.id == i.cursoId)[0],
+              usuario: usuarios.filter((u) => u.id == i.usuarioId)[0],
+            };
 
-          inscripcionesEntidad.push(insc);
+            inscripcionesEntidad.push(insc);
+
+          });
+
+          observador.next(inscripcionesEntidad);
+          observador.complete();
 
         });
 
-        observador.next(inscripcionesEntidad);
-        observador.complete();
-
       });
 
-    });
-
-}
+  }
 
 
-getInscripcionesEntidadXcurso(cursoId: string): Observable<InscripcionEntidad[]> {
+  getInscripcionesEntidadXcurso(cursoId: string): Observable<InscripcionEntidad[]> {
 
-  return this.getInscripcionesEntidad().pipe(
+    return this.getInscripcionesEntidad().pipe(
       map(
         (inscripciones: InscripcionEntidad[]) => inscripciones.filter((i: InscripcionEntidad) => i.cursoId === cursoId)
       )
     );
 
-}
+  }
 
 
-getInscripcionesEntidadXalumno(alumnoId: string): Observable<InscripcionEntidad[]> {
+  getInscripcionesEntidadXalumno(alumnoId: string): Observable<InscripcionEntidad[]> {
 
-  return this.getInscripcionesEntidad().pipe(
+    return this.getInscripcionesEntidad().pipe(
       map(
         (inscripciones: InscripcionEntidad[]) => inscripciones.filter((i: InscripcionEntidad) => i.alumnoId === alumnoId)
       )
     );
 
-}
-
-
-
-
-addInscripcionEntidad(inscripcion: InscripcionEntidad): Observable<InscripcionEntidad> {
-
-  return this.http.post<Inscripcion>(this.inscripcionesUrl, inscripcion)
-  .pipe(
-    map(() => inscripcion),
-    catchError(this.handleError)
-  );
-
-}
-
-editInscripcionEntidad(inscripcion: InscripcionEntidad): Observable<InscripcionEntidad> {
-  return this.http.post<InscripcionEntidad>(this.inscripcionesUrl, inscripcion)
-    .pipe(
-      map(() => inscripcion),
-      catchError(this.handleError)
-    );
-
-}
-
-deleteInscripcionEntidad(id: string): Observable<{}> {
-  const url = `${this.inscripcionesUrl}/${id}`;
-  return this.http.delete<InscripcionEntidad>(url)
-    .pipe(
-      catchError(this.handleError)
-    );
-}
-
-
-
-
-
-
-deleteInscripcionesXalumno(alumnoId: string) {
-
-  this.getInscripcionesEntidadXalumno(alumnoId).subscribe(
-    (insc) => {
-      insc.filter((a) => a.alumnoId == alumnoId).forEach((i) => {
-
-        const url = `${this.inscripcionesUrl}/${i.id}`;
-        return this.http.delete<Inscripcion>(url).pipe(
-            catchError(this.handleError)
-          );
-
-      })
-    }
-  );
-
-}
-
-
-
-deleteInscripcionesXcurso(cursoId: string) {
-  this.getInscripcionesEntidadXcurso(cursoId).subscribe(
-    (insc) => {
-      insc.filter((c) => c.cursoId == cursoId).forEach((i) => {
-
-        const url = `${this.inscripcionesUrl}/${i.id}`;
-        return this.http.delete<Inscripcion>(url).pipe(
-            catchError(this.handleError)
-          );
-
-      })
-    }
-  );
-}
-
-
-private handleError(err: any) {
-  let errorMessage: string;
-  if (err.error instanceof ErrorEvent) {
-    errorMessage = `Ocurrió un error: ${err.error.message}`;
-  } else {
-    errorMessage = `Backentd retornó código ${err.status}: ${err.body.error}`;
   }
-  console.error(err);
-  return throwError(() => errorMessage);
-}
+
+
+  addInscripcionEntidad(inscripcion: InscripcionEntidad): Observable<InscripcionEntidad> {
+
+    return this.http.post<Inscripcion>(this.inscripcionesUrl, inscripcion)
+      .pipe(
+        map(() => inscripcion),
+        catchError(this.handleError)
+      );
+
+  }
+
+
+  editInscripcionEntidad(inscripcion: InscripcionEntidad): Observable<InscripcionEntidad> {
+    return this.http.post<InscripcionEntidad>(this.inscripcionesUrl, inscripcion)
+      .pipe(
+        map(() => inscripcion),
+        catchError(this.handleError)
+      );
+
+  }
+
+  deleteInscripcionEntidad(id: string): Observable<{}> {
+    const url = `${this.inscripcionesUrl}/${id}`;
+    return this.http.delete<InscripcionEntidad>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
 
 
+  deleteInscripcionesXalumno(alumnoId: string) {
+
+    this.getInscripcionesEntidadXalumno(alumnoId).subscribe(
+      (insc) => {
+        insc.filter((a) => a.alumnoId == alumnoId).forEach((i) => {
+
+          const url = `${this.inscripcionesUrl}/${i.id}`;
+          return this.http.delete<Inscripcion>(url).pipe(
+            catchError(this.handleError)
+          );
+
+        })
+      }
+    );
+
+  }
 
 
+  deleteInscripcionesXcurso(cursoId: string) {
+    this.getInscripcionesEntidadXcurso(cursoId).subscribe(
+      (insc) => {
+        insc.filter((c) => c.cursoId == cursoId).forEach((i) => {
+
+          const url = `${this.inscripcionesUrl}/${i.id}`;
+          return this.http.delete<Inscripcion>(url).pipe(
+            catchError(this.handleError)
+          );
+
+        })
+      }
+    );
+  }
 
 
-
-
-
-
-
-  // getInscripcionesEntidades(): Observable<InscripcionEntidad[]> {
-
-  //   return this.getInscripcionesEntidad(this.getInscripciones());
-
-  // }
-
-  // getInscripcionesEntidadesXalumno(alumnoId: string): Observable<InscripcionEntidad[]> {
-
-  //   return this.getInscripcionesEntidad(this.getInscripcionesXalumno(alumnoId));
-
-  // }
-
-  // getInscripcionesEntidadesXcurso(cursoId: string): Observable<InscripcionEntidad[]> {
-
-  //   return this.getInscripcionesEntidad(this.getInscripcionesXcurso(cursoId));
-
-  // }
-
-  // getInscripcionesEntidad( inscripciones$:Observable<InscripcionEntidad[]> ): Observable<InscripcionEntidad[]> {
-
-  //   return new Observable<InscripcionEntidad[]>(
-
-  //     (observador) => {
-
-  //       let inscripcionAlumnoArray: InscripcionEntidad[] = [];
-
-  //       const alumnos$ = this.alumnosService.getAlumnos();
-  //       const cursos$ = this.cursosService.getCursos();
-  //       const usuarios$ = this.usuariosService.getUsuarios();
-
-  //       inscripciones$.pipe(
-
-  //         combineLatestWith(alumnos$, cursos$, usuarios$)
-
-  //       ).subscribe(([inscripciones, alumnos, cursos, usuarios]) => {
-
-  //         inscripciones.forEach(i => {
-
-  //           const insc: InscripcionEntidad = {
-  //             id: i.id,
-  //             fecha: i.fecha,
-  //             alumno: alumnos.filter((a) => a.id == i.alumnoId)[0],
-  //             curso: cursos.filter((c) => c.id == i.cursoId)[0],
-  //             usuario: usuarios.filter((u) => u.id == i.usuarioId)[0],
-  //           };
-
-  //           inscripcionAlumnoArray.push(insc);
-
-  //         });
-
-  //         observador.next(inscripcionAlumnoArray);
-  //         observador.complete();
-
-  //       });
-
-  //     });
-
-  // }
-
-
-
-  // limpiarInscripciones() {
-
-  //   this.getInscripcionesEntidades()
-  //     .subscribe((inscripciones: InscripcionEntidad[]) => {
-
-  //       inscripciones.forEach(i => {
-
-  //         if (i.curso === undefined) {
-  //           // this.deleteInscripcion(i.id);
-  //           console.log('inscripcion.id = ' + i.id);
-
-  //         }
-
-  //       });
-
-  //     });
-
-
-  // }
-
-
-
+  private handleError(err: any) {
+    let errorMessage: string;
+    if (err.error instanceof ErrorEvent) {
+      errorMessage = `Ocurrió un error: ${err.error.message}`;
+    } else {
+      errorMessage = `Backentd retornó código ${err.status}: ${err.body.error}`;
+    }
+    console.error(err);
+    return throwError(() => errorMessage);
+  }
 
 }

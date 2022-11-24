@@ -34,9 +34,7 @@ export class SesionService {
     return this.sesionSubject.asObservable();
   }
 
-  esAdmin():boolean{
-    return this.sesion.usuarioActivo?.admin || false;
-  }
+
 
   logout(){
     this.sesion.sesionActiva = false;

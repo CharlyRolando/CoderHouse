@@ -1,8 +1,8 @@
-<div>
+<ng-container *ngIf="sesion$ | async as sesion">
 
   <div class="row">
     <p appTemaTitulos>{{ this.appService.titulo }}</p>
-    <button *ngIf="esAdmin" mat-icon-button matTooltip="Agregar alumno" color="primary" (click)="addAlumno()">
+    <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button matTooltip="Agregar alumno" color="primary" (click)="addAlumno()">
       <mat-icon>add_circle</mat-icon>
     </button>
   </div>
@@ -67,10 +67,10 @@
             <button mat-icon-button matTooltip="Detalles alumno" [routerLink]="['alumno', alumno.id, 'detalles']">
               <mat-icon>reorder</mat-icon>
             </button>
-            <button *ngIf="esAdmin" mat-icon-button color="primary" matTooltip="Editar alumno" (click)="editAlumno(alumno)">
+            <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button color="primary" matTooltip="Editar alumno" (click)="editAlumno(alumno)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button *ngIf="esAdmin" mat-icon-button color="warn" matTooltip="Eliminar alumno" (click)="deleteConfirmacion(alumno)">
+            <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button color="warn" matTooltip="Eliminar alumno" (click)="deleteConfirmacion(alumno)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -86,4 +86,4 @@
     </div>
   </div>
 
-</div>
+</ng-container>

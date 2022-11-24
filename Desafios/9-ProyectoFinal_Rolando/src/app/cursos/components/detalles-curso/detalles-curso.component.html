@@ -1,98 +1,102 @@
-<div class="row">
-  <p appTemaTitulos>{{ this.appService.titulo }}</p>
-  <button mat-icon-button matTooltip="Volver" color="primary" routerLink="/container/cursos">
-    <mat-icon>undo</mat-icon>
-  </button>
-</div>
+<ng-container *ngIf="sesion$ | async as sesion">
 
-<section fxLayout="row wrap" fxLayoutAlign="center center">
-  <mat-card *ngIf="curso!=null" fxFlex="300px" fxFlex.xs="100%"  >
+  <div class="row">
+    <p appTemaTitulos>{{ this.appService.titulo }}</p>
+    <button mat-icon-button matTooltip="Volver" color="primary" routerLink="/container/cursos">
+      <mat-icon>undo</mat-icon>
+    </button>
+  </div>
 
-    <mat-card-title><img  [src]="curso.logo" class="img-fluid logo" /></mat-card-title>
+  <section fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card *ngIf="curso!=null" fxFlex="300px" fxFlex.xs="100%">
 
-    <mat-card-content class="detalles">
+      <mat-card-title><img [src]="curso.logo" class="img-fluid logo" /></mat-card-title>
 
-      <div fxLayout="column wrap">
+      <mat-card-content class="detalles">
 
-        <div fxLayout="row wrap" fxLayoutGap="10px">
-          <div><strong>Nombre:</strong></div>
-          <div>{{curso.nombre}}</div>
+        <div fxLayout="column wrap">
+
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <div><strong>Nombre:</strong></div>
+            <div>{{curso.nombre}}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <div><strong>Comisión:</strong></div>
+            <div>{{curso.comision}}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <div><strong>Profesor:</strong></div>
+            <div> {{ curso.profesor }}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <div><strong>Fecha de inicio:</strong></div>
+            <div>{{curso.fechaInicio | date: 'dd-MM-yyyy'}}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <div><strong>Fecha de fin:</strong></div>
+            <div>{{curso.fechaFin | date: 'dd-MM-yyyy' }}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <div><strong>Inscripción abierta:</strong></div>
+            <div [appTildeBooleano]="curso.inscripcion"></div>
+          </div>
+
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="10px">
-          <div><strong>Comisión:</strong></div>
-          <div>{{curso.comision}}</div>
-        </div>
+      </mat-card-content>
 
-        <div fxLayout="row wrap" fxLayoutGap="10px">
-          <div><strong>Profesor:</strong></div>
-          <div> {{ curso.profesor }}</div>
-        </div>
+    </mat-card>
 
-        <div fxLayout="row wrap" fxLayoutGap="10px">
-          <div><strong>Fecha de inicio:</strong></div>
-          <div>{{curso.fechaInicio | date: 'dd-MM-yyyy'}}</div>
-        </div>
-
-        <div fxLayout="row wrap" fxLayoutGap="10px">
-          <div><strong>Fecha de fin:</strong></div>
-        <div>{{curso.fechaFin | date: 'dd-MM-yyyy' }}</div>
-        </div>
-
-        <div fxLayout="row wrap" fxLayoutGap="10px">
-          <div><strong>Inscripción abierta:</strong></div>
-          <div [appTildeBooleano]="curso.inscripcion"></div>
-        </div>
-
-      </div>
-
-    </mat-card-content>
-
-  </mat-card>
-
-</section>
+  </section>
 
 
-<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <section fxLayout="row wrap" fxLayoutAlign="center center">
 
-  <mat-card class="tarjetaInscripciones" fxFlex="480px" fxFlex.xs="100%">
+    <mat-card class="tarjetaInscripciones" fxFlex="480px" fxFlex.xs="100%">
 
-    <mat-card-title>Inscripciones</mat-card-title>
+      <mat-card-title>Inscripciones</mat-card-title>
 
-    <mat-card-content class="detalles">
+      <mat-card-content class="detalles">
 
-      <div fxLayout="column wrap">
+        <div fxLayout="column wrap">
 
-        <div *ngFor="let inscripcion of inscripciones$ | async" class="row">
+          <div *ngFor="let inscripcion of inscripciones$ | async" class="row">
 
-          <div class="lineaInscripcion" fxLayout="row" fxLayoutGap="0px">
+            <div class="lineaInscripcion" fxLayout="row" fxLayoutGap="0px">
 
-            <div fxFlex>
-              <img [src]="inscripcion.alumno.foto" class="img-fluid foto" />
-            </div>
+              <div fxFlex>
+                <img [src]="inscripcion.alumno.foto" class="img-fluid foto" />
+              </div>
 
-            <div  style="width: 200px;" >
-              {{ inscripcion.alumno.apellido }}, {{ inscripcion.alumno.nombre }}
-            </div>
+              <div style="width: 200px;">
+                {{ inscripcion.alumno.apellido }}, {{ inscripcion.alumno.nombre }}
+              </div>
 
-            <div fxFlex>
-              {{ inscripcion.fecha | date:'dd-MM-yyyy' }}
-            </div>
+              <div fxFlex>
+                {{ inscripcion.fecha | date:'dd-MM-yyyy' }}
+              </div>
 
-            <div fxFlex style="text-align: end;">
-              <button mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="desinscribirConfirmacion(inscripcion)">
-                <mat-icon>delete</mat-icon>
-              </button>
+              <div fxFlex style="text-align: end;">
+                <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="desinscribirConfirmacion(inscripcion)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+
             </div>
 
           </div>
 
         </div>
 
-      </div>
+      </mat-card-content>
 
-    </mat-card-content>
+    </mat-card>
 
-  </mat-card>
+  </section>
 
-</section>
+</ng-container>

@@ -92,7 +92,7 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
       alumnoId: '',
       cursoId: this.curso.id,
       usuarioId: this.sesionService.sesion.usuarioActivo?.id,
-      fecha: new Date() //formatDate(new Date(), 'yyyy/MM/dd', 'en')
+      fecha: new Date()
     });
   }
 

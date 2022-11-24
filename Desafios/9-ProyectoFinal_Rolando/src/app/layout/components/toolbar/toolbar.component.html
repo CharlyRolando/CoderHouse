@@ -1,6 +1,6 @@
 <ng-container *ngIf="sesion$ | async as sesion">
 
-  <mat-toolbar [ngClass]="{'admin': esAdmin}">
+  <mat-toolbar [ngClass]="{'admin': sesion.usuarioActivo?.admin}">
     <div class="barra">
 
       <div class="box">
@@ -25,5 +25,5 @@
 
     </div>
   </mat-toolbar>
-  <!-- </div> -->
+
 </ng-container>

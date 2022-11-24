@@ -8,6 +8,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MainComponent } from './components/main/main.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SharedModule } from '../_shared/shared.module';
+import { UsuariosModule } from '../usuarios/usuarios.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { SharedModule } from '../_shared/shared.module';
     CommonModule,
     LayoutRoutingModule,
     SharedModule,
+    UsuariosModule,
   ]
 })
 export class LayoutModule { }

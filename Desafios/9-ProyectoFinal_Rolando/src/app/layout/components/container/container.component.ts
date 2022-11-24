@@ -1,7 +1,10 @@
 import { Component , AfterViewInit, ViewChild, ChangeDetectorRef, OnInit} from '@angular/core';
 import { BreakpointObserver} from '@angular/cdk/layout'
 import { MatSidenav } from '@angular/material/sidenav';
-import { SesionService } from 'src/app/autenticacion/services/sesion.service';
+import { Observable } from 'rxjs';
+import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
+import { Store } from '@ngrx/store';
+import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 
 
 
@@ -12,19 +15,22 @@ import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 })
 export class ContainerComponent implements OnInit, AfterViewInit {
 
+  sesion$!: Observable<Sesion>;
+
   @ViewChild(MatSidenav)
   sidenav! : MatSidenav;
 
-  esAdmin: boolean = false;
-
   constructor(
-    private sesionService: SesionService,
     private observer : BreakpointObserver,
-    private deteccionCambios: ChangeDetectorRef
-  ) { }
+    private deteccionCambios: ChangeDetectorRef,
+    private storeSesion: Store<Sesion>,
+  ) {
+
+    this.sesion$ = this.storeSesion.select(selectSesionActiva);
+
+  }
 
   ngOnInit(): void {
-     this.esAdmin = this.sesionService.esAdmin();
   }
 
 

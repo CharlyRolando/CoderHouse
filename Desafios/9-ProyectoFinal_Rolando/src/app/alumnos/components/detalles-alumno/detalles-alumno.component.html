@@ -1,3 +1,4 @@
+<ng-container *ngIf="sesion$ | async as sesion">
 
 <div class="row">
   <p appTemaTitulos>{{ this.appService.titulo }}</p>
@@ -80,7 +81,7 @@
             </div>
 
             <div fxFlex style="text-align: end;">
-              <button mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="desinscribirConfirmacion(inscripcion)">
+              <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="desinscribirConfirmacion(inscripcion)">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -96,3 +97,5 @@
   </mat-card>
 
 </section>
+
+</ng-container>

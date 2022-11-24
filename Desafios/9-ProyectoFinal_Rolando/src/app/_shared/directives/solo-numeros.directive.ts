@@ -7,45 +7,45 @@ export class SoloNumerosDirective {
 
   constructor(private readonly elemento: ElementRef) { }
 
-  @HostListener('input',['$event']) alCambiarElInput(event:Event): void{
+  @HostListener('input', ['$event']) alCambiarElInput(event: Event): void {
 
-      const soloNumeros = /[^0-9.]/g;
+    const soloNumeros = /[^0-9.]/g;
     const valor = this.elemento.nativeElement.value;
     var valorLimpio = valor.replace(soloNumeros, '');
     this.elemento.nativeElement.value = valorLimpio;
 
-    if (valor !== this.elemento.nativeElement.value){
+    if (valor !== this.elemento.nativeElement.value) {
       event.stopPropagation();
     };
 
 
-};
+  };
 
 
   validateDecimal(valor: any) {
     var RE = /^\d*\.?\d*$/;
     if (RE.test(valor)) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
-}
+  }
 
 
-//Para validar un número decimal con dos dígitos de precisión
-validateDecimal2(valor: any) {
+  //Para validar un número decimal con dos dígitos de precisión
+  validateDecimal2(valor: any) {
     var RE = /^\d*(\.\d{1})?\d{0,1}$/;
     if (RE.test(valor)) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
-}
+  }
 
 
-isCommaDecimalNumber(value:any) {
-  return /^-?(?:\d+(?:,\d*)?)$/.test(value);
-}
+  isCommaDecimalNumber(value: any) {
+    return /^-?(?:\d+(?:,\d*)?)$/.test(value);
+  }
 
 
 }

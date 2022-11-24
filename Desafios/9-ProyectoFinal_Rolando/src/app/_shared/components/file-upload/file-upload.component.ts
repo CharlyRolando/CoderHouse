@@ -39,7 +39,6 @@ export class FileUploadComponent {
     const task = this.storage.upload(filePath, file);
     this.uploadPercent	= task.percentageChanges();
 
-    //task.snapshotChanges().pipe(finalize(() => this.urlImage = ref.getDownloadURL())).subscribe();
     task.snapshotChanges().pipe(finalize(() => { ref.getDownloadURL().subscribe(
       downloadURL => {
         this.fileAttr = downloadURL;

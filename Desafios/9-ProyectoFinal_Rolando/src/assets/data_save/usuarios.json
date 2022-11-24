@@ -7,7 +7,7 @@
   "telefono": "11 4387-8753",
   "admin": true,
   "id": "1",
-  "pass2": "!Q2w3e4r5"
+  "pass2": "!Q2w3e4r"
  },
  {
   "email": "aPerez@gmail.com",
@@ -17,7 +17,7 @@
   "telefono": "11 4444 4444",
   "admin": false,
   "id": "2",
-  "pass2": "!Q2w3e4r5"
+  "pass2": "!Q2w3e4r"
  },
  {
   "email": "mArriola@gmail.com",
@@ -27,6 +27,6 @@
   "telefono": "11 4675-8976",
   "admin": false,
   "id": "3",
-  "pass2": "!Q2w3e4r5"
+  "pass2": "!Q2w3e4r"
  }
 ]

@@ -13,17 +13,13 @@ export class UsuariosService {
 
   private usuariosUrl = environment.baseUrl + 'usuarios';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUsuarios(): Observable<Usuario[]> {
-
-delay(100000);
-
-
     return this.http.get<Usuario[]>(this.usuariosUrl)
-    .pipe(
-      catchError(this.handleError)
-    );
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   getUsuario(id: string | null): Observable<Usuario> {
@@ -38,18 +34,7 @@ delay(100000);
   }
 
 
-  // getUsuarioXemail(email: string | null): Observable<Usuario | undefined> {
-  //   if (email === '') {
-  //     return of(undefined);
-  //   }
-  //   return this.http.get<Usuario[]>(this.usuariosUrl)
-  //     .pipe(
-  //       map((usuarios: Usuario[]) => usuarios.find((u: Usuario) => u.email === email))
-  //     );
-  // }
-
-
-  addUsuario(usuario: Usuario):  Observable<Usuario>  {
+  addUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(this.usuariosUrl, usuario)
       .pipe(
         catchError(this.handleError)
@@ -57,7 +42,7 @@ delay(100000);
   }
 
 
-  editUsuario(usuario: Usuario):  Observable<Usuario>  {
+  editUsuario(usuario: Usuario): Observable<Usuario> {
 
     return this.http.put<Usuario>(`${this.usuariosUrl}/${usuario.id}`, usuario)
       .pipe(
@@ -90,11 +75,11 @@ delay(100000);
   private inicializarUsuario(): Usuario {
     return {
       id: '',
-      email:'',
-      password:'',
-      nombre:'',
-      direccion:'',
-      telefono:'',
+      email: '',
+      password: '',
+      nombre: '',
+      direccion: '',
+      telefono: '',
       admin: false
     };
   }

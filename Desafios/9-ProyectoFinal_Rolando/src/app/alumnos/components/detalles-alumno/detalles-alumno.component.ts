@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
-import { SesionService } from 'src/app/autenticacion/services/sesion.service';
+import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
 import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
 import { deleteInscripcionEntidad, loadInscripcionesEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
 import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
 import { selectInscripcionEntidadXalumno, selectInscripcionesEntidadLoading } from 'src/app/inscripciones/state/inscripciones-entidad.selectors';
+import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Alumno } from '../../interfaces/alumno';
@@ -23,30 +24,33 @@ import { selectAlumno } from '../../state/alumnos.selectors';
 })
 export class DetallesAlumnoComponent implements OnInit, OnDestroy {
 
-  esAdmin: boolean = false;
   suscripcionLoading!: Subscription;
+  suscripcionAlumnos!: Subscription;
+
+  sesion$!: Observable<Sesion>;
 
   alumno!: Alumno;
   inscripciones$!:Observable<InscripcionEntidad[]>;
-  suscripcionAlumnos!: Subscription;
   errorMessage: string = '';
 
 
   constructor(
     private loader: LoaderService,
-    private sesionService: SesionService,
     private activatedRoute: ActivatedRoute,
     public appService: AppService,
     public dialog: MatDialog,
     private storeAlumnos: Store<AlumnosState>,
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
+    private storeSesion: Store<Sesion>,
   ) {
+
+    this.sesion$ = this.storeSesion.select(selectSesionActiva);
+
     this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
    }
 
 
   ngOnInit(): void {
-    this.esAdmin = this.sesionService.esAdmin();
 
     this.activatedRoute.paramMap.subscribe((parametro: any) => {
 

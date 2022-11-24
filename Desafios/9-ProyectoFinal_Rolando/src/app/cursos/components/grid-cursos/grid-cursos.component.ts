@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Curso } from 'src/app/cursos/interfaces/curso';
 import { ListaAlumnosComponent } from 'src/app/alumnos/components/lista-alumnos/lista-alumnos.component';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
@@ -17,6 +17,8 @@ import { addCurso, deleteCurso, editCurso, loadCursos } from '../../state/cursos
 import { selectCursos, selectCursosLoading } from '../../state/cursos.selectors';
 import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
 import { addInscripcionEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
+import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
+import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 
 
 @Component({
@@ -26,8 +28,7 @@ import { addInscripcionEntidad } from 'src/app/inscripciones/state/inscripciones
 })
 export class GridCursosComponent implements OnInit, OnDestroy {
 
-
-  esAdmin: boolean = false;
+  sesion$!: Observable<Sesion>;
   suscripcionLoading!: Subscription;
 
   cursos!: Curso[];
@@ -44,15 +45,19 @@ export class GridCursosComponent implements OnInit, OnDestroy {
     public appService: AppService,
     private storeCursos: Store<CursosState>,
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
+    private storeSesion: Store<Sesion>,
   ) {
+
+    this.sesion$ = this.storeSesion.select(selectSesionActiva);
+
     this.suscripcionLoading = this.storeCursos.select(selectCursosLoading).subscribe(this.loader.controlLoader);
+
   }
 
 
 
   ngOnInit(): void {
 
-    this.esAdmin = this.sesionService.esAdmin();
     this.getCursosData();
 
   }

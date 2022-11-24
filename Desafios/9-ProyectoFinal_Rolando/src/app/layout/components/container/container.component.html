@@ -1,8 +1,10 @@
+<ng-container *ngIf="sesion$ | async as sesion">
+
 <app-toolbar (toggleSidebar)="sidebar.toggle()"></app-toolbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container >
 
-  <mat-sidenav [ngClass]="{'admin': esAdmin}" #sidebar mode='side' opened>
+  <mat-sidenav [ngClass]="{'admin': sesion.usuarioActivo?.admin}" #sidebar mode='side' opened>
     <app-sidebar></app-sidebar>
   </mat-sidenav>
 
@@ -11,3 +13,5 @@
   </mat-sidenav-content>
 
 </mat-sidenav-container>
+
+</ng-container>

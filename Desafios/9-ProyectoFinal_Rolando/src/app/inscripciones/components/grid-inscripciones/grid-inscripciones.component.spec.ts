@@ -3,6 +3,8 @@ import { GridInscripcionesComponent } from './grid-inscripciones.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 
 
@@ -21,6 +23,8 @@ describe('GridInscripcionesComponent', () => {
         {provide: MatDialogRef, useValue: {}},
         {provide: MAT_DIALOG_DATA, useValue: []},
         {provide: MatDialog, useValue: []},
+        {provide: ActivatedRoute, useValue: []},
+        {provide: Store, useValue: []},
       ]
     })
     .compileComponents();

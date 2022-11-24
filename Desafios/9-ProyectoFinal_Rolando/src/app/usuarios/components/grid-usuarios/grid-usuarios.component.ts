@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
-import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
@@ -23,7 +22,6 @@ import { FormUsuarioComponent } from '../form-usuario/form-usuario.component';
 })
 export class GridUsuariosComponent implements OnInit, OnDestroy {
 
-  esAdmin: boolean = false;
   suscripcionLoading!: Subscription;
 
   usuarios: Usuario[] = [];
@@ -33,11 +31,8 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['nombre', 'email', 'direccion', 'telefono', 'admin', 'acciones'];
 
 
-
-
   constructor(
     private loader: LoaderService,
-    private sesionService: SesionService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
@@ -45,14 +40,13 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
     private storeUsuarios: Store<UsuariosState>
   ) {
     this.suscripcionLoading = this.storeUsuarios.select(selectUsuariosLoading).subscribe(this.loader.controlLoader);
-   }
+  }
 
 
   ngOnInit() {
 
-    this.esAdmin = this.sesionService.esAdmin();
-
     this.getUsuariosData();
+
   }
 
 
@@ -132,7 +126,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
   deleteUsuario(usuarioId: string): void {
 
     if (usuarioId != '') {
-      this.storeUsuarios.dispatch(deleteUsuario({id: usuarioId}))
+      this.storeUsuarios.dispatch(deleteUsuario({ id: usuarioId }))
     }
 
   }

@@ -4,6 +4,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 
 describe('GridAlumnosComponent', () => {
@@ -22,6 +24,8 @@ describe('GridAlumnosComponent', () => {
         {provide: MAT_DIALOG_DATA, useValue: []},
         {provide: MatDialog, useValue: []},
         {provide: MatSort, useValue: []},
+        {provide: ActivatedRoute, useValue: []},
+        {provide: Store, useValue: []},
       ]
     })
     .compileComponents();

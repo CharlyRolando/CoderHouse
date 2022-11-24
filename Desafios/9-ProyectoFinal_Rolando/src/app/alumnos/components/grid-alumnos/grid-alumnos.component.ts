@@ -8,14 +8,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { FormAlumnoComponent } from '../form-alumno/form-alumno.component';
-import { SesionService } from 'src/app/autenticacion/services/sesion.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlumnosState } from '../../state/alumnos.reducer';
 import { Store } from '@ngrx/store';
 import { addAlumno, deleteAlumno, editAlumno, loadAlumnos } from '../../state/alumnos.actions';
 import { selectAlumnos, selectAlumnosLoading } from '../../state/alumnos.selectors';
+import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
+import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 
 
 @Component({
@@ -25,7 +26,7 @@ import { selectAlumnos, selectAlumnosLoading } from '../../state/alumnos.selecto
 })
 export class GridAlumnosComponent implements OnInit, OnDestroy {
 
-  esAdmin: boolean = false;
+  sesion$!: Observable<Sesion>;
   suscripcionLoading!: Subscription;
 
   alumnos!: Alumno[];
@@ -38,23 +39,23 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) tbSort!: MatSort;
 
 
-
   constructor(
     private loader: LoaderService,
-    private sesionService: SesionService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
     public appService: AppService,
-    private storeAlumnos: Store<AlumnosState>
+    private storeAlumnos: Store<AlumnosState>,
+    private storeSesion: Store<Sesion>,
   ) {
+
+    this.sesion$ = this.storeSesion.select(selectSesionActiva);
+
     this.suscripcionLoading = this.storeAlumnos.select(selectAlumnosLoading).subscribe(this.loader.controlLoader);
   }
 
 
   ngOnInit(): void {
-
-    this.esAdmin = this.sesionService.esAdmin();
 
     this.getAlumnosData();
 

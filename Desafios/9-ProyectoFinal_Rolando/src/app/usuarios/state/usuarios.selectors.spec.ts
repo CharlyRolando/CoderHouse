@@ -7,6 +7,7 @@ describe('Usuarios Selectors', () => {
       [fromUsuarios.usuariosFeatureKey]: {}
     });
 
-    expect(result).toEqual({});
+    expect(result).toBeTruthy;
+
   });
 });

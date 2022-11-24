@@ -20,7 +20,7 @@ export const selectUsuarios = createSelector(
 );
 
 
-export const selectUsuario = (usuarioId:string) => createSelector(
+export const selectUsuario = (usuarioId: string) => createSelector(
   selectUsuarios,
   (usuarios: Usuario[]) => {
     return usuarios.filter(u => u.id == usuarioId)[0]

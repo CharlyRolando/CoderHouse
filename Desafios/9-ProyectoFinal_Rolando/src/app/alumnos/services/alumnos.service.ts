@@ -12,17 +12,15 @@ export class AlumnosService {
 
   private alumnosUrl = environment.baseUrl + 'alumnos';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAlumnos(): Observable<Alumno[]> {
-
-    delay(50000);
-
     return this.http.get<Alumno[]>(this.alumnosUrl)
-    .pipe(
-      catchError(this.handleError)
-    );
+      .pipe(
+        catchError(this.handleError)
+      );
   }
+
 
   getAlumno(id: string | null): Observable<Alumno> {
     if (id === '') {
@@ -36,7 +34,7 @@ export class AlumnosService {
   }
 
 
-  addAlumno(alumno: Alumno): Observable<Alumno | never>  {
+  addAlumno(alumno: Alumno): Observable<Alumno | never> {
     return this.http.post<Alumno>(this.alumnosUrl, alumno)
       .pipe(
         catchError(this.handleError)
@@ -44,7 +42,7 @@ export class AlumnosService {
   }
 
 
-  editAlumno(alumno: Alumno):  Observable<Alumno>  {
+  editAlumno(alumno: Alumno): Observable<Alumno> {
     const url = `${this.alumnosUrl}/${alumno.id}`;
     return this.http.put<Alumno>(url, alumno)
       .pipe(
@@ -63,10 +61,10 @@ export class AlumnosService {
   }
 
 
-  public handleError(err: any) : Observable<never> {
+  public handleError(err: any): Observable<never> {
     let errorMessage: string;
-    if(err === null || err === undefined){
-      errorMessage ="nulo";
+    if (err === null || err === undefined) {
+      errorMessage = "nulo";
     }
     else if (err.error === undefined) {
       errorMessage = "undefined";

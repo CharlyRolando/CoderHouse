@@ -21,8 +21,6 @@ export class RegistracionComponent implements OnInit {
 
 
   public onSubmit(): void {
-    //this.registracionValid = true;
-
     this._router.navigate(['login']);
   }
 

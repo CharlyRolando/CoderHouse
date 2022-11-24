@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
 import { SesionService } from 'src/app/autenticacion/services/sesion.service';
+import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 
 
 @Component({
@@ -10,16 +14,19 @@ import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 })
 export class SidebarComponent implements OnInit {
 
-  esAdmin: boolean = false;
+  sesion$!: Observable<Sesion>;
 
   constructor(
     private sesionService: SesionService,
+    private storeSesion: Store<Sesion>,
     private router: Router
-  ) { }
+  ) {
+    this.sesion$ = this.storeSesion.select(selectSesionActiva);
+  }
 
 
   ngOnInit(): void {
-    this.esAdmin = this.sesionService.esAdmin();
+
   }
 
 

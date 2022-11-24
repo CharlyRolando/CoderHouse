@@ -1,20 +1,20 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { InscripcionEntidad } from '../../interfaces/inscripcion-entidad';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { InscripcionesEntidadState } from '../../state/inscripciones-entidad.reducer';
 import { deleteInscripcionEntidad, loadInscripcionesEntidad } from '../../state/inscripciones-entidad.actions';
 import { selectInscripcionesEntidad, selectInscripcionesEntidadLoading } from '../../state/inscripciones-entidad.selectors';
+import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
+import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 
 
 @Component({
@@ -25,11 +25,12 @@ import { selectInscripcionesEntidad, selectInscripcionesEntidadLoading } from '.
 export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
   errorMessage = '';
-  esAdmin: boolean = true;
+  sesion$!: Observable<Sesion>;
+
   suscripcionLoading!: Subscription;
+  suscripcionInscripciones!: Subscription;
 
   inscripciones!: InscripcionEntidad[];
-  suscripcionInscripciones!: Subscription;
 
   dataSource!: MatTableDataSource<InscripcionEntidad>;
   columnas: string[] = ['id', 'nombreAlumno', 'nombreCurso', 'comisionCurso', 'fecha', 'nombreUsuario', 'acciones'];
@@ -39,22 +40,21 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
   constructor(
     private loader: LoaderService,
-    private sesionService: SesionService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
     public appService: AppService,
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
+    private storeSesion: Store<Sesion>,
   ) {
+
+    this.sesion$ = this.storeSesion.select(selectSesionActiva);
+
     this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
   }
 
 
 
   ngOnInit(): void {
-
-    this._snackBar
-    this.esAdmin = this.sesionService.esAdmin();
 
     this.getInscripciones();
 
@@ -79,7 +79,6 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
 
   configurarTabla() {
-
 
     this.dataSource = new MatTableDataSource(this.inscripciones);
 
@@ -162,8 +161,6 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
       this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: inscripcionId }));
     }
   }
-
-
 
 
   ngOnDestroy(): void {
