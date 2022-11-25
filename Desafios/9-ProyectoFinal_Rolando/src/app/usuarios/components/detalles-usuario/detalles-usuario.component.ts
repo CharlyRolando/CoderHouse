@@ -34,7 +34,6 @@ export class DetallesUsuarioComponent implements OnInit, OnDestroy {
   ) {
 
     this.sesion$ = this.storeSesion.select(selectSesionActiva);
-
     this.suscripcionLoading = this.storeUsuarios.select(selectUsuariosLoading).subscribe(this.loader.controlLoader);
   }
 

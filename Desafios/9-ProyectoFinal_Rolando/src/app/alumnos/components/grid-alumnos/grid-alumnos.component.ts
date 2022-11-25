@@ -50,8 +50,8 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
   ) {
 
     this.sesion$ = this.storeSesion.select(selectSesionActiva);
-
     this.suscripcionLoading = this.storeAlumnos.select(selectAlumnosLoading).subscribe(this.loader.controlLoader);
+
   }
 
 
@@ -65,7 +65,6 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
   getAlumnosData() {
 
     this.storeAlumnos.dispatch(loadAlumnos());
-
     this.suscripcionAlumnos = this.storeAlumnos.select(selectAlumnos)
       .subscribe((alumnos: Alumno[]) => {
 

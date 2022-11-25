@@ -49,7 +49,6 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
     this.sesion$ = this.storeSesion.select(selectSesionActiva);
 
-    this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
   }
 
 
@@ -63,15 +62,16 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
   getInscripciones() {
 
+    this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
     this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
 
     this.suscripcionInscripciones = this.storeInscripcionesEntidad.select(selectInscripcionesEntidad)
-    .subscribe((inscripciones: InscripcionEntidad[]) => {
+      .subscribe((inscripciones: InscripcionEntidad[]) => {
 
-      this.inscripciones = inscripciones.map(inscripciones => { return {...inscripciones}; });
-      this.configurarTabla();
+        this.inscripciones = inscripciones.map(inscripciones => { return { ...inscripciones }; });
+        this.configurarTabla();
 
-    });
+      });
 
   }
 
@@ -82,15 +82,15 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
 
     this.dataSource = new MatTableDataSource(this.inscripciones);
 
-    if(this.inscripciones.length > 0 ){
-    /* Ordenamiento por defecto id desc */
-    this.tbSort.disableClear = true;
-    const sortState: Sort = { active: 'id', direction: 'desc' };
-    this.tbSort.active = sortState.active;
-    this.tbSort.direction = sortState.direction;
-    this.tbSort.sortChange.emit(sortState);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.tbSort;
+    if (this.inscripciones.length > 0) {
+      /* Ordenamiento por defecto id desc */
+      this.tbSort.disableClear = true;
+      const sortState: Sort = { active: 'id', direction: 'asc' };
+      this.tbSort.active = sortState.active;
+      this.tbSort.direction = sortState.direction;
+      this.tbSort.sortChange.emit(sortState);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.tbSort;
     }
   }
 

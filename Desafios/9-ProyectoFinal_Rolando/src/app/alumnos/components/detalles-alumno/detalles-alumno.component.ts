@@ -31,7 +31,7 @@ export class DetallesAlumnoComponent implements OnInit, OnDestroy {
   sesion$!: Observable<Sesion>;
 
   alumno!: Alumno;
-  inscripciones$!:Observable<InscripcionEntidad[]>;
+  inscripciones$!: Observable<InscripcionEntidad[]>;
   errorMessage: string = '';
 
 
@@ -47,8 +47,7 @@ export class DetallesAlumnoComponent implements OnInit, OnDestroy {
 
     this.sesion$ = this.storeSesion.select(selectSesionActiva);
 
-    this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
-   }
+  }
 
 
   ngOnInit(): void {
@@ -69,18 +68,18 @@ export class DetallesAlumnoComponent implements OnInit, OnDestroy {
   getAlumno(alumnoId: string) {
 
     this.storeAlumnos.dispatch(loadAlumnos());
-    this.suscripcionAlumnos = this.storeAlumnos.select(selectAlumno(alumnoId)).subscribe((alumno: Alumno) =>{
+    this.suscripcionAlumnos = this.storeAlumnos.select(selectAlumno(alumnoId)).subscribe((alumno: Alumno) => {
       this.alumno = alumno;
     });
 
   }
 
 
-  getInscripcionesEntidadesXAlumno(alumnoId: string){
+  getInscripcionesEntidadesXAlumno(alumnoId: string) {
 
+    this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
     this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
-
-   this.inscripciones$ = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXalumno(alumnoId));
+    this.inscripciones$ = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXalumno(alumnoId));
 
   }
 

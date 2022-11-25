@@ -45,7 +45,6 @@ export class DetallesCursoComponent implements OnInit, OnDestroy {
   ) {
 
     this.sesion$ = this.storeSesion.select(selectSesionActiva);
-    this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
 
   }
 
@@ -73,6 +72,7 @@ export class DetallesCursoComponent implements OnInit, OnDestroy {
 
   getInscripcionesEntidadesXCurso(cursoId: string) {
 
+    this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
     this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
     this.inscripciones$ = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXcurso(cursoId));
 

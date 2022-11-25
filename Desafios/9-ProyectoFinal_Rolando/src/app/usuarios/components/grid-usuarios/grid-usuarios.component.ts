@@ -4,9 +4,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
+import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
+import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { NotificacionDialogComponent } from 'src/app/_shared/components/notificacion-dialog/notificacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
@@ -24,6 +26,7 @@ import { FormUsuarioComponent } from '../form-usuario/form-usuario.component';
 export class GridUsuariosComponent implements OnInit, OnDestroy {
 
   suscripcionLoading!: Subscription;
+  sesion$!: Observable<Sesion>;
 
   usuarios: Usuario[] = [];
   suscripcionUsuarios!: Subscription;
@@ -38,8 +41,10 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
     public appService: AppService,
-    private storeUsuarios: Store<UsuariosState>
+    private storeUsuarios: Store<UsuariosState>,
+    private storeSesion: Store<Sesion>,
   ) {
+    this.sesion$ = this.storeSesion.select(selectSesionActiva);
     this.suscripcionLoading = this.storeUsuarios.select(selectUsuariosLoading).subscribe(this.loader.controlLoader);
   }
 
@@ -93,7 +98,7 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
     dialogEdit.afterClosed().subscribe((respUsuario: Usuario) => {
 
       if (respUsuario) {
-        if(this.validarEditAdministrador(usuario, respUsuario))
+        if (this.validarEditAdministrador(usuario, respUsuario))
           return;
 
         this.storeUsuarios.dispatch(editUsuario({ usuario: respUsuario }))
