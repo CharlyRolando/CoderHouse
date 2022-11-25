@@ -41,7 +41,7 @@ import { EffectsModule } from '@ngrx/effects';
     AngularFireStorageModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   entryComponents: [ConfirmacionDialogComponent],

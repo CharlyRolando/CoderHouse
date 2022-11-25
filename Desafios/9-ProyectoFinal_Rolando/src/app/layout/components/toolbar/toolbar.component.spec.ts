@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarComponent } from './toolbar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 
 describe('ToolbarComponent', () => {
@@ -11,6 +13,10 @@ describe('ToolbarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ToolbarComponent ],
       imports: [HttpClientTestingModule],
+      providers: [
+        {provide: ActivatedRoute, useValue: []},
+        {provide: Store, useValue: []},
+      ]
     })
     .compileComponents();
 

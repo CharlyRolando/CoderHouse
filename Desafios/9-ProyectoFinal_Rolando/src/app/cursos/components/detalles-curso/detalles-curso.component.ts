@@ -36,7 +36,6 @@ export class DetallesCursoComponent implements OnInit, OnDestroy {
 
   constructor(
     private loader: LoaderService,
-    private sesionService: SesionService,
     private activatedRoute: ActivatedRoute,
     public appService: AppService,
     public dialog: MatDialog,
@@ -48,9 +47,9 @@ export class DetallesCursoComponent implements OnInit, OnDestroy {
     this.sesion$ = this.storeSesion.select(selectSesionActiva);
 
     this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
-  }
 
-  ngOnInit(): void {
+
+
 
     this.activatedRoute.paramMap.subscribe((parametro: any) => {
 
@@ -60,6 +59,13 @@ export class DetallesCursoComponent implements OnInit, OnDestroy {
 
       this.getInscripcionesEntidadesXCurso(cursoId);
     })
+
+
+  }
+
+  ngOnInit(): void {
+
+
   }
 
 
