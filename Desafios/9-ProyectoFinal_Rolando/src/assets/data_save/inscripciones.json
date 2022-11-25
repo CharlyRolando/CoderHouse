@@ -21,15 +21,15 @@
   "id": "3"
  },
  {
-  "cursoId": "3",
-  "alumnoId": "3",
+  "cursoId": "1",
+  "alumnoId": "4",
   "fecha": "2022-10-30T19:28:06.406Z",
   "usuarioId": "1",
   "id": "4"
  },
  {
   "cursoId": "3",
-  "alumnoId": "8",
+  "alumnoId": "3",
   "fecha": "2022-10-12T19:28:17.532Z",
   "usuarioId": "1",
   "id": "5"
@@ -71,7 +71,7 @@
  },
  {
   "cursoId": "6",
-  "alumnoId": "1",
+  "alumnoId": "8",
   "fecha": "2022-09-30T19:29:25.049Z",
   "usuarioId": "1",
   "id": "11"
@@ -161,8 +161,8 @@
   "id": "24"
  },
  {
-  "cursoId": "2",
-  "alumnoId": "1",
+  "cursoId": "1",
+  "alumnoId": "7",
   "fecha": "2022-04-22T19:35:16.851Z",
   "usuarioId": "1",
   "id": "25"
@@ -196,7 +196,7 @@
   "id": "29"
  },
  {
-  "cursoId": "5",
+  "cursoId": "1",
   "alumnoId": "5",
   "fecha": "2022-03-03T19:36:39.719Z",
   "usuarioId": "1",

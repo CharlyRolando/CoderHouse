@@ -69,7 +69,7 @@
             </div>
 
             <div fxFlex>
-              {{ inscripcion.curso.nombre}}
+              <a [routerLink]="['/container/cursos/curso', inscripcion.curso.id, 'detalles']"> {{ inscripcion.curso.nombre}} </a>
             </div>
 
             <div fxFlex>

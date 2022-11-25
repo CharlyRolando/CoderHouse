@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ɵbypassSanitizationTrustStyle } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { Usuario } from 'src/app/usuarios/interfaces/usuario';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
+import { NotificacionDialogComponent } from 'src/app/_shared/components/notificacion-dialog/notificacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { addUsuario, deleteUsuario, editUsuario, loadUsuarios } from '../../state/usuarios.actions';
 import { UsuariosState } from '../../state/usuarios.reducer';
@@ -53,9 +54,9 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
   getUsuariosData() {
 
     this.storeUsuarios.dispatch(loadUsuarios());
-
     this.suscripcionUsuarios = this.storeUsuarios.select(selectUsuarios).subscribe((usuarios: Usuario[]) => {
-      this.dataSource = new MatTableDataSource<Usuario>(usuarios);
+      this.usuarios = usuarios;
+      this.dataSource = new MatTableDataSource<Usuario>(this.usuarios);
     });
 
   }
@@ -69,11 +70,8 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
     });
 
     dialogAlta.afterClosed().subscribe((usuario: Usuario) => {
-
       if (usuario) {
-
         this.storeUsuarios.dispatch(addUsuario({ usuario }));
-
         this._snackBar.open(
           `El usuario '${usuario.nombre} ${usuario.nombre}' fue agregado exitosamente.`,
           '',
@@ -81,32 +79,58 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
         );
       }
     });
+
   }
 
 
   editUsuario(usuario: Usuario): void {
+
     const dialogEdit = this.dialog.open(FormUsuarioComponent, {
       width: '70%',
       data: usuario,
     });
 
-    dialogEdit.afterClosed().subscribe((usuario: Usuario) => {
+    dialogEdit.afterClosed().subscribe((respUsuario: Usuario) => {
 
-      if (usuario) {
+      if (respUsuario) {
+        if(this.validarEditAdministrador(usuario, respUsuario))
+          return;
 
-        this.storeUsuarios.dispatch(editUsuario({ usuario }))
-
+        this.storeUsuarios.dispatch(editUsuario({ usuario: respUsuario }))
         this._snackBar.open(
-          `El usuario '${usuario.nombre} ${usuario.nombre}' fue modificado exitosamente.`,
+          `El usuario '${respUsuario.nombre} ${respUsuario.nombre}' fue modificado exitosamente.`,
           '',
           { duration: 2000 }
         );
       }
     });
+
+  }
+
+  validarEditAdministrador(usuario: Usuario, respUsuario: Usuario): boolean {
+
+    const usuariosAdmin: Usuario[] = this.usuarios.filter((u) => u.admin);
+    if (usuario.admin && !respUsuario.admin && usuariosAdmin.length == 1) {
+      const message = `El usuario '${usuario.nombre}' es el único Administrador.\nNo se puede quitar su rol.`;
+      const dialogData = new ConfirmacionDialogModel('Modificar Administrador', message);
+
+      const dialogRef = this.dialog.open(NotificacionDialogComponent, {
+        maxWidth: '400px',
+        data: dialogData,
+      });
+
+      return true;
+    } else {
+      return false;
+    }
   }
 
 
   deleteConfirmacion(usuario: Usuario): void {
+
+    if (this.validarUltimoAdministrador(usuario))
+      return;
+
     const message = `Confirma la eliminación de '${usuario.nombre}'?`;
     const dialogData = new ConfirmacionDialogModel('Eliminar usuario', message);
 
@@ -122,6 +146,23 @@ export class GridUsuariosComponent implements OnInit, OnDestroy {
     });
   }
 
+  validarUltimoAdministrador(usuario: Usuario): boolean {
+
+    const usuariosAdmin: Usuario[] = this.usuarios.filter((u) => u.admin);
+    if (usuario.admin && usuariosAdmin.length == 1) {
+      const message = `El usuario '${usuario.nombre}' es el único Administrador.\nNo se puede eliminar.`;
+      const dialogData = new ConfirmacionDialogModel('Eliminar usuario', message);
+
+      const dialogRef = this.dialog.open(NotificacionDialogComponent, {
+        maxWidth: '400px',
+        data: dialogData,
+      });
+
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   deleteUsuario(usuarioId: string): void {
 

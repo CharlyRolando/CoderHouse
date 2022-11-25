@@ -69,11 +69,9 @@ export class FormAlumnoComponent implements OnInit {
   }
 
 
-
   addUrlFile(urlFile: string) {
     this.fgAlumno.controls['foto'].setValue(urlFile);
   }
-
 
 
 }

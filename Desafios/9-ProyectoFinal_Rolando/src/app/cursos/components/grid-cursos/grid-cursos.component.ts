@@ -49,7 +49,6 @@ export class GridCursosComponent implements OnInit, OnDestroy {
   ) {
 
     this.sesion$ = this.storeSesion.select(selectSesionActiva);
-
     this.suscripcionLoading = this.storeCursos.select(selectCursosLoading).subscribe(this.loader.controlLoader);
 
   }
@@ -66,7 +65,6 @@ export class GridCursosComponent implements OnInit, OnDestroy {
   getCursosData() {
 
     this.storeCursos.dispatch(loadCursos());
-
     this.suscripcionCursos = this.storeCursos.select(selectCursos).subscribe((cursos: Curso[]) => {
         this.cursos = cursos;
       });

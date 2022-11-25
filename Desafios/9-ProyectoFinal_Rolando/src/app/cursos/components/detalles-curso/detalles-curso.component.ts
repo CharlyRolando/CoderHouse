@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
-import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
 import { deleteInscripcionEntidad, loadInscripcionesEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
 import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
@@ -14,6 +13,7 @@ import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Curso } from '../../interfaces/curso';
+import { loadCursos } from '../../state/cursos.actions';
 import { CursosState } from '../../state/cursos.reducer';
 import { selectCurso } from '../../state/cursos.selectors';
 
@@ -45,32 +45,25 @@ export class DetallesCursoComponent implements OnInit, OnDestroy {
   ) {
 
     this.sesion$ = this.storeSesion.select(selectSesionActiva);
-
     this.suscripcionLoading = this.storeInscripcionesEntidad.select(selectInscripcionesEntidadLoading).subscribe(this.loader.controlLoader);
-
-
-
-
-    this.activatedRoute.paramMap.subscribe((parametro: any) => {
-
-      let cursoId: string = parametro.get('id');
-
-      this.getCurso(cursoId);
-
-      this.getInscripcionesEntidadesXCurso(cursoId);
-    })
-
 
   }
 
   ngOnInit(): void {
 
+    this.activatedRoute.paramMap.subscribe((parametro: any) => {
+      let cursoId: string = parametro.get('id');
+
+      this.getCurso(cursoId);
+      this.getInscripcionesEntidadesXCurso(cursoId);
+    })
 
   }
 
 
   getCurso(cursoId: string) {
 
+    this.storeCursos.dispatch(loadCursos());
     this.suscripcionCursos = this.storeCursos.select(selectCurso(cursoId)).subscribe((curso: Curso) => {
       this.curso = curso;
     });
@@ -81,7 +74,6 @@ export class DetallesCursoComponent implements OnInit, OnDestroy {
   getInscripcionesEntidadesXCurso(cursoId: string) {
 
     this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
-
     this.inscripciones$ = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXcurso(cursoId));
 
   }

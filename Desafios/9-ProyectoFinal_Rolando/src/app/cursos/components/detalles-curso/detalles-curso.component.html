@@ -74,7 +74,7 @@
               </div>
 
               <div style="width: 200px;">
-                {{ inscripcion.alumno.apellido }}, {{ inscripcion.alumno.nombre }}
+                <a [routerLink]="['/container/alumnos/alumno', inscripcion.alumno.id, 'detalles']"> {{ inscripcion.alumno.apellido }}, {{ inscripcion.alumno.nombre }} </a>
               </div>
 
               <div fxFlex>
@@ -82,7 +82,7 @@
               </div>
 
               <div fxFlex style="text-align: end;">
-                <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="desinscribirConfirmacion(inscripcion)">
+                <button *ngIf="sesion.usuarioActivo?.admin && curso.inscripcion" mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="desinscribirConfirmacion(inscripcion)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>

@@ -3,8 +3,8 @@
 <div mat-dialog-content class="margen">
 
   <div *ngFor="let alumno of alumnos" class="row">
-    <div class="card tarjeta"
-      [style.background-color]="alumno.sexo === 1 ? 'rgba(0, 0, 0, 0.15)' : 'rgba(0, 0, 0, 0.03)'">
+    <div class="card tarjeta" (click)= "irAlAlumno(alumno.id)"
+      [style.background-color]="alumno.sexo === 1 ? 'rgba(0, 0, 0, 0.20)' : 'rgba(0, 0, 0, 0.03)'" >
       <div fxLayout="row" fxLayoutGap="10px">
         <div class="">
           <img [src]="alumno.foto" class="img-fluid foto" />

@@ -33,14 +33,14 @@
         <ng-container matColumnDef="nombreAlumno">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
           <td mat-cell *matCellDef="let inscripto">
-            {{ inscripto.alumno.nombre }}  {{ inscripto.alumno.apellido }}
+            <a [routerLink]="['/container/alumnos/alumno', inscripto.alumno.id, 'detalles']">  {{ inscripto.alumno.nombre }}  {{ inscripto.alumno.apellido }} </a>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="nombreCurso">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Curso</th>
           <td mat-cell *matCellDef="let inscripto">
-            {{ inscripto.curso.nombre }}
+            <a [routerLink]="['/container/cursos/curso', inscripto.curso.id, 'detalles']">  {{ inscripto.curso.nombre }} </a>
           </td>
         </ng-container>
 
@@ -70,7 +70,7 @@
             Acciones
           </th>
           <td mat-cell *matCellDef="let inscripto">
-            <button *ngIf="sesion.usuarioActivo?.admin" mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="deleteConfirmacion(inscripto)">
+            <button *ngIf="sesion.usuarioActivo?.admin && inscripto.curso.inscripcion" mat-icon-button color="warn" matTooltip="Eliminar inscripción" (click)="deleteConfirmacion(inscripto)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>

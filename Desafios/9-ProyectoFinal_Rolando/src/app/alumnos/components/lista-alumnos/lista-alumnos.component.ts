@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Alumno } from 'src/app/alumnos/interfaces/alumno';
 import { Curso } from 'src/app/cursos/interfaces/curso';
 import { Observable, Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { loadInscripcionesEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
 import { selectInscripcionEntidadXcurso } from 'src/app/inscripciones/state/inscripciones-entidad.selectors';
 import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
+import { Router } from '@angular/router';
 
 
 
@@ -25,7 +26,9 @@ export class ListaAlumnosComponent implements OnInit, OnDestroy {
 
   constructor(
     private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
-    @Inject(MAT_DIALOG_DATA) public cursoFiltro: Curso
+    private dialogRef: MatDialogRef<ListaAlumnosComponent>,
+    @Inject(MAT_DIALOG_DATA) public cursoFiltro: Curso,
+    private router: Router,
   ) { }
 
 
@@ -37,19 +40,20 @@ export class ListaAlumnosComponent implements OnInit, OnDestroy {
   getAlumonsXcurso(cursoId: string) {
 
     this.storeInscripcionesEntidad.dispatch(loadInscripcionesEntidad());
-
     this.suscripcion = this.storeInscripcionesEntidad.select(selectInscripcionEntidadXcurso(cursoId))
     .subscribe((inscripciones: InscripcionEntidad[]) => {
       this.alumnos = inscripciones?.map((inscripcion) => {
-        return inscripcion.alumno
+        return inscripcion.alumno;
       })
     });
-
-
 
   }
 
 
+  irAlAlumno(alumnoId:string){
+    this.router.navigate(['/container/alumnos/alumno', alumnoId, 'detalles']);
+    this.dialogRef.close();
+  }
 
 
   ngOnDestroy(): void {

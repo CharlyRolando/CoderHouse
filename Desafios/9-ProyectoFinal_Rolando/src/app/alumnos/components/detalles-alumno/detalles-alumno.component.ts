@@ -13,6 +13,7 @@ import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { Alumno } from '../../interfaces/alumno';
+import { loadAlumnos } from '../../state/alumnos.actions';
 import { AlumnosState } from '../../state/alumnos.reducer';
 import { selectAlumno } from '../../state/alumnos.selectors';
 
@@ -67,6 +68,7 @@ export class DetallesAlumnoComponent implements OnInit, OnDestroy {
 
   getAlumno(alumnoId: string) {
 
+    this.storeAlumnos.dispatch(loadAlumnos());
     this.suscripcionAlumnos = this.storeAlumnos.select(selectAlumno(alumnoId)).subscribe((alumno: Alumno) =>{
       this.alumno = alumno;
     });
