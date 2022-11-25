@@ -2,6 +2,6 @@ export interface Inscripcion {
   id: string,
   alumnoId: string,
   cursoId: string,
-  usuarioId: string,
+  usuarioInscriptor: string,
   fecha: Date,
 }

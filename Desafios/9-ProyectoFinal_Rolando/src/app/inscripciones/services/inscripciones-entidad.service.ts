@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { catchError, combineLatestWith, map, Observable, throwError } from 'rxjs';
 import { AlumnosService } from 'src/app/alumnos/services/alumnos.service';
 import { CursosService } from 'src/app/cursos/services/cursos.service';
-import { UsuariosService } from 'src/app/usuarios/services/usuarios.service';
 import { environment } from 'src/environments/environment';
 import { Inscripcion } from '../interfaces/inscripcion';
 import { InscripcionEntidad } from '../interfaces/inscripcion-entidad';
@@ -21,7 +20,6 @@ export class InscripcionesEntidadService {
     private http: HttpClient,
     private alumnosService: AlumnosService,
     private cursosService: CursosService,
-    private usuariosService: UsuariosService
   ) { }
 
 
@@ -36,13 +34,12 @@ export class InscripcionesEntidadService {
 
         const alumnos$ = this.alumnosService.getAlumnos();
         const cursos$ = this.cursosService.getCursos();
-        const usuarios$ = this.usuariosService.getUsuarios();
 
         return this.http.get<Inscripcion[]>(this.inscripcionesUrl).pipe(
 
-          combineLatestWith(alumnos$, cursos$, usuarios$)
+          combineLatestWith(alumnos$, cursos$)
 
-        ).subscribe(([inscripciones, alumnos, cursos, usuarios]) => {
+        ).subscribe(([inscripciones, alumnos, cursos]) => {
 
           inscripciones.forEach(i => {
 
@@ -50,11 +47,10 @@ export class InscripcionesEntidadService {
               id: i.id,
               alumnoId: i.alumnoId,
               cursoId: i.cursoId,
-              usuarioId: i.usuarioId,
+              usuarioInscriptor: i.usuarioInscriptor,
               fecha: i.fecha,
               alumno: alumnos.filter((a) => a.id == i.alumnoId)[0],
               curso: cursos.filter((c) => c.id == i.cursoId)[0],
-              usuario: usuarios.filter((u) => u.id == i.usuarioId)[0],
             };
 
             inscripcionesEntidad.push(insc);
@@ -122,41 +118,6 @@ export class InscripcionesEntidadService {
   }
 
 
-
-  deleteInscripcionesXalumno(alumnoId: string) {
-
-    this.getInscripcionesEntidadXalumno(alumnoId).subscribe(
-      (insc) => {
-        insc.filter((a) => a.alumnoId == alumnoId).forEach((i) => {
-
-          const url = `${this.inscripcionesUrl}/${i.id}`;
-          return this.http.delete<Inscripcion>(url).pipe(
-            catchError(this.handleError)
-          );
-
-        })
-      }
-    );
-
-  }
-
-
-  deleteInscripcionesXcurso(cursoId: string) {
-    this.getInscripcionesEntidadXcurso(cursoId).subscribe(
-      (insc) => {
-        insc.filter((c) => c.cursoId == cursoId).forEach((i) => {
-
-          const url = `${this.inscripcionesUrl}/${i.id}`;
-          return this.http.delete<Inscripcion>(url).pipe(
-            catchError(this.handleError)
-          );
-
-        })
-      }
-    );
-  }
-
-
   private handleError(err: any) {
     let errorMessage: string;
     if (err.error instanceof ErrorEvent) {
@@ -167,5 +128,6 @@ export class InscripcionesEntidadService {
     console.error(err);
     return throwError(() => errorMessage);
   }
+
 
 }

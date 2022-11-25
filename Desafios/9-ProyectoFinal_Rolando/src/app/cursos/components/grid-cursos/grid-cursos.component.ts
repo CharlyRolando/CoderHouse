@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { Curso } from 'src/app/cursos/interfaces/curso';
 import { ListaAlumnosComponent } from 'src/app/alumnos/components/lista-alumnos/lista-alumnos.component';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
@@ -16,9 +16,15 @@ import { Store } from '@ngrx/store';
 import { addCurso, deleteCurso, editCurso, loadCursos } from '../../state/cursos.actions';
 import { selectCursos, selectCursosLoading } from '../../state/cursos.selectors';
 import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
-import { addInscripcionEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
+import { addInscripcionEntidad, deleteInscripcionEntidad, loadInscripcionesEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
 import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
 import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
+import { deleteInscripcion } from 'src/app/inscripciones/state/inscripciones.actions';
+import { selectInscripcionEntidadXcurso } from 'src/app/inscripciones/state/inscripciones-entidad.selectors';
+import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
+import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
+import { InscripcionesEntidadService } from 'src/app/inscripciones/services/inscripciones-entidad.service';
+import { Inscripcion } from 'src/app/inscripciones/interfaces/inscripcion';
 
 
 @Component({
@@ -38,7 +44,7 @@ export class GridCursosComponent implements OnInit, OnDestroy {
 
   constructor(
     private loader: LoaderService,
-    private sesionService: SesionService,
+    private inscripcionesService: InscripcionesService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
@@ -133,7 +139,16 @@ export class GridCursosComponent implements OnInit, OnDestroy {
   deleteCurso(cursoId: string): void {
 
     if (cursoId != '') {
-      this.storeCursos.dispatch(deleteCurso({id: cursoId}))
+
+      this.inscripcionesService.getInscripcionesXcurso(cursoId).subscribe(
+        (insc:Inscripcion[]) => {
+        insc.forEach(
+          (i) =>   this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: i.id }))
+        )}
+      );
+
+      this.storeCursos.dispatch(deleteCurso({id: cursoId}));
+
     }
 
   }

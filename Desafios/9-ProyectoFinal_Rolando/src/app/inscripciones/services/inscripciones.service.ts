@@ -31,10 +31,10 @@ export class InscripcionesService {
   getInscripcionesXcurso(cursoId: string): Observable<Inscripcion[]> {
 
     return this.getInscripciones().pipe(
-        map(
-          (inscripciones: Inscripcion[]) => inscripciones.filter((i: Inscripcion) => i.cursoId === cursoId)
-        )
-      );
+      map(
+        (inscripciones: Inscripcion[]) => inscripciones.filter((i: Inscripcion) => i.cursoId === cursoId)
+      )
+    );
 
   }
 
@@ -42,10 +42,10 @@ export class InscripcionesService {
   getInscripcionesXalumno(alumnoId: string): Observable<Inscripcion[]> {
 
     return this.getInscripciones().pipe(
-        map(
-          (inscripciones: Inscripcion[]) => inscripciones.filter((i: Inscripcion) => i.alumnoId === alumnoId)
-        )
-      );
+      map(
+        (inscripciones: Inscripcion[]) => inscripciones.filter((i: Inscripcion) => i.alumnoId === alumnoId)
+      )
+    );
 
   }
 
@@ -78,41 +78,6 @@ export class InscripcionesService {
   }
 
 
-  deleteInscripcionesXalumno(alumnoId: string) {
-
-    this.getInscripcionesXalumno(alumnoId).subscribe(
-      (insc) => {
-        insc.filter((a) => a.alumnoId == alumnoId).forEach((i) => {
-
-          const url = `${this.inscripcionesUrl}/${i.id}`;
-          return this.http.delete<Inscripcion>(url).pipe(
-              catchError(this.handleError)
-            );
-
-        })
-      }
-    );
-
-  }
-
-
-
-  deleteInscripcionesXcurso(cursoId: string) {
-    this.getInscripcionesXcurso(cursoId).subscribe(
-      (insc) => {
-        insc.filter((c) => c.cursoId == cursoId).forEach((i) => {
-
-          const url = `${this.inscripcionesUrl}/${i.id}`;
-          return this.http.delete<Inscripcion>(url).pipe(
-              catchError(this.handleError)
-            );
-
-        })
-      }
-    );
-  }
-
-
   private handleError(err: any) {
     let errorMessage: string;
     if (err.error instanceof ErrorEvent) {
@@ -123,9 +88,6 @@ export class InscripcionesService {
     console.error(err);
     return throwError(() => errorMessage);
   }
-
-
-
 
 
 }

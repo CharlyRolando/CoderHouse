@@ -46,7 +46,6 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.getAlumnosData();
-
     this.configurarFormulario();
 
   }
@@ -91,7 +90,7 @@ export class FormInscripcionComponent implements OnInit, OnDestroy {
       id: '',
       alumnoId: '',
       cursoId: this.curso.id,
-      usuarioId: this.sesionService.sesion.usuarioActivo?.id,
+      usuarioInscriptor: this.sesionService.sesion.usuarioActivo?.nombre,
       fecha: new Date()
     });
   }

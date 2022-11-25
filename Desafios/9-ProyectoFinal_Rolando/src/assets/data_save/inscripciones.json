@@ -3,238 +3,238 @@
   "cursoId": "2",
   "alumnoId": "1",
   "fecha": "2022-04-26T18:17:48.728Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "1"
  },
  {
   "cursoId": "5",
   "alumnoId": "6",
   "fecha": "2022-03-18T19:23:15.571Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "2"
  },
  {
   "cursoId": "6",
   "alumnoId": "9",
   "fecha": "2022-10-11T19:23:47.191Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "3"
  },
  {
   "cursoId": "1",
   "alumnoId": "4",
   "fecha": "2022-10-30T19:28:06.406Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Martin Arriola",
   "id": "4"
  },
  {
   "cursoId": "3",
   "alumnoId": "3",
   "fecha": "2022-10-12T19:28:17.532Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "5"
  },
  {
   "cursoId": "3",
   "alumnoId": "10",
   "fecha": "2022-10-26T19:28:28.744Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "6"
  },
  {
   "cursoId": "4",
   "alumnoId": "4",
   "fecha": "2022-10-11T19:28:39.447Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "7"
  },
  {
   "cursoId": "4",
   "alumnoId": "9",
   "fecha": "2022-10-23T19:28:50.184Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Martin Arriola",
   "id": "8"
  },
  {
   "cursoId": "4",
   "alumnoId": "10",
   "fecha": "2022-10-11T19:28:59.556Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "9"
  },
  {
   "cursoId": "6",
   "alumnoId": "2",
   "fecha": "2022-10-25T19:29:14.407Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "10"
  },
  {
   "cursoId": "6",
   "alumnoId": "8",
   "fecha": "2022-09-30T19:29:25.049Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "11"
  },
  {
   "cursoId": "6",
   "alumnoId": "1",
   "fecha": "2022-08-28T19:29:25.049Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Martin Arriola",
   "id": "12"
  },
  {
   "cursoId": "6",
   "alumnoId": "4",
   "fecha": "2022-10-21T19:29:35.953Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "13"
  },
  {
   "cursoId": "4",
   "alumnoId": "2",
   "fecha": "2022-11-12T19:30:14.984Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "14"
  },
  {
   "cursoId": "5",
   "alumnoId": "5",
   "fecha": "2022-03-11T19:30:27.531Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "15"
  },
  {
   "cursoId": "6",
   "alumnoId": "10",
   "fecha": "2022-10-12T19:30:36.450Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "16"
  },
  {
   "cursoId": "3",
   "alumnoId": "2",
   "fecha": "2022-10-29T19:30:54.970Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "17"
  },
  {
   "cursoId": "3",
   "alumnoId": "7",
   "fecha": "2022-10-23T19:31:00.767Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "18"
  },
  {
   "cursoId": "6",
   "alumnoId": "5",
   "fecha": "2022-10-11T19:31:30.776Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "19"
  },
  {
   "cursoId": "2",
   "alumnoId": "9",
   "fecha": "2022-04-28T19:34:24.160Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "21"
  },
  {
   "cursoId": "2",
   "alumnoId": "8",
   "fecha": "2022-04-15T19:34:37.665Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "22"
  },
  {
   "cursoId": "2",
   "alumnoId": "6",
   "fecha": "2022-04-16T19:34:53.388Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "23"
  },
  {
   "cursoId": "2",
   "alumnoId": "7",
   "fecha": "2022-04-19T19:35:04.589Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "24"
  },
  {
   "cursoId": "1",
   "alumnoId": "7",
   "fecha": "2022-04-22T19:35:16.851Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Martin Arriola",
   "id": "25"
  },
  {
   "cursoId": "2",
   "alumnoId": "4",
   "fecha": "2022-04-24T19:35:24.537Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "26"
  },
  {
   "cursoId": "4",
   "alumnoId": "3",
   "fecha": "2022-10-19T19:35:53.587Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "27"
  },
  {
   "cursoId": "5",
   "alumnoId": "1",
   "fecha": "2022-03-22T19:36:18.588Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "28"
  },
  {
   "cursoId": "5",
   "alumnoId": "3",
   "fecha": "2022-03-27T19:36:30.754Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Martin Arriola",
   "id": "29"
  },
  {
   "cursoId": "1",
   "alumnoId": "5",
   "fecha": "2022-03-03T19:36:39.719Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "30"
  },
  {
   "cursoId": "5",
   "alumnoId": "7",
   "fecha": "2022-03-17T19:36:47.211Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "31"
  },
  {
   "cursoId": "4",
   "alumnoId": "1",
   "fecha": "2022-10-17T19:37:16.335Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "33"
  },
  {
   "cursoId": "4",
   "alumnoId": "5",
   "fecha": "2022-11-02T19:37:24.405Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "34"
  },
  {
   "cursoId": "3",
   "alumnoId": "4",
   "fecha": "2022-11-01T02:47:54.056Z",
-  "usuarioId": "2",
+  "usuarioInscriptor": "Andrea Perez",
   "id": "35"
  },
  {
   "cursoId": "2",
   "alumnoId": "3",
   "fecha": "2022-04-03T23:15:08.187Z",
-  "usuarioId": "1",
+  "usuarioInscriptor": "Santiago Arana",
   "id": "36"
  }
 ]

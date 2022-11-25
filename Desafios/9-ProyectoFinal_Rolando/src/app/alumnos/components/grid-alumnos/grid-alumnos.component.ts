@@ -17,6 +17,10 @@ import { addAlumno, deleteAlumno, editAlumno, loadAlumnos } from '../../state/al
 import { selectAlumnos, selectAlumnosLoading } from '../../state/alumnos.selectors';
 import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
 import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
+import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
+import { Inscripcion } from 'src/app/inscripciones/interfaces/inscripcion';
+import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
+import { deleteInscripcionEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
 
 
 @Component({
@@ -45,6 +49,8 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute,
     public appService: AppService,
+    private inscripcionesService: InscripcionesService,
+    private storeInscripcionesEntidad: Store<InscripcionesEntidadState>,
     private storeAlumnos: Store<AlumnosState>,
     private storeSesion: Store<Sesion>,
   ) {
@@ -167,6 +173,14 @@ configurarTabla() {
 
   deleteAlumno(alumnoId: string): void {
     if (alumnoId != '') {
+
+      this.inscripcionesService.getInscripcionesXcurso(alumnoId).subscribe(
+        (insc:Inscripcion[]) => {
+        insc.forEach(
+          (i) =>   this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: i.id }))
+        )}
+      );
+
       this.storeAlumnos.dispatch(deleteAlumno({ id: alumnoId }));
     }
   };

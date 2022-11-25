@@ -6,9 +6,8 @@ export interface InscripcionEntidad {
   id: string,
   alumnoId: string,
   cursoId: string,
-  usuarioId: string,
+  usuarioInscriptor: string,
   fecha: Date,
   alumno: Alumno,
   curso: Curso,
-  usuario: Usuario,
 }

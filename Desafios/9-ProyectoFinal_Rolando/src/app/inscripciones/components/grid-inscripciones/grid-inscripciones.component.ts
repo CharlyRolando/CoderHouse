@@ -33,7 +33,7 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
   inscripciones!: InscripcionEntidad[];
 
   dataSource!: MatTableDataSource<InscripcionEntidad>;
-  columnas: string[] = ['id', 'nombreAlumno', 'nombreCurso', 'comisionCurso', 'fecha', 'nombreUsuario', 'acciones'];
+  columnas: string[] = ['id', 'nombreAlumno', 'nombreCurso', 'comisionCurso', 'fecha', 'usuarioInscriptor', 'acciones'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) tbSort!: MatSort;
 
@@ -102,7 +102,6 @@ export class GridInscripcionesComponent implements OnInit, OnDestroy {
         case 'nombreAlumno': return compare(a.alumno.apellido, b.alumno.apellido, isAsc);
         case 'nombreCurso': return compare(a.curso.nombre, b.curso.nombre, isAsc);
         case 'comisionCurso': return compare(a.curso.comision, b.curso.comision, isAsc);
-        case 'nombreUsuario': return compare(a.usuario.nombre, b.usuario.nombre, isAsc);
         default: return 0;
       }
     });
