@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Alumno } from 'src/app/alumnos/interfaces/alumno';
-import { catchError, delay, map, Observable, of, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
