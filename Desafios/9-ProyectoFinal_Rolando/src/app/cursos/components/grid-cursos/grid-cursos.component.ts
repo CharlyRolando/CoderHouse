@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { map, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Curso } from 'src/app/cursos/interfaces/curso';
 import { ListaAlumnosComponent } from 'src/app/alumnos/components/lista-alumnos/lista-alumnos.component';
 import { ConfirmacionDialogComponent, ConfirmacionDialogModel } from 'src/app/_shared/components/confirmacion-dialog/confirmacion-dialog.component';
 import { FormCursoComponent } from '../form-curso/form-curso.component';
-import { SesionService } from 'src/app/autenticacion/services/sesion.service';
 import { LoaderService } from 'src/app/_shared/services/loader.service';
 import { FormInscripcionComponent } from 'src/app/inscripciones/components/form-inscripcion/form-inscripcion.component';
 import { ActivatedRoute } from '@angular/router';
@@ -16,14 +15,10 @@ import { Store } from '@ngrx/store';
 import { addCurso, deleteCurso, editCurso, loadCursos } from '../../state/cursos.actions';
 import { selectCursos, selectCursosLoading } from '../../state/cursos.selectors';
 import { InscripcionesEntidadState } from 'src/app/inscripciones/state/inscripciones-entidad.reducer';
-import { addInscripcionEntidad, deleteInscripcionEntidad, loadInscripcionesEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
+import { addInscripcionEntidad, deleteInscripcionEntidad } from 'src/app/inscripciones/state/inscripciones-entidad.actions';
 import { Sesion } from 'src/app/autenticacion/interfaces/sesion';
 import { selectSesionActiva } from 'src/app/_core/state/sesion.selectors';
-import { deleteInscripcion } from 'src/app/inscripciones/state/inscripciones.actions';
-import { selectInscripcionEntidadXcurso } from 'src/app/inscripciones/state/inscripciones-entidad.selectors';
-import { InscripcionEntidad } from 'src/app/inscripciones/interfaces/inscripcion-entidad';
 import { InscripcionesService } from 'src/app/inscripciones/services/inscripciones.service';
-import { InscripcionesEntidadService } from 'src/app/inscripciones/services/inscripciones-entidad.service';
 import { Inscripcion } from 'src/app/inscripciones/interfaces/inscripcion';
 
 
@@ -72,8 +67,8 @@ export class GridCursosComponent implements OnInit, OnDestroy {
 
     this.storeCursos.dispatch(loadCursos());
     this.suscripcionCursos = this.storeCursos.select(selectCursos).subscribe((cursos: Curso[]) => {
-        this.cursos = cursos;
-      });
+      this.cursos = cursos;
+    });
   }
 
 
@@ -140,17 +135,22 @@ export class GridCursosComponent implements OnInit, OnDestroy {
 
     if (cursoId != '') {
 
+      /* primero elimino todas las inscripciones del curso a eliminar */
       this.inscripcionesService.getInscripcionesXcurso(cursoId).subscribe(
-        (insc:Inscripcion[]) => {
-        insc.forEach(
-          (i) =>   this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: i.id }))
-        )}
+        (inscripciones: Inscripcion[]) => {
+          //console.log('cantidad de inscripciones: ', inscripciones.length);
+          inscripciones.forEach(
+            (inscripcion) => {
+              //console.log('delete inscr: ', inscripcion.id)
+              this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: inscripcion.id }));
+            }
+          )
+        }
       );
 
-      this.storeCursos.dispatch(deleteCurso({id: cursoId}));
+      this.storeCursos.dispatch(deleteCurso({ id: cursoId }));
 
     }
-
   }
 
 
@@ -164,7 +164,7 @@ export class GridCursosComponent implements OnInit, OnDestroy {
     dialogEdit.afterClosed().subscribe((inscripcion) => {
       if (inscripcion) {
 
-        this.storeInscripcionesEntidad.dispatch(addInscripcionEntidad({inscripcion}));
+        this.storeInscripcionesEntidad.dispatch(addInscripcionEntidad({ inscripcion }));
 
         this._snackBar.open(
           'Inscripción exitosa', '',

@@ -74,7 +74,7 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
     this.suscripcionAlumnos = this.storeAlumnos.select(selectAlumnos)
       .subscribe((alumnos: Alumno[]) => {
 
-        this.alumnos = alumnos.map(alumnos => { return {...alumnos}; });  //para que no de error 'Sort'
+        this.alumnos = alumnos.map(alumnos => { return { ...alumnos }; });  //para que no de error 'Sort'
         this.configurarTabla();
 
       });
@@ -83,21 +83,21 @@ export class GridAlumnosComponent implements OnInit, OnDestroy {
 
 
 
-configurarTabla() {
+  configurarTabla() {
 
-  this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
+    this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
 
-  if(this.alumnos.length > 0 ){
-  /* Ordenamiento por defecto id desc */
-  this.tbSort.disableClear = true;
-  const sortState: Sort = { active: 'id', direction: 'desc' };
-  this.tbSort.active = sortState.active;
-  this.tbSort.direction = sortState.direction;
-  this.tbSort.sortChange.emit(sortState);
-  this.dataSource.sort = this.tbSort;
-  this.dataSource.paginator = this.paginator;
+    if (this.alumnos.length > 0) {
+      /* Ordenamiento por defecto id desc */
+      this.tbSort.disableClear = true;
+      const sortState: Sort = { active: 'id', direction: 'desc' };
+      this.tbSort.active = sortState.active;
+      this.tbSort.direction = sortState.direction;
+      this.tbSort.sortChange.emit(sortState);
+      this.dataSource.sort = this.tbSort;
+      this.dataSource.paginator = this.paginator;
+    }
   }
-}
 
 
 
@@ -172,16 +172,24 @@ configurarTabla() {
 
 
   deleteAlumno(alumnoId: string): void {
+
     if (alumnoId != '') {
 
-      this.inscripcionesService.getInscripcionesXcurso(alumnoId).subscribe(
-        (insc:Inscripcion[]) => {
-        insc.forEach(
-          (i) =>   this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: i.id }))
-        )}
+      /* primero elimino todas las inscripciones del alumno a eliminar */
+      this.inscripcionesService.getInscripcionesXalumno(alumnoId).subscribe(
+        (inscripciones: Inscripcion[]) => {
+          //console.log('cantidad de inscripciones: ', inscripciones.length)
+          inscripciones.forEach(
+            (inscripcion) => {
+              //console.log('delete inscr: ', inscripcion.id)
+              this.storeInscripcionesEntidad.dispatch(deleteInscripcionEntidad({ id: inscripcion.id }));
+            }
+          )
+        }
       );
 
       this.storeAlumnos.dispatch(deleteAlumno({ id: alumnoId }));
+
     }
   };
 
